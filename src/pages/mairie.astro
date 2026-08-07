@@ -4,11 +4,11 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 const elus = [{ role: 'Maire', name: 'Thierry Chatain' }];
 
 const hours = [
-  { day: 'Lundi', label: 'Fermé', dow: 1, open: null },
-  { day: 'Mardi', label: '14h – 17h', dow: 2, open: [14, 17] },
-  { day: 'Mercredi', label: 'Fermé', dow: 3, open: null },
-  { day: 'Jeudi', label: 'Fermé', dow: 4, open: null },
-  { day: 'Vendredi', label: '9h – 12h', dow: 5, open: [9, 12] },
+  { day: 'Lundi', label: 'Fermé' },
+  { day: 'Mardi', label: '14h – 17h' },
+  { day: 'Mercredi', label: 'Fermé' },
+  { day: 'Jeudi', label: 'Fermé' },
+  { day: 'Vendredi', label: '9h – 12h' },
 ];
 
 const services = [
@@ -64,30 +64,31 @@ const services = [
       </p>
     </div>
 
-    <div class="card">
-      <h2>Horaires d'ouverture</h2>
-      <table id="hours-table">
-        <tbody>
-          {hours.map((h) => (
-            <tr data-dow={h.dow} data-open={h.open ? h.open.join('-') : ''}>
-              <td>{h.day}</td>
-              <td>{h.label}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
+    <div class="grid-col">
+      <div class="card">
+        <h2>Horaires d'ouverture</h2>
+        <table>
+          <tbody>
+            {hours.map((h) => (
+              <tr>
+                <td>{h.day}</td>
+                <td class={h.label !== 'Fermé' ? 'is-open' : ''}>{h.label}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
 
-    <div class="card">
-      <h2>Maire</h2>
-      <ul class="elus">
-        {elus.map((elu) => (
-          <li>
-            <strong>{elu.role}</strong>
-            <span>{elu.name}</span>
-          </li>
-        ))}
-      </ul>
+      <div class="card">
+        <h2>Maire</h2>
+        <ul class="elus">
+          {elus.map((elu) => (
+            <li>
+              <span>{elu.name}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   </section>
 
@@ -110,36 +111,30 @@ const services = [
   </section>
 </BaseLayout>
 
-<script>
-  function highlightOpenHours() {
-    const now = new Date();
-    const dow = now.getDay();
-    const hour = now.getHours() + now.getMinutes() / 60;
-
-    document.querySelectorAll<HTMLTableRowElement>('#hours-table tr').forEach((row) => {
-      const rowDow = Number(row.dataset.dow);
-      const openRange = row.dataset.open;
-      let isOpen = false;
-
-      if (rowDow === dow && openRange) {
-        const [start, end] = openRange.split('-').map(Number);
-        isOpen = hour >= start && hour < end;
-      }
-
-      row.classList.toggle('is-open', isOpen);
-    });
-  }
-
-  highlightOpenHours();
-</script>
 
 <style>
   .grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    align-items: start;
+    grid-template-columns: repeat(2, 1fr);
     gap: 1.5rem;
     margin: 1.5rem 0;
+  }
+
+  .grid-col {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    height: 100%;
+  }
+
+  .grid-col .card:first-child {
+    flex-grow: 1;
+  }
+
+  @media (max-width: 720px) {
+    .grid {
+      grid-template-columns: 1fr;
+    }
   }
 
   table {
@@ -157,7 +152,7 @@ const services = [
     color: var(--color-text-muted);
   }
 
-  table tr.is-open td {
+  table td.is-open {
     color: var(--color-primary);
     font-weight: 700;
   }

@@ -56,7 +56,7 @@ const { slides } = Astro.props;
 
       const setActive = (i: number) => {
         index = (i + slides.length) % slides.length;
-        slides[index].scrollIntoView({ behavior: 'smooth', inline: 'start', block: 'nearest' });
+        track.scrollTo({ left: slides[index].offsetLeft, behavior: 'smooth' });
         dots.forEach((dot, di) => dot.classList.toggle('active', di === index));
       };
 

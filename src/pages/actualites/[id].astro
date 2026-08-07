@@ -1,4 +1,5 @@
 ---
+import { marked } from 'marked';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { actualites, getById, formatActualiteDate } from '../../data/actualites';
 
@@ -11,6 +12,7 @@ export function getStaticPaths() {
 const id = Number(Astro.params.id);
 const actualite = getById(id)!;
 const formattedDate = formatActualiteDate(actualite);
+const contentHtml = marked.parse(actualite.content, { async: false });
 ---
 
 <BaseLayout title={actualite.title} description={actualite.excerpt}>
@@ -22,7 +24,7 @@ const formattedDate = formatActualiteDate(actualite);
     )}
     <time datetime={actualite.date}>{formattedDate}</time>
     <h1>{actualite.title}</h1>
-    <p>{actualite.content}</p>
+    <div class="news-detail-content" set:html={contentHtml} />
     {actualite.associations && actualite.associations.length > 0 && (
       <p class="news-detail-assoc">
         Organisé par
@@ -76,11 +78,25 @@ const formattedDate = formatActualiteDate(actualite);
     margin: 0 0 1.25rem;
   }
 
-  .news-detail p {
+  .news-detail-content {
     color: var(--color-text);
     font-size: 1.05rem;
     line-height: 1.7;
     max-width: 52rem;
+  }
+
+  .news-detail-content :global(p) {
+    margin: 0 0 1rem;
+  }
+
+  .news-detail-content :global(a) {
+    color: var(--color-primary);
+  }
+
+  .news-detail-content :global(ul),
+  .news-detail-content :global(ol) {
+    margin: 0 0 1rem;
+    padding-left: 1.5rem;
   }
 
   .news-detail-assoc {
