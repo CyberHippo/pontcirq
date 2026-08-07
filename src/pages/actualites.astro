@@ -1,0 +1,42 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ActualiteCard from '../components/ActualiteCard.astro';
+import { getPage, getTotalPages } from '../data/actualites';
+
+const firstPage = getPage(1);
+const totalPages = getTotalPages();
+---
+
+<BaseLayout title="Actualités" description="Actualités et annonces de la commune de Pontcirq.">
+  <h1>Actualités</h1>
+  <p class="intro">Les dernières annonces municipales. Faites défiler pour charger la suite.</p>
+
+  <div id="news-list">
+    {firstPage.map((item) => <ActualiteCard actualite={item} layout="row" />)}
+
+    {totalPages > 1 && (
+      <div
+        class="load-more-trigger"
+        hx-get="/fragments/actualites/2.html"
+        hx-trigger="revealed"
+        hx-swap="outerHTML"
+      >
+        <p class="htmx-indicator">Chargement…</p>
+      </div>
+    )}
+  </div>
+</BaseLayout>
+
+<style>
+  .intro {
+    color: var(--color-text-muted);
+    margin-bottom: 1.5rem;
+  }
+
+  #news-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    margin-bottom: 3rem;
+  }
+</style>

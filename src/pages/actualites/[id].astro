@@ -1,0 +1,73 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { actualites, getById, formatActualiteDate } from '../../data/actualites';
+
+export function getStaticPaths() {
+  return actualites.map((item) => ({
+    params: { id: String(item.id) },
+  }));
+}
+
+const id = Number(Astro.params.id);
+const actualite = getById(id)!;
+const formattedDate = formatActualiteDate(actualite);
+---
+
+<BaseLayout title={actualite.title} description={actualite.excerpt}>
+  <a href="/actualites" class="back-link">&larr; Retour aux actualités</a>
+
+  <article class="news-detail">
+    {actualite.image && (
+      <img class="news-detail-image" src={actualite.image} alt="" />
+    )}
+    <time datetime={actualite.date}>{formattedDate}</time>
+    <h1>{actualite.title}</h1>
+    <p>{actualite.content}</p>
+  </article>
+</BaseLayout>
+
+<style>
+  .back-link {
+    display: inline-block;
+    margin: 1.5rem 0 1rem;
+    color: var(--color-text-muted);
+    font-weight: 600;
+    font-size: 0.9rem;
+  }
+
+  .news-detail {
+    max-width: 42rem;
+    margin-bottom: 3rem;
+  }
+
+  .news-detail time {
+    display: block;
+    font-weight: 700;
+    font-size: 0.85rem;
+    color: var(--color-accent);
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    margin-bottom: 0.5rem;
+  }
+
+  .news-detail-image {
+    display: block;
+    width: 100%;
+    max-height: 32rem;
+    object-fit: contain;
+    background: var(--color-surface);
+    border-radius: var(--radius);
+    margin-bottom: 1.25rem;
+    box-shadow: var(--shadow-sm);
+  }
+
+  .news-detail h1 {
+    margin: 0 0 1.25rem;
+  }
+
+  .news-detail p {
+    color: var(--color-text);
+    font-size: 1.05rem;
+    line-height: 1.7;
+  }
+</style>

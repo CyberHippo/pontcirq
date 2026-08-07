@@ -1,0 +1,167 @@
+---
+interface Slide {
+  src: string;
+  alt: string;
+}
+
+interface Props {
+  slides: Slide[];
+}
+
+const { slides } = Astro.props;
+---
+
+<div class="carousel" data-carousel>
+  <div class="carousel-track" data-carousel-track>
+    {slides.map((slide, i) => (
+      <div class="carousel-slide">
+        <img src={slide.src} alt={slide.alt} loading={i === 0 ? 'eager' : 'lazy'} />
+      </div>
+    ))}
+  </div>
+
+  <button class="carousel-nav prev" type="button" aria-label="Photo précédente" data-carousel-prev>
+    &larr;
+  </button>
+  <button class="carousel-nav next" type="button" aria-label="Photo suivante" data-carousel-next>
+    &rarr;
+  </button>
+
+  <div class="carousel-dots" data-carousel-dots>
+    {slides.map((_, i) => (
+      <button
+        type="button"
+        class="carousel-dot"
+        aria-label={`Aller à la photo ${i + 1}`}
+        data-carousel-dot={i}
+      ></button>
+    ))}
+  </div>
+</div>
+
+<script>
+  function initCarousels() {
+    document.querySelectorAll<HTMLElement>('[data-carousel]').forEach((carousel) => {
+      const track = carousel.querySelector<HTMLElement>('[data-carousel-track]');
+      const slides = Array.from(carousel.querySelectorAll<HTMLElement>('.carousel-slide'));
+      const dots = Array.from(carousel.querySelectorAll<HTMLElement>('[data-carousel-dot]'));
+      const prevBtn = carousel.querySelector<HTMLElement>('[data-carousel-prev]');
+      const nextBtn = carousel.querySelector<HTMLElement>('[data-carousel-next]');
+      if (!track || slides.length === 0) return;
+
+      let index = 0;
+
+      const setActive = (i: number) => {
+        index = (i + slides.length) % slides.length;
+        slides[index].scrollIntoView({ behavior: 'smooth', inline: 'start', block: 'nearest' });
+        dots.forEach((dot, di) => dot.classList.toggle('active', di === index));
+      };
+
+      prevBtn?.addEventListener('click', () => setActive(index - 1));
+      nextBtn?.addEventListener('click', () => setActive(index + 1));
+      dots.forEach((dot, di) => dot.addEventListener('click', () => setActive(di)));
+
+      let autoplay = setInterval(() => setActive(index + 1), 5000);
+      carousel.addEventListener('mouseenter', () => clearInterval(autoplay));
+      carousel.addEventListener('mouseleave', () => {
+        autoplay = setInterval(() => setActive(index + 1), 5000);
+      });
+
+      setActive(0);
+    });
+  }
+
+  document.addEventListener('astro:page-load', initCarousels);
+</script>
+
+<style>
+  .carousel {
+    position: relative;
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: var(--shadow-md);
+  }
+
+  .carousel-track {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+  }
+
+  .carousel-track::-webkit-scrollbar {
+    display: none;
+  }
+
+  .carousel-slide {
+    flex: 0 0 100%;
+    scroll-snap-align: start;
+    aspect-ratio: 21 / 9;
+  }
+
+  .carousel-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .carousel-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255, 255, 255, 0.85);
+    border: none;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 999px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    box-shadow: var(--shadow-sm);
+    transition: background-color 0.15s ease;
+  }
+
+  .carousel-nav:hover {
+    background: #fff;
+  }
+
+  .carousel-nav.prev {
+    left: 1rem;
+  }
+
+  .carousel-nav.next {
+    right: 1rem;
+  }
+
+  .carousel-dots {
+    position: absolute;
+    bottom: 1rem;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+  }
+
+  .carousel-dot {
+    width: 0.55rem;
+    height: 0.55rem;
+    border-radius: 999px;
+    border: none;
+    background: rgba(255, 255, 255, 0.6);
+    cursor: pointer;
+    padding: 0;
+  }
+
+  .carousel-dot.active {
+    background: #fff;
+    transform: scale(1.2);
+  }
+
+  @media (max-width: 640px) {
+    .carousel-nav {
+      width: 2rem;
+      height: 2rem;
+      font-size: 0.95rem;
+    }
+  }
+</style>

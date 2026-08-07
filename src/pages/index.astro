@@ -1,0 +1,189 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Carousel from '../components/Carousel.astro';
+import ActualiteCard from '../components/ActualiteCard.astro';
+import { getPage } from '../data/actualites';
+
+const latestNews = getPage(1);
+
+const slides = [
+  { src: '/images/accueil/pontcirq-1.jpg', alt: "L'église et le clocher de Pontcirq" },
+  { src: '/images/accueil/pontcirq-2.jpg', alt: 'Vue du village de Pontcirq' },
+  { src: '/images/accueil/pontcirq-3.jpg', alt: 'Paysage autour de Pontcirq' },
+  { src: '/images/accueil/pontcirq-4.jpg', alt: 'Le patrimoine bâti de Pontcirq' },
+  { src: '/images/accueil/pontcirq-5.jpg', alt: 'Ruelle du village de Pontcirq' },
+  { src: '/images/accueil/pontcirq-6.jpg', alt: 'Campagne environnant Pontcirq' },
+  { src: '/images/accueil/pontcirq-7.jpg', alt: 'Pontcirq vu depuis les alentours' },
+];
+---
+
+<BaseLayout title="Accueil">
+  <section class="hero">
+    <h1>Bienvenue à Pontcirq</h1>
+    <p class="lead">
+      Petite commune rurale du Lot, aux portes du Quercy blanc, Pontcirq vous accueille
+      dans un cadre de vie paisible entre causses et vallées. Avec ses <strong>184 habitants</strong>
+      répartis sur <strong>11,9 km²</strong>, entre <strong>122 et 250 m</strong> d'altitude,
+      le village fait partie du département du <strong>Lot (46)</strong>.
+    </p>
+  </section>
+
+  <section class="gallery">
+    <Carousel slides={slides} />
+  </section>
+
+  <section class="news">
+    <div class="news-header">
+      <h2>Dernières actualités</h2>
+      <a href="/actualites" class="news-link">Toutes les actualités &rarr;</a>
+    </div>
+    <div class="news-grid">
+      {latestNews.map((item) => <ActualiteCard actualite={item} showImage={false} />)}
+    </div>
+  </section>
+
+  <section class="explore">
+    <h2>Explorer le site</h2>
+  </section>
+
+  <section class="highlights">
+    <a class="card highlight" href="/mairie">
+      <span class="highlight-icon">🏛️</span>
+      <h3>La Mairie</h3>
+      <p>Horaires d'ouverture, élus, coordonnées et informations pratiques.</p>
+      <span class="highlight-link">En savoir plus &rarr;</span>
+    </a>
+    <a class="card highlight" href="/demarches">
+      <span class="highlight-icon">📋</span>
+      <h3>Démarches</h3>
+      <p>État civil, urbanisme, élections : retrouvez toutes les démarches administratives.</p>
+      <span class="highlight-link">En savoir plus &rarr;</span>
+    </a>
+    <a class="card highlight" href="/actualites">
+      <span class="highlight-icon">📰</span>
+      <h3>Actualités</h3>
+      <p>Suivez les dernières annonces et actualités de la commune.</p>
+      <span class="highlight-link">En savoir plus &rarr;</span>
+    </a>
+    <a class="card highlight" href="/vie-locale">
+      <span class="highlight-icon">🤝</span>
+      <h3>Vie locale</h3>
+      <p>Associations, commerces et rendez-vous qui font la vie du village.</p>
+      <span class="highlight-link">En savoir plus &rarr;</span>
+    </a>
+  </section>
+</BaseLayout>
+
+<style>
+  .hero {
+    padding: 2.5rem 1.5rem;
+    margin: 0 -1.5rem 1.5rem;
+    text-align: center;
+    background: radial-gradient(circle at top, var(--color-primary-light) 0%, var(--color-bg) 70%);
+    border-radius: 0 0 2rem 2rem;
+  }
+
+  .hero h1 {
+    font-size: clamp(1.85rem, 4vw, 2.5rem);
+    margin: 0 0 0.5rem;
+  }
+
+  .lead {
+    max-width: 38rem;
+    margin: 0 auto;
+    color: var(--color-text-muted);
+    font-size: 1rem;
+  }
+
+  .lead strong {
+    color: var(--color-primary);
+  }
+
+  .gallery {
+    margin: 0 0 1.5rem;
+  }
+
+  .news {
+    margin: 2.5rem 0;
+  }
+
+  .news-header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .news-header h2 {
+    margin: 0;
+    font-size: 1.5rem;
+  }
+
+  .news-link {
+    color: var(--color-primary);
+    font-weight: 600;
+    font-size: 0.9rem;
+    white-space: nowrap;
+  }
+
+  .news-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1.25rem;
+  }
+
+  .explore h2 {
+    margin: 0;
+    font-size: 1.5rem;
+  }
+
+  .highlights {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.5rem;
+    margin: 1.25rem 0 3rem;
+  }
+
+  .highlight {
+    color: var(--color-text);
+    display: flex;
+    flex-direction: column;
+  }
+
+  .highlight:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateY(-3px);
+    color: var(--color-text);
+  }
+
+  .highlight-icon {
+    font-size: 1.75rem;
+    width: 3rem;
+    height: 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--color-primary-light);
+    border-radius: var(--radius-sm);
+    margin-bottom: 1rem;
+  }
+
+  .highlights h3 {
+    margin: 0 0 0.5rem;
+    font-size: 1.1rem;
+  }
+
+  .highlights p {
+    color: var(--color-text-muted);
+    font-size: 0.92rem;
+    margin: 0 0 1rem;
+    flex-grow: 1;
+  }
+
+  .highlight-link {
+    color: var(--color-primary);
+    font-weight: 600;
+    font-size: 0.9rem;
+  }
+</style>

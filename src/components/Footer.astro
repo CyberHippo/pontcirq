@@ -1,0 +1,129 @@
+---
+const year = new Date().getFullYear();
+
+const partners = [
+  { src: '/images/footer/republique-francaise.svg', alt: 'République française' },
+  { src: '/images/footer/Logo CG 46 - Vert Moyen.png', alt: 'Département du Lot' },
+  { src: '/images/footer/OC-1706-instit-logo rectangle-quadri-150x150-150dpi.png', alt: 'Région Occitanie' },
+  { src: '/images/footer/grand-cahors.png', alt: 'Grand Cahors' },
+];
+---
+
+<footer>
+  <div class="container footer-inner">
+    <div>
+      <strong>Mairie de Pontcirq</strong>
+      <p>530 Route du Bourg, 46150 Pontcirq</p>
+      <p>05 65 36 24 78</p>
+      <p>mairie.de.pontcirq@wanadoo.fr</p>
+    </div>
+    <div>
+      <strong>Horaires d'ouverture</strong>
+      <p>Mardi : 14h &ndash; 17h</p>
+      <p>Vendredi : 9h &ndash; 12h</p>
+    </div>
+    <div>
+      <strong>Liens utiles</strong>
+      <ul>
+        <li><a href="/mairie">La Mairie</a></li>
+        <li><a href="/demarches">Démarches administratives</a></li>
+        <li><a href="/mentions-legales">Mentions légales</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="container partners">
+    {partners.map((partner) => (
+      <div class="partner-logo">
+        <img src={partner.src} alt={partner.alt} loading="lazy" />
+      </div>
+    ))}
+  </div>
+  <div class="container copyright">
+    <p>
+      &copy; {year} Commune de Pontcirq &mdash; Site non officiel réalisé à titre d'exemple.
+      <a href="/mentions-legales">Mentions légales</a>
+    </p>
+  </div>
+</footer>
+
+<style>
+  footer {
+    background: var(--color-primary-dark);
+    color: #eef2ea;
+    margin-top: 3rem;
+  }
+
+  .footer-inner {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 2rem;
+    padding-top: 2.5rem;
+    padding-bottom: 2rem;
+  }
+
+  .footer-inner strong {
+    font-weight: 700;
+    color: #fff;
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+
+  .footer-inner p {
+    margin: 0.2rem 0;
+    color: #cdd8c6;
+    font-size: 0.9rem;
+  }
+
+  .footer-inner ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .footer-inner a {
+    color: #cdd8c6;
+    font-size: 0.9rem;
+  }
+
+  .partners {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+    padding: 2rem 1.5rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.15);
+  }
+
+  .partner-logo {
+    background: #fff;
+    border-radius: var(--radius-sm);
+    padding: 1rem 1.5rem;
+    height: 6rem;
+    display: flex;
+    align-items: center;
+  }
+
+  .partner-logo img {
+    height: 100%;
+    width: auto;
+    max-width: 17rem;
+    object-fit: contain;
+  }
+
+  .copyright {
+    border-top: 1px solid rgba(255, 255, 255, 0.15);
+    padding: 1rem 1.5rem;
+    font-size: 0.8rem;
+    color: #a9b6a1;
+  }
+
+  .copyright a {
+    color: #a9b6a1;
+    margin-left: 0.75rem;
+  }
+
+  .copyright a:hover {
+    color: #fff;
+  }
+</style>

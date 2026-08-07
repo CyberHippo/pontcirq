@@ -1,0 +1,142 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const demarches = [
+  {
+    title: 'État civil',
+    items: [
+      {
+        label: "Carte nationale d'identité",
+        href: 'https://www.service-public.fr/particuliers/vosdroits/N358',
+      },
+      {
+        label: 'Passeport',
+        href: 'https://www.service-public.fr/particuliers/vosdroits/N360',
+      },
+      {
+        label: "Copie d'acte de naissance",
+        href: 'https://www.service-public.fr/particuliers/vosdroits/F1420',
+      },
+      {
+        label: "Copie d'acte de mariage",
+        href: 'https://www.service-public.fr/particuliers/vosdroits/F1429',
+      },
+      {
+        label: "Copie d'acte de décès",
+        href: 'https://www.service-public.fr/particuliers/vosdroits/F1431',
+      },
+    ],
+  },
+  {
+    title: 'Urbanisme',
+    items: [
+      {
+        label: 'Permis de construire',
+        href: 'https://www.service-public.fr/particuliers/vosdroits/F1986',
+      },
+      {
+        label: 'Déclaration préalable de travaux',
+        href: 'https://www.service-public.fr/particuliers/vosdroits/F17578',
+      },
+      {
+        label: "Certificat d'urbanisme",
+        href: 'https://www.service-public.fr/particuliers/vosdroits/F17690',
+      },
+    ],
+  },
+  {
+    title: 'Élections',
+    items: [
+      {
+        label: 'Inscription sur les listes électorales',
+        href: 'https://www.service-public.fr/particuliers/vosdroits/F1338',
+      },
+      {
+        label: 'Procuration de vote',
+        href: 'https://www.service-public.fr/particuliers/vosdroits/F1604',
+      },
+    ],
+  },
+  {
+    title: 'Vie quotidienne',
+    items: [
+      {
+        label: 'Recensement citoyen (16 ans)',
+        href: 'https://www.service-public.fr/particuliers/vosdroits/F870',
+      },
+      {
+        label: "Inscription à l'école",
+        href: 'https://www.service-public.fr/particuliers/vosdroits/F31151',
+      },
+      {
+        label: 'Demande de branchement eau/assainissement',
+        href: 'https://www.aquareso.fr',
+      },
+    ],
+  },
+];
+---
+
+<BaseLayout title="Démarches" description="Démarches administratives de la commune de Pontcirq.">
+  <h1>Démarches administratives</h1>
+  <p class="intro">
+    La plupart des démarches d'état civil et d'urbanisme peuvent être initiées en ligne sur
+    <a href="https://www.service-public.fr" target="_blank" rel="noopener">service-public.fr</a>,
+    ou directement auprès du secrétariat de mairie.
+  </p>
+
+  <section class="grid">
+    {demarches.map((group) => (
+      <div class="card">
+        <h2>{group.title}</h2>
+        <ul>
+          {group.items.map((item) => (
+            <li>
+              <a href={item.href} target="_blank" rel="noopener">{item.label}</a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    ))}
+  </section>
+</BaseLayout>
+
+<style>
+  .intro {
+    max-width: 42rem;
+    color: var(--color-text-muted);
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+    margin: 1.5rem 0 3rem;
+  }
+
+  @media (max-width: 640px) {
+    .grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .grid h2 {
+    margin-top: 0;
+  }
+
+  .grid ul {
+    padding-left: 1.2rem;
+  }
+
+  .grid li {
+    margin-bottom: 0.4rem;
+  }
+
+  .grid li a {
+    color: var(--color-text);
+  }
+
+  .grid li a:hover {
+    color: var(--color-primary);
+  }
+</style>

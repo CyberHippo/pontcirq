@@ -1,0 +1,202 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const elus = [{ role: 'Maire', name: 'Thierry Chatain' }];
+
+const services = [
+  {
+    title: 'Eau potable',
+    desc: 'Syndicat Aquareso (délégataire SOGEDO)',
+    href: 'https://www.aquareso.fr',
+    logo: '/images/services/logo-aquareso.png',
+  },
+  {
+    title: 'Assainissement collectif',
+    desc: 'Syndicat Aquareso — exploitation SOGEDO',
+    href: 'https://www.aquareso.fr',
+    logo: '/images/services/logo-sogedo.jpg',
+  },
+  {
+    title: 'Assainissement non-collectif',
+    desc: 'Grand Cahors (SPANC)',
+    href: 'https://cahorsagglo.fr',
+    logo: '/images/services/logo_spanc.jpg',
+  },
+  {
+    title: 'Déchets ménagers et recyclables',
+    desc: 'Collecte le vendredi · recyclables un mardi sur deux (tous les mardis en juillet-août) · SYDED du Lot',
+    href: 'https://www.syded-lot.fr',
+    logo: '/images/services/logo-syded.png',
+  },
+];
+---
+
+<BaseLayout title="La Mairie" description="Horaires, contact et élus de la mairie de Pontcirq (46150).">
+  <h1>La Mairie de Pontcirq</h1>
+
+  <section class="grid">
+    <div class="card">
+      <h2>Coordonnées</h2>
+      <p>530 Route du Bourg<br />46150 Pontcirq</p>
+      <p>Téléphone : 05 65 36 24 78</p>
+      <p>Email : mairie.de.pontcirq@wanadoo.fr</p>
+      <div class="map-embed">
+        <iframe
+          title="Carte de localisation de Pontcirq"
+          src="https://www.openstreetmap.org/export/embed.html?bbox=1.2328%2C44.5226%2C1.2928%2C44.5726&layer=mapnik&marker=44.5476%2C1.2628"
+          loading="lazy"
+        ></iframe>
+      </div>
+      <p>
+        <a href="https://www.openstreetmap.org/relation/123870" target="_blank" rel="noopener">
+          Voir le contour de la commune sur OpenStreetMap &rarr;
+        </a>
+      </p>
+    </div>
+
+    <div class="card">
+      <h2>Horaires d'ouverture</h2>
+      <table>
+        <tbody>
+          <tr><td>Lundi</td><td>Fermé</td></tr>
+          <tr><td>Mardi</td><td>14h &ndash; 17h</td></tr>
+          <tr><td>Mercredi</td><td>Fermé</td></tr>
+          <tr><td>Jeudi</td><td>Fermé</td></tr>
+          <tr><td>Vendredi</td><td>9h &ndash; 12h</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <h2>La municipalité</h2>
+    <ul class="elus">
+      {elus.map((elu) => (
+        <li class="card">
+          <strong>{elu.role}</strong>
+          <span>{elu.name}</span>
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <section>
+    <h2>Services publics</h2>
+    <ul class="services">
+      {services.map((service) => (
+        <li>
+          <a class="card service-card" href={service.href} target="_blank" rel="noopener">
+            <div class="service-logo">
+              <img src={service.logo} alt="" loading="lazy" />
+            </div>
+            <strong>{service.title}</strong>
+            <span>{service.desc}</span>
+            <span class="service-link">Site officiel &rarr;</span>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </section>
+</BaseLayout>
+
+<style>
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.5rem;
+    margin: 1.5rem 0;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  table td {
+    padding: 0.4rem 0;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  table td:last-child {
+    text-align: right;
+    color: var(--color-text-muted);
+  }
+
+  .elus {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    list-style: none;
+    padding: 0;
+  }
+
+  .elus li {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .services {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1rem;
+    list-style: none;
+    padding: 0;
+    margin: 1.5rem 0 2.5rem;
+  }
+
+  .service-card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    color: var(--color-text);
+    height: 100%;
+  }
+
+  .service-card:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+    color: var(--color-text);
+  }
+
+  .service-logo {
+    height: 2.5rem;
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.25rem;
+  }
+
+  .service-logo img {
+    height: 100%;
+    width: auto;
+    max-width: 100%;
+    object-fit: contain;
+    object-position: left;
+  }
+
+  .services span {
+    color: var(--color-text-muted);
+    font-size: 0.9rem;
+  }
+
+  .service-card .service-link {
+    margin-top: 0.5rem;
+    color: var(--color-primary);
+    font-weight: 600;
+    font-size: 0.85rem;
+  }
+
+  .map-embed {
+    margin: 1rem 0;
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+    border: 1px solid var(--color-border);
+  }
+
+  .map-embed iframe {
+    width: 100%;
+    height: 220px;
+    border: 0;
+    display: block;
+  }
+</style>

@@ -1,0 +1,64 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Mentions légales" description="Mentions légales du site de la commune de Pontcirq.">
+  <h1>Mentions légales</h1>
+
+  <section class="legal">
+    <p class="notice">
+      Ce site est un projet de démonstration réalisé à titre d'exemple et ne constitue pas
+      le site officiel de la commune de Pontcirq.
+    </p>
+
+    <h2>Édition du site</h2>
+    <p>
+      Mairie de Pontcirq<br />
+      Le Bourg, 46150 Pontcirq<br />
+      Email : mairie.de.pontcirq@wanadoo.fr
+    </p>
+
+    <h2>Directeur de la publication</h2>
+    <p>Le maire de Pontcirq, en sa qualité de représentant légal de la commune.</p>
+
+    <h2>Hébergement</h2>
+    <p>Les informations d'hébergement seront précisées lors de la mise en production du site.</p>
+
+    <h2>Propriété intellectuelle</h2>
+    <p>
+      L'ensemble des contenus de ce site (textes, images, logos) est la propriété de la commune de Pontcirq
+      ou de ses partenaires institutionnels, sauf mention contraire. Toute reproduction sans autorisation est interdite.
+    </p>
+
+    <h2>Données personnelles</h2>
+    <p>Ce site ne collecte, ne traite ni ne conserve aucune donnée personnelle des visiteurs.</p>
+
+    <h2>Cookies</h2>
+    <p>Ce site ne dépose aucun cookie de suivi ou de mesure d'audience.</p>
+  </section>
+</BaseLayout>
+
+<style>
+  .legal {
+    max-width: 42rem;
+    margin: 1.5rem 0 3rem;
+  }
+
+  .legal h2 {
+    font-size: 1.1rem;
+    margin: 1.75rem 0 0.5rem;
+  }
+
+  .legal p {
+    color: var(--color-text-muted);
+  }
+
+  .notice {
+    background: var(--color-primary-light);
+    color: var(--color-primary-dark);
+    border-radius: var(--radius-sm);
+    padding: 0.85rem 1rem;
+    font-weight: 600;
+    font-size: 0.9rem;
+  }
+</style>
