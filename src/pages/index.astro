@@ -34,11 +34,12 @@ const slides = [
   <section class="news">
     <div class="news-header">
       <h2>Dernières actualités</h2>
-      <a href="/actualites" class="news-link">Toutes les actualités &rarr;</a>
+      <a href="/actualites" class="news-link news-link--top">Toutes les actualités &rarr;</a>
     </div>
     <div class="news-grid">
       {latestNews.map((item) => <ActualiteCard actualite={item} showImage={false} />)}
     </div>
+    <a href="/actualites" class="news-link news-link--bottom">Toutes les actualités &rarr;</a>
   </section>
 
   <section class="explore">
@@ -126,10 +127,29 @@ const slides = [
     white-space: nowrap;
   }
 
+  .news-link--bottom {
+    display: none;
+  }
+
   .news-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
     gap: 1.25rem;
+  }
+
+  @media (max-width: 640px) {
+    .news-header {
+      justify-content: flex-start;
+    }
+
+    .news-link--top {
+      display: none;
+    }
+
+    .news-link--bottom {
+      display: inline-block;
+      margin-top: 1.25rem;
+    }
   }
 
   .explore h2 {

@@ -42,6 +42,9 @@ const { slides } = Astro.props;
 <script>
   function initCarousels() {
     document.querySelectorAll<HTMLElement>('[data-carousel]').forEach((carousel) => {
+      if (carousel.dataset.carouselInit === 'true') return;
+      carousel.dataset.carouselInit = 'true';
+
       const track = carousel.querySelector<HTMLElement>('[data-carousel-track]');
       const slides = Array.from(carousel.querySelectorAll<HTMLElement>('.carousel-slide'));
       const dots = Array.from(carousel.querySelectorAll<HTMLElement>('[data-carousel-dot]'));
@@ -71,6 +74,11 @@ const { slides } = Astro.props;
     });
   }
 
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initCarousels);
+  } else {
+    initCarousels();
+  }
   document.addEventListener('astro:page-load', initCarousels);
 </script>
 
