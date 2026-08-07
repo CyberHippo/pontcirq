@@ -37,7 +37,7 @@ const slides = [
       <a href="/actualites" class="news-link news-link--top">Toutes les actualités &rarr;</a>
     </div>
     <div class="news-grid">
-      {latestNews.map((item) => <ActualiteCard actualite={item} showImage={false} />)}
+      {latestNews.map((item) => <ActualiteCard actualite={item} showImage={false} showAssociation={false} />)}
     </div>
     <a href="/actualites" class="news-link news-link--bottom">Toutes les actualités &rarr;</a>
   </section>

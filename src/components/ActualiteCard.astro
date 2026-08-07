@@ -5,27 +5,43 @@ interface Props {
   actualite: Actualite;
   layout?: 'grid' | 'row';
   showImage?: boolean;
+  showAssociation?: boolean;
 }
 
-const { actualite, layout = 'grid', showImage = true } = Astro.props;
+const { actualite, layout = 'grid', showImage = true, showAssociation = true } = Astro.props;
 const formattedDate = formatActualiteDate(actualite);
 ---
 
-<a class={`card news-item news-item--${layout}`} href={`/actualites/${actualite.id}`}>
+<div class={`card news-item news-item--${layout}`}>
+  <a class="news-item-link" href={`/actualites/${actualite.id}`}></a>
   <div class="news-item-body">
     <time datetime={actualite.date}>{formattedDate}</time>
     <h3>{actualite.title}</h3>
-    <p>{actualite.excerpt}</p>
+    <p class="excerpt">{actualite.excerpt}</p>
+    <span class="news-item-more">En savoir plus &rarr;</span>
+    {showAssociation && actualite.associations && actualite.associations.length > 0 && (
+      <p class="news-item-assoc">
+        Organisé par
+        {' '}
+        {actualite.associations.map((assoc, i) => (
+          <>
+            {i > 0 && ' et '}
+            <a href={`/vie-locale#${assoc.anchor}`}>{assoc.name}</a>
+          </>
+        ))}
+      </p>
+    )}
   </div>
   {showImage && actualite.image && (
     <div class="news-item-preview">
       <img src={actualite.image} alt="" loading="lazy" />
     </div>
   )}
-</a>
+</div>
 
 <style>
   .news-item {
+    position: relative;
     display: block;
     color: var(--color-text);
     padding: 0;
@@ -34,9 +50,14 @@ const formattedDate = formatActualiteDate(actualite);
   }
 
   .news-item:hover {
-    color: var(--color-text);
     box-shadow: var(--shadow-md);
     transform: translateY(-2px);
+  }
+
+  .news-item-link {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
   }
 
   .news-item--grid {
@@ -51,9 +72,6 @@ const formattedDate = formatActualiteDate(actualite);
     flex-grow: 1;
   }
 
-  .news-item--grid .news-item-body p {
-    flex-grow: 1;
-  }
 
   .news-item--grid .news-item-preview {
     aspect-ratio: 16 / 9;
@@ -63,6 +81,12 @@ const formattedDate = formatActualiteDate(actualite);
     display: grid;
     grid-template-columns: 1fr 18rem;
     align-items: stretch;
+  }
+
+  .news-item--row .news-item-body {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
   }
 
   .news-item--row .news-item-preview {
@@ -99,6 +123,28 @@ const formattedDate = formatActualiteDate(actualite);
   .news-item p {
     color: var(--color-text-muted);
     margin: 0;
+  }
+
+  .news-item-more {
+    display: inline-block;
+    margin-top: 0.75rem;
+    color: var(--color-primary);
+    font-weight: 600;
+    font-size: 0.9rem;
+  }
+
+  .news-item p.news-item-assoc {
+    position: relative;
+    z-index: 2;
+    margin-top: auto;
+    padding-top: 0.75rem;
+    font-size: 0.85rem;
+  }
+
+  .news-item-assoc a {
+    position: relative;
+    color: var(--color-primary);
+    font-weight: 600;
   }
 
   @media (max-width: 640px) {

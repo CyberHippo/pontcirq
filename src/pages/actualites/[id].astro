@@ -23,6 +23,18 @@ const formattedDate = formatActualiteDate(actualite);
     <time datetime={actualite.date}>{formattedDate}</time>
     <h1>{actualite.title}</h1>
     <p>{actualite.content}</p>
+    {actualite.associations && actualite.associations.length > 0 && (
+      <p class="news-detail-assoc">
+        Organisé par
+        {' '}
+        {actualite.associations.map((assoc, i) => (
+          <>
+            {i > 0 && ' et '}
+            <a href={`/vie-locale#${assoc.anchor}`}>{assoc.name}</a>
+          </>
+        ))}
+      </p>
+    )}
   </article>
 </BaseLayout>
 
@@ -69,5 +81,16 @@ const formattedDate = formatActualiteDate(actualite);
     font-size: 1.05rem;
     line-height: 1.7;
     max-width: 52rem;
+  }
+
+  .news-detail-assoc {
+    margin-top: 1.5rem;
+    font-size: 0.95rem;
+    color: var(--color-text-muted);
+  }
+
+  .news-detail-assoc a {
+    color: var(--color-primary);
+    font-weight: 600;
   }
 </style>

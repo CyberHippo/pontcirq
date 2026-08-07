@@ -1,10 +1,11 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { slugify } from '../utils/slugify';
 
 const associations = [
   {
     name: 'ACCA de Pontcirq',
-    desc: 'Chasse et protection de la faune sauvage.',
+    desc: 'Association Communale de Chasse Agréée.',
     contact: '',
   },
   {
@@ -37,15 +38,91 @@ const associations = [
     desc: 'Association culturelle.',
     contact: 'francisbarascou@gmail.com',
   },
+  {
+    name: 'APE 3LP',
+    desc: "Association des parents d'élèves du RPI Labastide-du-Vert, Les Junies, Lherm et Pontcirq.",
+    contact: '3lp.ape@gmail.com',
+  },
+  {
+    name: 'Unis Vers Terre',
+    desc: "Laboratoire d'écologie globale cultivant l'autonomie, la coopération humaine et la transition intérieure à travers la permaculture.",
+    contact: 'asso.unisversterre (at) gmail.com',
+    website: 'https://unisversterre.wordpress.com/',
+  },
 ];
 
 const marches = [
-  { day: 'Mardi matin', places: ['Catus à 5 km'] },
-  { day: 'Mercredi matin', places: ['Cahors à 20 km', 'Luzech à 9 km'] },
-  { day: 'Jeudi matin', places: ['Mercues à 10 km'] },
-  { day: 'Vendredi matin', places: ['Prayssac à 12 km'] },
-  { day: 'Samedi matin', places: ['Cahors'] },
-  { day: 'Dimanche matin', places: ['Espère à 9 km', 'Montcuq à 16 km'] },
+  {
+    day: 'Lundi soir',
+    places: [
+      {
+        label: 'Castelfranc à 8 km',
+        href: 'https://www.tourisme-lot.com/offres/marche-de-castelfranc-castelfranc-fr-4214447/',
+      },
+    ],
+  },
+  {
+    day: 'Mardi matin',
+    places: [
+      {
+        label: 'Catus à 8 km',
+        href: 'https://www.tourisme-lot.com/offres/marche-a-catus-catus-fr-1036361/',
+      },
+    ],
+  },
+  {
+    day: 'Mercredi matin',
+    places: [
+      {
+        label: 'Cahors à 22 km',
+        href: 'https://www.tourisme-lot.com/offres/marche-a-cahors-cahors-fr-3457366/',
+      },
+      {
+        label: 'Luzech à 12 km',
+        href: 'https://www.tourisme-lot.com/offres/marche-a-luzech-luzech-fr-687258/',
+      },
+    ],
+  },
+  {
+    day: 'Jeudi matin',
+    places: [
+      {
+        label: 'Mercues à 14 km',
+        href: 'https://www.tourisme-lot.com/offres/marche-a-mercues-mercues-fr-1036319/',
+      },
+    ],
+  },
+  {
+    day: 'Vendredi matin',
+    places: [
+      {
+        label: 'Prayssac à 11 km',
+        href: 'https://www.tourisme-lot.com/offres/marche-a-prayssac-prayssac-fr-687275/',
+      },
+    ],
+  },
+  {
+    day: 'Samedi matin',
+    places: [
+      {
+        label: 'Cahors',
+        href: 'https://www.tourisme-lot.com/offres/marche-a-cahors-cahors-fr-3457366/',
+      },
+    ],
+  },
+  {
+    day: 'Dimanche matin',
+    places: [
+      {
+        label: 'Espère à 12 km',
+        href: 'https://www.tourisme-lot.com/offres/marche-a-espere-espere-fr-1036354/',
+      },
+      {
+        label: 'Montcuq à 32 km',
+        href: 'https://www.tourisme-lot.com/offres/marche-a-montcuq-montcuq-en-quercy-blanc-fr-1036315/',
+      },
+    ],
+  },
 ];
 ---
 
@@ -56,45 +133,37 @@ const marches = [
     <h2>Associations</h2>
     <ul class="assoc-list">
       {associations.map((assoc) => (
-        <li class="card">
+        <li class="card" id={`assoc-${slugify(assoc.name)}`}>
           <h3>{assoc.name}</h3>
           <p>{assoc.desc}</p>
-          {assoc.contact && <p class="contact">{assoc.contact}</p>}
+          {assoc.contact && (
+            <p class="contact">
+              {assoc.contact.includes('@') ? (
+                <a href={`mailto:${assoc.contact}`}>{assoc.contact}</a>
+              ) : (
+                assoc.contact
+              )}
+            </p>
+          )}
+          {assoc.website && (
+            <p class="contact">
+              <a href={assoc.website} target="_blank" rel="noopener">Voir le site &rarr;</a>
+            </p>
+          )}
         </li>
       ))}
     </ul>
-  </section>
-
-  <section>
-    <h2>Marchés du coin</h2>
-    <p class="section-intro">Aucun marché à Pontcirq même, mais plusieurs marchés hebdomadaires à proximité.</p>
-    <ul class="marches-list">
-      {marches.map((marche) => (
-        <li class="card">
-          <h3>{marche.day}</h3>
-          <ul class="places">
-            {marche.places.map((place) => <li>{place}</li>)}
-          </ul>
-        </li>
-      ))}
-    </ul>
-  </section>
-
-  <section>
-    <h2>Patrimoine</h2>
-    <p>
-      Pontcirq s'est bâti au flanc d'une anse couronnée de bois, offrant une vue harmonieuse sur la vallée.
-      Le hameau de Tourniac conserve un très beau four à pain, vestige du patrimoine rural de la commune.
-    </p>
   </section>
 
   <section>
     <h2>Bibliothèque</h2>
-    <div class="card library-card">
+    <div class="card library-card" id="assoc-bibliotheque-de-pontcirq">
       <img src="/images/vie-locale/bibliotheque.jpg" alt="Intérieur de la bibliothèque de Pontcirq" />
       <div>
         <h3>Bibliothèque de Pontcirq</h3>
-        <p>Située au hameau de Tourniac.</p>
+        <p>56 Rue de l'église, 46150 Pontcirq</p>
+        <p>Mercredi : 16h30 &ndash; 18h<br />Samedi : 10h30 &ndash; 12h30</p>
+        <p><a href="mailto:bibliotheque.pontcirq@gmail.com">bibliotheque.pontcirq@gmail.com</a></p>
         <p>
           <a href="https://www.facebook.com/bibliothequepontcirq/" target="_blank" rel="noopener">
             Suivre la page Facebook &rarr;
@@ -107,20 +176,68 @@ const marches = [
   <section>
     <h2>École</h2>
     <p>
-      Les enfants de Pontcirq sont scolarisés au sein du regroupement pédagogique intercommunal (RPI),
-      en école maternelle et élémentaire. Ramassage scolaire assuré par le Conseil départemental du Lot.
+      Les enfants de Pontcirq sont scolarisés au sein du regroupement pédagogique intercommunal (RPI)
+      réunissant les communes de Labastide-du-Vert, Les Junies, Lherm et Pontcirq, en école maternelle
+      et élémentaire. Ramassage scolaire assuré par le Conseil départemental du Lot.
     </p>
+    <p>
+      L'association des parents d'élèves du RPI (APE 3LP) organise chaque année des événements dont
+      les fonds récoltés sont reversés intégralement et équitablement entre les écoles du regroupement.
+    </p>
+  </section>
+
+  <section>
+    <h2>Patrimoine</h2>
+    <p>
+      Pontcirq s'est bâti au flanc d'une anse couronnée de bois, offrant une vue harmonieuse sur la vallée.
+      Le hameau de Tourniac conserve un très beau four à pain, vestige du patrimoine rural de la commune.
+    </p>
+  </section>
+
+  <section>
+    <h2>Marchés du coin</h2>
+    <p class="section-intro">Aucun marché à Pontcirq même, mais plusieurs marchés hebdomadaires à proximité.</p>
+    <ul class="marches-list">
+      {marches.map((marche) => (
+        <li class="card">
+          <h3>{marche.day}</h3>
+          <ul class="places">
+            {marche.places.map((place) => (
+              <li>
+                {place.href ? (
+                  <a href={place.href} target="_blank" rel="noopener">{place.label}</a>
+                ) : (
+                  place.label
+                )}
+              </li>
+            ))}
+          </ul>
+        </li>
+      ))}
+    </ul>
   </section>
 </BaseLayout>
 
 <style>
   .assoc-list {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    grid-template-columns: repeat(3, 1fr);
     gap: 1.5rem;
     list-style: none;
     padding: 0;
     margin: 1.5rem 0 2.5rem;
+  }
+
+  @media (max-width: 900px) {
+    .assoc-list {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 560px) {
+    .assoc-list {
+      grid-template-columns: 1fr;
+    }
   }
 
   .assoc-list h3 {
@@ -137,6 +254,10 @@ const marches = [
     font-size: 0.85rem;
   }
 
+  .assoc-list .contact a {
+    color: var(--color-primary);
+  }
+
   .section-intro {
     color: var(--color-text-muted);
     margin-top: 0.25rem;
@@ -144,17 +265,22 @@ const marches = [
 
   .marches-list {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 1.25rem;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 1rem;
     list-style: none;
     padding: 0;
     margin: 1.5rem 0 2.5rem;
   }
 
+  .marches-list li {
+    display: flex;
+    flex-direction: column;
+    padding: 1.1rem 1rem;
+  }
+
   .marches-list h3 {
     margin: 0 0 0.5rem;
-    font-size: 1rem;
-    color: var(--color-primary);
+    font-size: 0.9rem;
   }
 
   .marches-list .places {
@@ -162,16 +288,33 @@ const marches = [
     padding: 0;
     margin: 0;
     color: var(--color-text-muted);
-    font-size: 0.92rem;
+    font-size: 0.85rem;
+    flex-grow: 1;
+  }
+
+  .marches-list .places a {
+    color: var(--color-primary);
   }
 
   .marches-list .places li {
     padding: 0.15rem 0;
   }
 
+  @media (max-width: 900px) {
+    .marches-list {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+
+  @media (max-width: 640px) {
+    .marches-list {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
   .library-card {
     display: grid;
-    grid-template-columns: 16rem 1fr;
+    grid-template-columns: 24rem 1fr;
     gap: 1.5rem;
     align-items: center;
     margin: 1.5rem 0 2.5rem;
@@ -182,7 +325,7 @@ const marches = [
   .library-card img {
     width: 100%;
     height: 100%;
-    min-height: 12rem;
+    aspect-ratio: 16 / 9;
     object-fit: cover;
   }
 

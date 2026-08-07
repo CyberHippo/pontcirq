@@ -6,6 +6,7 @@ export interface Actualite {
   excerpt: string;
   content: string;
   image?: string;
+  associations?: { name: string; anchor: string }[];
 }
 
 export function formatActualiteDate(actualite: Pick<Actualite, 'date' | 'endDate'>): string {
@@ -37,6 +38,7 @@ export const actualites: Actualite[] = [
       "Dimanche 26 juillet : jeu de piste \"randonnée découverte du patrimoine\" en équipe (5 km) de 10h à 12h, inscription à 9h45 devant la mairie " +
       "— ouvert à tous, gratuit, avec quizz et petits lots. Buvette, petite restauration et vente de pain cuit au four communal les deux jours.",
     image: '/images/actualites/pontcirq-en-fete-1-2026.jpg',
+    associations: [{ name: "FESTI'PONTCIRQ", anchor: 'assoc-festi-pontcirq' }],
   },
   {
     id: 9,
@@ -53,6 +55,9 @@ export const actualites: Actualite[] = [
       "Le concert est organisé par l'association Nashuar terre vivante avec le soutien de l'association du patrimoine communal, " +
       "de la bibliothèque et de la commune de Pontcirq. Tarif : 12 €. Réservation possible sur HelloAsso.",
     image: '/images/actualites/concert-harpe-2026.JPG',
+    associations: [
+      { name: 'Association de Sauvegarde du Patrimoine', anchor: 'assoc-association-de-sauvegarde-du-patrimoine' },
+    ],
   },
   {
     id: 10,
@@ -69,6 +74,10 @@ export const actualites: Actualite[] = [
       "l'animation de ce concert, comme dans l'accompagnement du chanteur Jean-Marie Tiam. Le public a apprécié cette après-midi " +
       "musicale, bien au frais dans l'église Saint-Pierre qui accueillait avec cette initiative un concert dont les références " +
       "chrétiennes disparaissent derrière les qualités fédératrices de cette musique.",
+    image: '/images/actualites/gospel.jpg',
+    associations: [
+      { name: 'Association de Sauvegarde du Patrimoine', anchor: 'assoc-association-de-sauvegarde-du-patrimoine' },
+    ],
   },
   {
     id: 11,
@@ -81,6 +90,23 @@ export const actualites: Actualite[] = [
       "Les jeux de l'Ours. Événement gratuit et ouvert à tous. Buvette et petite restauration (glaces, paninis, tapas) proposées par le bar " +
       "associatif La Gariotte. Contact : bibliotheque.pontcirq@gmail.com.",
     image: '/images/actualites/bibs-en-jeux-2026.jpg',
+    associations: [
+      { name: 'Bibliothèque de Pontcirq', anchor: 'assoc-bibliotheque-de-pontcirq' },
+      { name: 'La Gariotte', anchor: 'assoc-la-gariotte-cafe-associatif-de-pontcirq' },
+    ],
+  },
+  {
+    id: 13,
+    date: '2026-06-13',
+    title: 'Bal-atelier de danses traditionnelles à Catus',
+    excerpt: "L'association Lo Garric propose un bal-atelier de danses traditionnelles, samedi 13 juin de 21h à 23h, place de la halle à Catus.",
+    content:
+      "Samedi 13 juin de 21h à 23h, place de la halle à Catus, l'association Lo Garric propose un bal-atelier de danses traditionnelles, " +
+      "gratuit et ouvert à tous. Le duo Lo Garric, composé de Gilles Cassagnes (cabrette et autres cornemuses) et Francis Barascou " +
+      "(accordéon), animera une session de musiques du Quercy, de l'Auvergne, du Limousin et d'autres régions. Jean-Luc Laviale assurera " +
+      "l'animation pour la danse.",
+    image: '/images/actualites/lo-garric.webp',
+    associations: [{ name: 'Lo Garric', anchor: 'assoc-lo-garric' }],
   },
   {
     id: 12,
@@ -92,6 +118,10 @@ export const actualites: Actualite[] = [
       "sensible et émouvant sur l'amitié et la solidarité, inspiré d'un roman d'Anna Gavalda. Entrée gratuite. Ouverture de la buvette " +
       "à 18h30, vente de popcorns et glaces, en partenariat avec le café associatif La Gariotte.",
     image: '/images/actualites/bibli-projection-2026.jpg',
+    associations: [
+      { name: 'Bibliothèque de Pontcirq', anchor: 'assoc-bibliotheque-de-pontcirq' },
+      { name: 'La Gariotte', anchor: 'assoc-la-gariotte-cafe-associatif-de-pontcirq' },
+    ],
   },
 ];
 

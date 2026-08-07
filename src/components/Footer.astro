@@ -2,10 +2,36 @@
 const year = new Date().getFullYear();
 
 const partners = [
-  { src: '/images/footer/republique-francaise.svg', alt: 'République française' },
-  { src: '/images/footer/Logo CG 46 - Vert Moyen.png', alt: 'Département du Lot' },
-  { src: '/images/footer/OC-1706-instit-logo rectangle-quadri-150x150-150dpi.png', alt: 'Région Occitanie' },
-  { src: '/images/footer/grand-cahors.png', alt: 'Grand Cahors' },
+  {
+    src: '/images/footer/republique-francaise.svg',
+    alt: 'République française',
+    href: 'https://www.gouvernement.fr',
+  },
+  {
+    src: '/images/footer/Logo CG 46 - Vert Moyen.png',
+    alt: 'Département du Lot',
+    href: 'https://www.lot.fr',
+  },
+  {
+    src: '/images/footer/OC-1706-instit-logo rectangle-quadri-150x150-150dpi.png',
+    alt: 'Région Occitanie',
+    href: 'https://www.laregion.fr',
+  },
+  {
+    src: '/images/footer/grand-cahors.png',
+    alt: 'Grand Cahors',
+    href: 'https://cahorsagglo.fr',
+  },
+  {
+    src: '/images/footer/oh-my-lot.png',
+    alt: 'Oh My Lot! — Tourisme Lot',
+    href: 'https://www.tourisme-lot.com',
+  },
+  {
+    src: '/images/footer/vallees-lot-dordogne-occitanie.png',
+    alt: 'Vallées Lot & Dordogne',
+    href: 'https://www.valleesdordogne.com',
+  },
 ];
 ---
 
@@ -35,9 +61,9 @@ const partners = [
   </div>
   <div class="container partners">
     {partners.map((partner) => (
-      <div class="partner-logo">
+      <a class="partner-logo" href={partner.href} target="_blank" rel="noopener">
         <img src={partner.src} alt={partner.alt} loading="lazy" />
-      </div>
+      </a>
     ))}
   </div>
   <div class="container copyright">
@@ -104,6 +130,12 @@ const partners = [
     height: 6rem;
     display: flex;
     align-items: center;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+
+  .partner-logo:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
   }
 
   .partner-logo img {
