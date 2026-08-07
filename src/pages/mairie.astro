@@ -3,6 +3,14 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
 const elus = [{ role: 'Maire', name: 'Thierry Chatain' }];
 
+const hours = [
+  { day: 'Lundi', label: 'Fermé', dow: 1, open: null },
+  { day: 'Mardi', label: '14h – 17h', dow: 2, open: [14, 17] },
+  { day: 'Mercredi', label: 'Fermé', dow: 3, open: null },
+  { day: 'Jeudi', label: 'Fermé', dow: 4, open: null },
+  { day: 'Vendredi', label: '9h – 12h', dow: 5, open: [9, 12] },
+];
+
 const services = [
   {
     title: 'Eau potable',
@@ -37,9 +45,11 @@ const services = [
   <section class="grid">
     <div class="card">
       <h2>Coordonnées</h2>
-      <p>530 Route du Bourg<br />46150 Pontcirq</p>
-      <p>Téléphone : 05 65 36 24 78</p>
-      <p>Email : mairie.de.pontcirq@wanadoo.fr</p>
+      <p>
+        Adresse : <a href="geo:44.5476,1.2628?q=530+Route+du+Bourg%2C+46150+Pontcirq">530 Route du Bourg, 46150 Pontcirq</a>
+      </p>
+      <p>Téléphone : <a href="tel:+33565362478">05 65 36 24 78</a></p>
+      <p>Email : <a href="mailto:mairie.de.pontcirq@wanadoo.fr">mairie.de.pontcirq@wanadoo.fr</a></p>
       <div class="map-embed">
         <iframe
           title="Carte de localisation de Pontcirq"
@@ -56,28 +66,29 @@ const services = [
 
     <div class="card">
       <h2>Horaires d'ouverture</h2>
-      <table>
+      <table id="hours-table">
         <tbody>
-          <tr><td>Lundi</td><td>Fermé</td></tr>
-          <tr><td>Mardi</td><td>14h &ndash; 17h</td></tr>
-          <tr><td>Mercredi</td><td>Fermé</td></tr>
-          <tr><td>Jeudi</td><td>Fermé</td></tr>
-          <tr><td>Vendredi</td><td>9h &ndash; 12h</td></tr>
+          {hours.map((h) => (
+            <tr data-dow={h.dow} data-open={h.open ? h.open.join('-') : ''}>
+              <td>{h.day}</td>
+              <td>{h.label}</td>
+            </tr>
+          ))}
         </tbody>
       </table>
     </div>
-  </section>
 
-  <section>
-    <h2>La municipalité</h2>
-    <ul class="elus">
-      {elus.map((elu) => (
-        <li class="card">
-          <strong>{elu.role}</strong>
-          <span>{elu.name}</span>
-        </li>
-      ))}
-    </ul>
+    <div class="card">
+      <h2>Maire</h2>
+      <ul class="elus">
+        {elus.map((elu) => (
+          <li>
+            <strong>{elu.role}</strong>
+            <span>{elu.name}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
   </section>
 
   <section>
@@ -99,10 +110,34 @@ const services = [
   </section>
 </BaseLayout>
 
+<script>
+  function highlightOpenHours() {
+    const now = new Date();
+    const dow = now.getDay();
+    const hour = now.getHours() + now.getMinutes() / 60;
+
+    document.querySelectorAll<HTMLTableRowElement>('#hours-table tr').forEach((row) => {
+      const rowDow = Number(row.dataset.dow);
+      const openRange = row.dataset.open;
+      let isOpen = false;
+
+      if (rowDow === dow && openRange) {
+        const [start, end] = openRange.split('-').map(Number);
+        isOpen = hour >= start && hour < end;
+      }
+
+      row.classList.toggle('is-open', isOpen);
+    });
+  }
+
+  highlightOpenHours();
+</script>
+
 <style>
   .grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    align-items: start;
     gap: 1.5rem;
     margin: 1.5rem 0;
   }
@@ -122,10 +157,12 @@ const services = [
     color: var(--color-text-muted);
   }
 
+  table tr.is-open td {
+    color: var(--color-primary);
+    font-weight: 700;
+  }
+
   .elus {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 1rem;
     list-style: none;
     padding: 0;
   }
