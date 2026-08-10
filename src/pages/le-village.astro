@@ -1,0 +1,194 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const photos = [
+  { src: '/images/accueil/pontcirq-1.jpg', alt: "L'église et le clocher de Pontcirq" },
+  { src: '/images/accueil/pontcirq-2.jpg', alt: 'Vue du village de Pontcirq' },
+  { src: '/images/accueil/pontcirq-3.jpg', alt: 'Paysage autour de Pontcirq' },
+  { src: '/images/accueil/pontcirq-4.jpg', alt: 'Le patrimoine bâti de Pontcirq' },
+  { src: '/images/accueil/pontcirq-5.jpg', alt: 'Ruelle du village de Pontcirq' },
+  { src: '/images/accueil/pontcirq-6.jpg', alt: 'Campagne environnant Pontcirq' },
+  { src: '/images/accueil/pontcirq-7.jpg', alt: 'Pontcirq vu depuis les alentours' },
+];
+---
+
+<BaseLayout title="Le village" description="Découvrez Pontcirq, son cadre de vie, son histoire et son patrimoine dans le Lot.">
+  <h1>Le village</h1>
+
+  <section>
+    <h2>Description</h2>
+    <p class="lead">
+      Petite commune rurale aux portes du Quercy blanc, Pontcirq vous accueille dans un cadre de vie
+      paisible entre causses et vallées. 184 habitants sur 11,9 km²,
+      dans le Lot (46). Le village s'est bâti au flanc d'une anse couronnée de bois,
+      offrant une vue harmonieuse sur la vallée.
+    </p>
+  </section>
+
+  <section>
+    <h2>Histoire du village</h2>
+    <p class="lead">
+      Pontcirq conserve les traces d'un riche passé rural, marqué par l'agriculture et l'artisanat local.
+      Le hameau de Tourniac abrite un très beau four à pain, vestige du patrimoine rural de la commune,
+      témoin des savoir-faire d'autrefois. L'église Saint-Pierre-ès-Liens, au cœur du village, rythme
+      encore aujourd'hui la vie communale et accueille régulièrement des événements culturels.
+    </p>
+  </section>
+
+  <section>
+    <h2>Galerie photo</h2>
+    <p class="section-intro">Cliquez sur une photo pour l'agrandir.</p>
+    <div class="photo-grid">
+      {photos.map((photo, i) => (
+        <a href={`#photo-${i}`} class="photo-thumb">
+          <img src={photo.src} alt={photo.alt} loading="lazy" />
+        </a>
+      ))}
+    </div>
+
+    {photos.map((photo, i) => (
+      <div id={`photo-${i}`} class="lightbox">
+        <a href="#" class="lightbox-backdrop" aria-label="Fermer"></a>
+        <figure class="lightbox-content">
+          <img src={photo.src} alt={photo.alt} />
+          <figcaption>{photo.alt}</figcaption>
+          <a href="#" class="lightbox-close" aria-label="Fermer">&times;</a>
+        </figure>
+      </div>
+    ))}
+  </section>
+</BaseLayout>
+
+<style>
+  .lead {
+    margin: 1rem 0;
+    color: var(--color-text-muted);
+    font-size: 1.1rem;
+  }
+
+  .lead strong {
+    color: var(--color-primary);
+  }
+
+  h2 {
+    margin-top: 2.5rem;
+  }
+
+  section:first-of-type h2 {
+    margin-top: 1.5rem;
+  }
+
+  .section-intro {
+    color: var(--color-text-muted);
+    margin-top: 0.25rem;
+  }
+
+  .photo-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    margin: 1.5rem 0 2.5rem;
+  }
+
+  @media (max-width: 720px) {
+    .photo-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 480px) {
+    .photo-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .photo-thumb {
+    display: block;
+    aspect-ratio: 4 / 3;
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+
+  .photo-thumb:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+  }
+
+  .photo-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .lightbox {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .lightbox:target {
+    display: flex;
+  }
+
+  .lightbox-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.85);
+  }
+
+  .lightbox-content {
+    position: relative;
+    z-index: 1;
+    max-width: min(90vw, 60rem);
+    max-height: 90vh;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .lightbox-content img {
+    max-width: 100%;
+    max-height: 80vh;
+    object-fit: contain;
+    border-radius: var(--radius-sm);
+    box-shadow: var(--shadow-md);
+  }
+
+  .lightbox-content figcaption {
+    color: #fff;
+    margin-top: 0.75rem;
+    font-size: 0.95rem;
+    text-align: center;
+  }
+
+  .lightbox-close {
+    position: absolute;
+    top: -1.5rem;
+    right: -1.5rem;
+    width: 2.5rem;
+    height: 2.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #fff;
+    color: var(--color-text);
+    border-radius: 999px;
+    font-size: 1.5rem;
+    line-height: 1;
+    box-shadow: var(--shadow-sm);
+  }
+
+  @media (max-width: 640px) {
+    .lightbox-close {
+      top: 0.5rem;
+      right: 0.5rem;
+    }
+  }
+</style>

@@ -15,12 +15,12 @@ const associations = [
   },
   {
     name: 'Equi-Vox – Le petit ranch',
-    desc: 'Activités équestres et loisirs.',
+    desc: 'Activités équestres et loisirs basée au Cluzel.',
     contact: 'equivox.asso@gmail.com',
   },
   {
     name: "FESTI'PONTCIRQ",
-    desc: 'Organisation de festivités et animations locales.',
+    desc: 'Organisation de festivités et animations locales diverses (marché gourmand, brocante, fête votive, etc.).',
     contact: 'festipontcirq@gmail.com',
   },
   {
@@ -34,8 +34,13 @@ const associations = [
     contact: '',
   },
   {
+    name: 'La maison du Garric Blanc',
+    desc: 'Sauvegarde et mise en valeur de la maison dite du Garric Blanc, située au 158, route de la Crouzette à Pontcirq 46150',
+    contact: '',
+  },
+  {
     name: 'Lo Garric',
-    desc: 'Association culturelle.',
+    desc: "Duo musical qui promeut les arts et traditions populaires d'occitanie sur le territoire du causse bourian dans le département du lot.",
     contact: 'francisbarascou@gmail.com',
   },
   {
@@ -188,14 +193,6 @@ const marches = [
   </section>
 
   <section>
-    <h2>Patrimoine</h2>
-    <p>
-      Pontcirq s'est bâti au flanc d'une anse couronnée de bois, offrant une vue harmonieuse sur la vallée.
-      Le hameau de Tourniac conserve un très beau four à pain, vestige du patrimoine rural de la commune.
-    </p>
-  </section>
-
-  <section>
     <h2>Marchés du coin</h2>
     <p class="section-intro">Aucun marché à Pontcirq même, mais plusieurs marchés hebdomadaires à proximité.</p>
     <ul class="marches-list">
@@ -222,22 +219,20 @@ const marches = [
 <style>
   .assoc-list {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(5, auto);
+    grid-auto-flow: column;
     gap: 1.5rem;
     list-style: none;
     padding: 0;
     margin: 1.5rem 0 2.5rem;
   }
 
-  @media (max-width: 900px) {
-    .assoc-list {
-      grid-template-columns: repeat(2, 1fr);
-    }
-  }
-
   @media (max-width: 560px) {
     .assoc-list {
       grid-template-columns: 1fr;
+      grid-template-rows: none;
+      grid-auto-flow: row;
     }
   }
 

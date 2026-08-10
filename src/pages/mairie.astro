@@ -15,14 +15,14 @@ const services = [
   {
     title: 'Eau potable',
     desc: 'Syndicat Aquareso (délégataire SOGEDO)',
-    href: 'https://www.aquareso.fr',
-    logo: '/images/services/logo-aquareso.png',
+    href: 'https://sogedo.fr/',
+    logo: '/images/services/logo-sogedo.jpg',
   },
   {
     title: 'Assainissement collectif',
     desc: 'Syndicat Aquareso — exploitation SOGEDO',
     href: 'https://www.aquareso.fr',
-    logo: '/images/services/logo-sogedo.jpg',
+    logo: '/images/services/logo-aquareso.png',
   },
   {
     title: 'Assainissement non-collectif',
@@ -35,6 +35,81 @@ const services = [
     desc: 'Collecte le vendredi · recyclables un mardi sur deux (tous les mardis en juillet-août) · SYDED du Lot',
     href: 'https://www.syded-lot.fr',
     logo: '/images/services/logo-syded.png',
+  },
+];
+
+const demarches = [
+  {
+    title: 'État civil',
+    items: [
+      {
+        label: "Carte nationale d'identité",
+        href: 'https://www.service-public.gouv.fr/particuliers/vosdroits/N358',
+      },
+      {
+        label: 'Passeport',
+        href: 'https://www.service-public.gouv.fr/particuliers/vosdroits/N360',
+      },
+      {
+        label: "Copie d'acte de naissance",
+        href: 'https://www.service-public.gouv.fr/particuliers/vosdroits/F1427',
+      },
+      {
+        label: "Copie d'acte de mariage",
+        href: 'https://www.service-public.gouv.fr/particuliers/vosdroits/F1432',
+      },
+      {
+        label: "Copie d'acte de décès",
+        href: 'https://www.service-public.gouv.fr/particuliers/vosdroits/F1444',
+      },
+    ],
+  },
+  {
+    title: 'Urbanisme',
+    items: [
+      {
+        label: 'Permis de construire',
+        href: 'https://www.service-public.gouv.fr/particuliers/vosdroits/F1986',
+      },
+      {
+        label: 'Déclaration préalable de travaux',
+        href: 'https://www.service-public.gouv.fr/particuliers/vosdroits/F17578',
+      },
+      {
+        label: "Certificat d'urbanisme",
+        href: 'https://www.service-public.gouv.fr/particuliers/vosdroits/F1633',
+      },
+    ],
+  },
+  {
+    title: 'Élections',
+    items: [
+      {
+        label: 'Inscription sur les listes électorales',
+        href: 'https://www.service-public.gouv.fr/particuliers/vosdroits/R16396',
+      },
+      {
+        label: 'Procuration de vote',
+        href: 'https://www.service-public.gouv.fr/particuliers/vosdroits/F1604',
+      },
+    ],
+  },
+  {
+    title: 'Vie quotidienne',
+    items: [
+      {
+        label: 'Recensement citoyen (16 ans)',
+        href: 'https://www.service-public.gouv.fr/particuliers/vosdroits/F870',
+      },
+      {
+        label: "Inscription à l'école",
+        href: 'https://www.service-public.gouv.fr/particuliers/vosdroits/N54',
+      },
+      {
+        label: 'Demande de branchement eau/assainissement',
+        href: 'https://aquareso.fr/demarches/',
+      },
+    ],
   },
 ];
 ---
@@ -108,6 +183,35 @@ const services = [
         </li>
       ))}
     </ul>
+  </section>
+
+  <section id="demarches">
+    <h2>Démarches administratives</h2>
+    <div class="intro-row">
+      <p class="intro">
+        La plupart des démarches d'état civil et d'urbanisme peuvent être initiées en ligne sur
+        <a href="https://www.service-public.gouv.fr" target="_blank" rel="noopener">service-public.fr</a>,
+        ou directement auprès du secrétariat de mairie.
+      </p>
+      <a href="https://www.service-public.gouv.fr" target="_blank" rel="noopener" class="intro-logo">
+        <img src="/images/services/Service-public.svg" alt="Service-public.fr" />
+      </a>
+    </div>
+
+    <div class="demarches-grid">
+      {demarches.map((group) => (
+        <div class="card">
+          <h3>{group.title}</h3>
+          <ul>
+            {group.items.map((item) => (
+              <li>
+                <a href={item.href} target="_blank" rel="noopener">{item.label}</a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </div>
   </section>
 </BaseLayout>
 
@@ -230,5 +334,56 @@ const services = [
     height: 220px;
     border: 0;
     display: block;
+  }
+
+  .intro-row {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.25rem;
+    margin: 1.5rem 0;
+  }
+
+  .intro {
+    max-width: 42rem;
+    color: var(--color-text-muted);
+  }
+
+  .intro-logo {
+    display: block;
+  }
+
+  .intro-logo img {
+    width: 24rem;
+    height: auto;
+  }
+
+  .demarches-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+    margin: 1.5rem 0 3rem;
+  }
+
+  @media (max-width: 640px) {
+    .demarches-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .demarches-grid h3 {
+    margin-top: 0;
+  }
+
+  .demarches-grid ul {
+    padding-left: 1.2rem;
+  }
+
+  .demarches-grid li {
+    margin-bottom: 0.4rem;
+  }
+
+  .demarches-grid li a {
+    color: var(--color-primary);
   }
 </style>
