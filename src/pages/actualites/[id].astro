@@ -1,6 +1,6 @@
 ---
-import { marked } from 'marked';
 import { getImage } from 'astro:assets';
+import { render } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import StatusBadge from '../../components/StatusBadge.astro';
 import { actualites, getById, getActualiteImage, getActualiteWhen } from '../../data/actualites';
@@ -22,7 +22,7 @@ const image = source && (await getImage({ src: source, widths: [480, 800, 1200, 
 const imageMaxWidthRem = image
   ? Math.min(72, Math.ceil((32 * Number(image.attributes.width)) / Number(image.attributes.height)))
   : 72;
-const contentHtml = marked.parse(actualite.content, { async: false });
+const { Content } = await render(actualite.entry);
 ---
 
 <BaseLayout title={actualite.title} description={actualite.excerpt} image={source} type="article">
@@ -45,7 +45,7 @@ const contentHtml = marked.parse(actualite.content, { async: false });
     </div>
     {actualite.lieu && <p class="news-detail-lieu">{actualite.lieu}</p>}
     <h1>{actualite.title}</h1>
-    <div class="news-detail-content" set:html={contentHtml} />
+    <div class="news-detail-content"><Content /></div>
     {actualite.associations && actualite.associations.length > 0 && (
       <p class="news-detail-assoc">
         Organisé par

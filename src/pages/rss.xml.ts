@@ -4,7 +4,7 @@ import { actualites } from '../data/actualites';
 
 export function GET(context: APIContext) {
   const items = [...actualites]
-    .sort((a, b) => b.date.localeCompare(a.date))
+    .sort((a, b) => b.date.localeCompare(a.date) || a.id - b.id)
     .map((actualite) => ({
       title: actualite.title,
       link: `/actualites/${actualite.id}/`,
