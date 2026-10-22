@@ -124,7 +124,6 @@ export const actualites: Actualite[] = [
       "(accordéon), animera une session de musiques du Quercy, de l'Auvergne, du Limousin et d'autres régions. Jean-Luc Laviale assurera " +
       "l'animation pour la danse.",
     image: '/images/actualites/lo-garric.webp',
-    associations: [{ name: 'Lo Garric', anchor: 'assoc-lo-garric' }],
   },
   {
     id: 12,
