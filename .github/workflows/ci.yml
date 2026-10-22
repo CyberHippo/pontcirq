@@ -1,0 +1,40 @@
+name: CI
+
+# Build the site on every PR so breaking changes (e.g. Dependabot bumps) are
+# caught before merge. Uses pull_request (never pull_request_target): fork and
+# Dependabot PRs run with a read-only token and no secrets.
+on:
+  pull_request:
+    branches: [master]
+
+# Deny everything by default; each job requests only what it needs.
+permissions: {}
+
+# Only the latest push to a PR matters; cancel older runs.
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  # Keep this job name stable: it is meant to be a required status check.
+  build:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      # No dependency cache, same as the deploy workflow.
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: 22
+          package-manager-cache: false
+
+      # Install scripts are skipped; esbuild and sharp ship prebuilt binaries
+      # through optional dependencies.
+      - run: npm ci --ignore-scripts --no-audit --no-fund
+
+      - run: npm run build

@@ -53,7 +53,8 @@ Associations are listed in `src/pages/vie-locale.astro`. When removing one, also
 ## CI / deployment
 
 - `.github/workflows/deploy.yml` builds and deploys on push to `master`, weekly, and on manual dispatch
-- Actions are pinned to full commit SHAs with a version comment; the runner is pinned to `ubuntu-24.04`; token permissions are per job. Keep it that way when editing the workflow.
+- `.github/workflows/ci.yml` runs `npm ci` + `npm run build` on every PR to `master` (job `build`, meant to be a required status check). It uses `pull_request`, never `pull_request_target`, and only `contents: read`
+- Actions are pinned to full commit SHAs with a version comment; the runner is pinned to `ubuntu-24.04`; token permissions are per job. Keep it that way when editing or adding workflows, and reuse the same action SHAs across workflows.
 - Dependabot (`.github/dependabot.yml`) updates actions and npm weekly with a 7-day cooldown
 - When the domain changes, update `site` in `astro.config.mjs`, the sitemap line in `public/robots.txt`, and the custom domain in the repo's Pages settings
 
