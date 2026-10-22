@@ -3,6 +3,9 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches: [master]
+  # Nightly rebuild so event labels (à venir / passé) and archives stay current.
+  schedule:
+    - cron: '5 23 * * *'
   workflow_dispatch:
 
 # Deny everything by default; each job requests only what it needs.

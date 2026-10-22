@@ -1,6 +1,7 @@
 ---
 import { marked } from 'marked';
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import StatusBadge from '../../components/StatusBadge.astro';
 import { actualites, getById, formatActualiteDate } from '../../data/actualites';
 
 export function getStaticPaths() {
@@ -22,7 +23,10 @@ const contentHtml = marked.parse(actualite.content, { async: false });
     {actualite.image && (
       <img class="news-detail-image" src={actualite.image} alt="" />
     )}
-    <time datetime={actualite.date}>{formattedDate}</time>
+    <div class="news-detail-meta">
+      <time datetime={actualite.date}>{formattedDate}</time>
+      <StatusBadge actualite={actualite} />
+    </div>
     <h1>{actualite.title}</h1>
     <div class="news-detail-content" set:html={contentHtml} />
     {actualite.associations && actualite.associations.length > 0 && (
@@ -53,14 +57,20 @@ const contentHtml = marked.parse(actualite.content, { async: false });
     margin-bottom: 3rem;
   }
 
+  .news-detail-meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+  }
+
   .news-detail time {
-    display: block;
     font-weight: 700;
     font-size: 0.85rem;
     color: var(--color-accent);
     text-transform: uppercase;
     letter-spacing: 0.03em;
-    margin-bottom: 0.5rem;
   }
 
   .news-detail-image {

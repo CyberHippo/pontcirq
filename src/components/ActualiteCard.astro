@@ -1,4 +1,5 @@
 ---
+import StatusBadge from './StatusBadge.astro';
 import { formatActualiteDate, type Actualite } from '../data/actualites';
 
 interface Props {
@@ -15,7 +16,10 @@ const formattedDate = formatActualiteDate(actualite);
 <div class={`card news-item news-item--${layout}`}>
   <a class="news-item-link" href={`/actualites/${actualite.id}`}></a>
   <div class="news-item-body">
-    <time datetime={actualite.date}>{formattedDate}</time>
+    <div class="news-item-meta">
+      <time datetime={actualite.date}>{formattedDate}</time>
+      <StatusBadge actualite={actualite} />
+    </div>
     <h3>{actualite.title}</h3>
     <p class="excerpt">{actualite.excerpt}</p>
     <span class="news-item-more">En savoir plus &rarr;</span>
@@ -106,6 +110,13 @@ const formattedDate = formatActualiteDate(actualite);
 
   .news-item-body {
     padding: 1.75rem;
+  }
+
+  .news-item-meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem;
   }
 
   .news-item time {
