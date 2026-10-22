@@ -16,7 +16,7 @@ const formattedDate = formatActualiteDate(actualite);
 const contentHtml = marked.parse(actualite.content, { async: false });
 ---
 
-<BaseLayout title={actualite.title} description={actualite.excerpt}>
+<BaseLayout title={actualite.title} description={actualite.excerpt} image={actualite.image} type="article">
   <a href="/actualites" class="back-link">&larr; Retour aux actualités</a>
 
   <article class="news-detail">
