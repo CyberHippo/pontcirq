@@ -1,4 +1,4 @@
-// Town-hall contact details, shared by the home page, /mairie and the footer.
+// Town-hall contact details, shared by /mairie and the footer.
 
 export const address = {
   label: 'Le Bourg, 46150 Pontcirq',
@@ -26,11 +26,3 @@ export const hours = [
 ];
 
 export const openingHours = hours.filter((h) => h.label !== CLOSED);
-
-// National emergency numbers (France / EU).
-export const emergencyNumbers = [
-  { number: '15', label: 'SAMU', href: 'tel:15' },
-  { number: '17', label: 'Police / Gendarmerie', href: 'tel:17' },
-  { number: '18', label: 'Pompiers', href: 'tel:18' },
-  { number: '112', label: 'Urgence européenne', href: 'tel:112' },
-];
