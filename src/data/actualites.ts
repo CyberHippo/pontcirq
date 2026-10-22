@@ -84,7 +84,7 @@ export const actualites: Actualite[] = [
       "lieux patrimoniaux en Occitanie ; elle sera pour la première fois dans le Lot. C'est l'occasion de découvrir une artiste singulière. " +
       "Le concert est organisé par l'association Nashuar terre vivante avec le soutien de l'association du patrimoine communal, " +
       "de la bibliothèque et de la commune de Pontcirq. Tarif : 12 €. Réservation possible sur HelloAsso.",
-    image: '/images/actualites/concert-harpe-2026.JPG',
+    image: '/images/actualites/concert-harpe-2026.jpg',
     associations: [
       { name: 'Association de Sauvegarde du Patrimoine', anchor: 'assoc-association-de-sauvegarde-du-patrimoine' },
     ],
@@ -104,7 +104,7 @@ export const actualites: Actualite[] = [
       "l'animation de ce concert, comme dans l'accompagnement du chanteur Jean-Marie Tiam. Le public a apprécié cette après-midi " +
       "musicale, bien au frais dans l'église Saint-Pierre qui accueillait avec cette initiative un concert dont les références " +
       "chrétiennes disparaissent derrière les qualités fédératrices de cette musique.",
-    image: '/images/actualites/gospel.jpg',
+    image: '/images/actualites/concert-gospel-2026.jpg',
     associations: [
       { name: 'Association de Sauvegarde du Patrimoine', anchor: 'assoc-association-de-sauvegarde-du-patrimoine' },
     ],
@@ -135,7 +135,7 @@ export const actualites: Actualite[] = [
       "gratuit et ouvert à tous. Le duo Lo Garric, composé de Gilles Cassagnes (cabrette et autres cornemuses) et Francis Barascou " +
       "(accordéon), animera une session de musiques du Quercy, de l'Auvergne, du Limousin et d'autres régions. Jean-Luc Laviale assurera " +
       "l'animation pour la danse.",
-    image: '/images/actualites/lo-garric.webp',
+    image: '/images/actualites/bal-lo-garric-2026.webp',
   },
   {
     id: 12,

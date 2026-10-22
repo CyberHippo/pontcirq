@@ -18,7 +18,7 @@ Site content is in French; code, comments, commit messages and PR descriptions a
 - `src/components/`: `ActualiteCard`, `StatusBadge`, `Carousel`, `Header`, `Footer`
 - `src/pages/vie-locale.astro`: associations, library, school, markets (data inline in the frontmatter)
 - `src/styles/global.css`: design tokens (`--color-*`, `--radius`, `--shadow-*`); reuse them instead of hard-coded colors
-- `public/images/`: static images, served from `/images/...`
+- `public/images/`: static images, served from `/images/...`. File names are lowercase kebab-case with lowercase extensions: `logo-<name>` for logos, `<event>-<year>` for events
 
 htmx is loaded from unpkg in `BaseLayout.astro` with an SRI hash; keep the hash when changing the version.
 
