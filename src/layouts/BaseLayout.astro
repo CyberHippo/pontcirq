@@ -25,8 +25,9 @@ const { title, description = "Site officiel de la commune de Pontcirq (46150), d
     <script is:inline src="https://unpkg.com/htmx.org@2.0.4" integrity="sha384-HGfztofotfshcF7+8n44JQL2oJmowVChPTg48S+jvZoztPfvwD79OC/LTtG6dMp+" crossorigin="anonymous" defer></script>
   </head>
   <body>
+    <a class="skip-link" href="#contenu">Aller au contenu</a>
     <Header />
-    <main class="container">
+    <main id="contenu" class="container">
       <slot />
     </main>
     <Footer />

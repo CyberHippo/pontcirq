@@ -14,7 +14,7 @@ const formattedDate = formatActualiteDate(actualite);
 ---
 
 <div class={`card news-item news-item--${layout}`}>
-  <a class="news-item-link" href={`/actualites/${actualite.id}`}></a>
+  <a class="news-item-link" href={`/actualites/${actualite.id}`} aria-label={actualite.title}></a>
   <div class="news-item-body">
     <div class="news-item-meta">
       <time datetime={actualite.date}>{formattedDate}</time>
@@ -62,6 +62,17 @@ const formattedDate = formatActualiteDate(actualite);
     position: absolute;
     inset: 0;
     z-index: 1;
+    border-radius: inherit;
+  }
+
+  /* The card clips overflow, so draw the focus ring inside the overlay link */
+  .news-item-link:focus-visible {
+    outline: 3px solid var(--color-primary);
+    outline-offset: -3px;
+  }
+
+  .news-item:has(.news-item-link:focus-visible) {
+    box-shadow: var(--shadow-md);
   }
 
   .news-item--grid {
