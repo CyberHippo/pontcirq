@@ -1,4 +1,6 @@
 ---
+import { address, phone, email, openingHours } from '../data/mairie';
+
 const year = new Date().getFullYear();
 
 const partners = [
@@ -40,15 +42,14 @@ const partners = [
     <div>
       <strong>Mairie de Pontcirq</strong>
       <p>
-        <a href="geo:44.5476,1.2628?q=530+Route+du+Bourg%2C+46150+Pontcirq">530 Route du Bourg, 46150 Pontcirq</a>
+        <a href={address.href}>{address.label}</a>
       </p>
-      <p><a href="tel:+33565362478">05 65 36 24 78</a></p>
-      <p><a href="mailto:mairie.de.pontcirq@wanadoo.fr">mairie.de.pontcirq@wanadoo.fr</a></p>
+      <p><a href={phone.href}>{phone.label}</a></p>
+      <p><a href={email.href}>{email.label}</a></p>
     </div>
     <div>
       <strong>Horaires d'ouverture</strong>
-      <p>Mardi : 14h &ndash; 17h</p>
-      <p>Vendredi : 9h &ndash; 12h</p>
+      {openingHours.map((h) => <p>{h.day} : {h.label}</p>)}
     </div>
     <div>
       <strong>Liens utiles</strong>

@@ -1,15 +1,8 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { address, phone, email, hours, CLOSED } from '../data/mairie';
 
 const elus = [{ role: 'Maire', name: 'Thierry Chatain' }];
-
-const hours = [
-  { day: 'Lundi', label: 'Fermé' },
-  { day: 'Mardi', label: '14h – 17h' },
-  { day: 'Mercredi', label: 'Fermé' },
-  { day: 'Jeudi', label: 'Fermé' },
-  { day: 'Vendredi', label: '9h – 12h' },
-];
 
 const services = [
   {
@@ -121,10 +114,10 @@ const demarches = [
     <div class="card">
       <h2>Coordonnées</h2>
       <p>
-        Adresse : <a href="geo:44.5476,1.2628?q=530+Route+du+Bourg%2C+46150+Pontcirq">530 Route du Bourg, 46150 Pontcirq</a>
+        Adresse : <a href={address.href}>{address.label}</a>
       </p>
-      <p>Téléphone : <a href="tel:+33565362478">05 65 36 24 78</a></p>
-      <p>Email : <a href="mailto:mairie.de.pontcirq@wanadoo.fr">mairie.de.pontcirq@wanadoo.fr</a></p>
+      <p>Téléphone : <a href={phone.href}>{phone.label}</a></p>
+      <p>Email : <a href={email.href}>{email.label}</a></p>
       <div class="map-embed">
         <iframe
           title="Carte de localisation de Pontcirq"
@@ -147,7 +140,7 @@ const demarches = [
             {hours.map((h) => (
               <tr>
                 <td>{h.day}</td>
-                <td class={h.label !== 'Fermé' ? 'is-open' : ''}>{h.label}</td>
+                <td class={h.label !== CLOSED ? 'is-open' : ''}>{h.label}</td>
               </tr>
             ))}
           </tbody>
