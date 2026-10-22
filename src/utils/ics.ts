@@ -1,5 +1,5 @@
 // Minimal iCalendar (RFC 5545) writer for the events in src/data/actualites.ts.
-// Events have no time yet, so they are emitted as all-day events.
+// Single-day events with a `time` are timed in Europe/Paris; the others are all-day.
 import type { Actualite } from '../data/actualites';
 
 const encoder = new TextEncoder();
@@ -40,6 +40,49 @@ function formatDate(date: string, addDays = 0): string {
   return new Date(Date.UTC(y, m - 1, d + addDays)).toISOString().slice(0, 10).replace(/-/g, '');
 }
 
+// 'YYYY-MM-DD' + 'HH:MM' -> 'YYYYMMDDTHHMM00' (local time, used with TZID).
+function formatLocalDateTime(date: string, time: string): string {
+  return `${date.replace(/-/g, '')}T${time.replace(':', '')}00`;
+}
+
+// Events only have a start time; assume this duration so calendars show a block.
+const DEFAULT_DURATION = 'PT2H';
+
+// Europe/Paris with the EU daylight-saving rules, referenced by TZID.
+const VTIMEZONE = [
+  'BEGIN:VTIMEZONE',
+  'TZID:Europe/Paris',
+  'BEGIN:DAYLIGHT',
+  'TZOFFSETFROM:+0100',
+  'TZOFFSETTO:+0200',
+  'TZNAME:CEST',
+  'DTSTART:19700329T020000',
+  'RRULE:FREQ=YEARLY;BYMONTH=3;BYDAY=-1SU',
+  'END:DAYLIGHT',
+  'BEGIN:STANDARD',
+  'TZOFFSETFROM:+0200',
+  'TZOFFSETTO:+0100',
+  'TZNAME:CET',
+  'DTSTART:19701025T030000',
+  'RRULE:FREQ=YEARLY;BYMONTH=10;BYDAY=-1SU',
+  'END:STANDARD',
+  'END:VTIMEZONE',
+];
+
+function eventTiming(event: Actualite): string[] {
+  if (event.time && !event.endDate) {
+    return [
+      `DTSTART;TZID=Europe/Paris:${formatLocalDateTime(event.date, event.time)}`,
+      `DURATION:${DEFAULT_DURATION}`,
+    ];
+  }
+  return [
+    `DTSTART;VALUE=DATE:${formatDate(event.date)}`,
+    // DTEND is exclusive for all-day events: the day after the last day.
+    `DTEND;VALUE=DATE:${formatDate(event.endDate ?? event.date, 1)}`,
+  ];
+}
+
 const dtstamp = new Date().toISOString().replace(/[-:]/g, '').replace(/\.\d{3}/, '');
 
 export function buildCalendar(events: Actualite[], site: URL): string {
@@ -50,6 +93,7 @@ export function buildCalendar(events: Actualite[], site: URL): string {
     'CALSCALE:GREGORIAN',
     'X-WR-CALNAME:Pontcirq',
     'X-WR-TIMEZONE:Europe/Paris',
+    ...VTIMEZONE,
   ];
 
   for (const event of events) {
@@ -58,10 +102,9 @@ export function buildCalendar(events: Actualite[], site: URL): string {
       'BEGIN:VEVENT',
       `UID:actualite-${event.id}@${site.host}`,
       `DTSTAMP:${dtstamp}`,
-      `DTSTART;VALUE=DATE:${formatDate(event.date)}`,
-      // DTEND is exclusive for all-day events: the day after the last day.
-      `DTEND;VALUE=DATE:${formatDate(event.endDate ?? event.date, 1)}`,
+      ...eventTiming(event),
       `SUMMARY:${escapeText(event.title)}`,
+      ...(event.lieu ? [`LOCATION:${escapeText(event.lieu)}`] : []),
       `DESCRIPTION:${escapeText(`${event.excerpt}\n\n${url}`)}`,
       `URL:${url}`,
       'END:VEVENT',
