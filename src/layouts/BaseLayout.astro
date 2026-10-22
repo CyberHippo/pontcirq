@@ -1,6 +1,7 @@
 ---
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import '@fontsource-variable/inter';
 import '../styles/global.css';
 
 interface Props {
@@ -38,11 +39,10 @@ const imageUrl = new URL(image, Astro.site);
     <meta name="twitter:card" content="summary_large_image" />
     <link rel="icon" type="image/png" href="/images/pontcirq-blason.png" />
     <link rel="alternate" type="application/rss+xml" title="Actualités de Pontcirq" href="/rss.xml" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
     <title>{title} · Pontcirq</title>
-    <script is:inline src="https://unpkg.com/htmx.org@2.0.4" integrity="sha384-HGfztofotfshcF7+8n44JQL2oJmowVChPTg48S+jvZoztPfvwD79OC/LTtG6dMp+" crossorigin="anonymous" defer></script>
+    <script>
+      import 'htmx.org';
+    </script>
   </head>
   <body>
     <a class="skip-link" href="#contenu">Aller au contenu</a>
