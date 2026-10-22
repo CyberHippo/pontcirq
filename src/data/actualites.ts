@@ -36,7 +36,7 @@ export const actualites: Actualite[] = [
       "proposé par la compagnie L'Arbre à sons. Un spectacle musical et sensoriel de 45 minutes qui invitait petits et grands " +
       "à explorer les sons, les silences et les sensations.\n\n" +
       "Spectacle gratuit, suivi d'un goûter offert par les bénévoles.",
-    image: '/images/actualites/contes-2026.png',
+    image: '/images/actualites/contes-2026.jpg',
   },
   {
     id: 14,
