@@ -1,5 +1,12 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import pontcirq1 from '../assets/accueil/pontcirq-1.jpg';
+import pontcirq2 from '../assets/accueil/pontcirq-2.jpg';
+import pontcirq3 from '../assets/accueil/pontcirq-3.jpg';
+import pontcirq4 from '../assets/accueil/pontcirq-4.jpg';
+import pontcirq5 from '../assets/accueil/pontcirq-5.jpg';
+import pontcirq6 from '../assets/accueil/pontcirq-6.jpg';
+import pontcirq7 from '../assets/accueil/pontcirq-7.jpg';
 import Carousel from '../components/Carousel.astro';
 import ActualiteCard from '../components/ActualiteCard.astro';
 import { getHighlights } from '../data/actualites';
@@ -8,13 +15,13 @@ import { address, phone, email, openingHours, emergencyNumbers } from '../data/m
 const latestNews = getHighlights(3);
 
 const slides = [
-  { src: '/images/accueil/pontcirq-1.jpg', alt: "L'église et le clocher de Pontcirq" },
-  { src: '/images/accueil/pontcirq-2.jpg', alt: 'Vue du village de Pontcirq' },
-  { src: '/images/accueil/pontcirq-3.jpg', alt: 'Paysage autour de Pontcirq' },
-  { src: '/images/accueil/pontcirq-4.jpg', alt: 'Le patrimoine bâti de Pontcirq' },
-  { src: '/images/accueil/pontcirq-5.jpg', alt: 'Ruelle du village de Pontcirq' },
-  { src: '/images/accueil/pontcirq-6.jpg', alt: 'Campagne environnant Pontcirq' },
-  { src: '/images/accueil/pontcirq-7.jpg', alt: 'Pontcirq vu depuis les alentours' },
+  { src: pontcirq1, alt: "L'église et le clocher de Pontcirq" },
+  { src: pontcirq2, alt: 'Vue du village de Pontcirq' },
+  { src: pontcirq3, alt: 'Paysage autour de Pontcirq' },
+  { src: pontcirq4, alt: 'Le patrimoine bâti de Pontcirq' },
+  { src: pontcirq5, alt: 'Ruelle du village de Pontcirq' },
+  { src: pontcirq6, alt: 'Campagne environnant Pontcirq' },
+  { src: pontcirq7, alt: 'Pontcirq vu depuis les alentours' },
 ];
 ---
 

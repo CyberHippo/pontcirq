@@ -1,8 +1,9 @@
 ---
 import { marked } from 'marked';
+import { getImage } from 'astro:assets';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import StatusBadge from '../../components/StatusBadge.astro';
-import { actualites, getById, getActualiteWhen } from '../../data/actualites';
+import { actualites, getById, getActualiteImage, getActualiteWhen } from '../../data/actualites';
 
 export function getStaticPaths() {
   return actualites.map((item) => ({
@@ -13,15 +14,30 @@ export function getStaticPaths() {
 const id = Number(Astro.params.id);
 const actualite = getById(id)!;
 const when = getActualiteWhen(actualite);
+const source = getActualiteImage(actualite);
+// getImage() rather than <Image> so the output dimensions are known without reading width/height on the
+// source (which would make Astro also publish the unoptimised original).
+const image = source && (await getImage({ src: source, widths: [480, 800, 1200, 1600], loading: 'eager' }));
+// The image is capped at 32rem high (object-fit: contain), so portrait posters render much narrower than the column
+const imageMaxWidthRem = image
+  ? Math.min(72, Math.ceil((32 * Number(image.attributes.width)) / Number(image.attributes.height)))
+  : 72;
 const contentHtml = marked.parse(actualite.content, { async: false });
 ---
 
-<BaseLayout title={actualite.title} description={actualite.excerpt} image={actualite.image} type="article">
+<BaseLayout title={actualite.title} description={actualite.excerpt} image={source} type="article">
   <a href="/actualites" class="back-link">&larr; Retour aux actualités</a>
 
   <article class="news-detail">
-    {actualite.image && (
-      <img class="news-detail-image" src={actualite.image} alt="" />
+    {image && (
+      <img
+        {...image.attributes}
+        class="news-detail-image"
+        src={image.src}
+        srcset={image.srcSet.attribute}
+        sizes={`(max-width: ${imageMaxWidthRem}rem) 100vw, ${imageMaxWidthRem}rem`}
+        alt=""
+      />
     )}
     <div class="news-detail-meta">
       <time datetime={when.datetime}>{when.date}{when.time && <span class="news-detail-hour"> · {when.time}</span>}</time>
