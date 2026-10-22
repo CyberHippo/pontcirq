@@ -1,3 +1,4 @@
+import type { ImageMetadata } from 'astro';
 import { VALID_ANCHORS } from './associations';
 
 export interface Actualite {
@@ -11,6 +12,7 @@ export interface Actualite {
   title: string;
   excerpt: string;
   content: string;
+  /** File name of an image in src/assets/actualites/, e.g. `contes-2026.jpg` */
   image?: string;
   associations?: { name: string; anchor: string }[];
 }
@@ -63,7 +65,7 @@ export const actualites: Actualite[] = [
       "proposé par la compagnie L'Arbre à sons. Un spectacle musical et sensoriel de 45 minutes qui invitait petits et grands " +
       "à explorer les sons, les silences et les sensations.\n\n" +
       "Spectacle gratuit, suivi d'un goûter offert par les bénévoles.",
-    image: '/images/actualites/contes-2026.jpg',
+    image: 'contes-2026.jpg',
   },
   {
     id: 14,
@@ -78,7 +80,7 @@ export const actualites: Actualite[] = [
       "La projection sera suivie d'une discussion autour de l'autonomie, animée par Émilie Galan de l'association Unis Vers Terre.\n\n" +
       "Entrée gratuite. Ouverture du bar associatif La Gariotte à partir de 18h30. " +
       "Contact : bibliotheque.pontcirq@gmail.com.",
-    image: '/images/actualites/mois-du-doc-2026.png',
+    image: 'mois-du-doc-2026.png',
     associations: [
       { name: 'Bibliothèque de Pontcirq', anchor: 'assoc-bibliotheque-de-pontcirq' },
       { name: 'Unis Vers Terre', anchor: 'assoc-unis-vers-terre' },
@@ -96,7 +98,7 @@ export const actualites: Actualite[] = [
       "Samedi 25 juillet : messe à 10h30, cérémonie au monument aux morts à 11h30, puis soirée dansante à 22h animée par le groupe Clin d'œil.\n\n" +
       "Dimanche 26 juillet : jeu de piste \"randonnée découverte du patrimoine\" en équipe (5 km) de 10h à 12h, inscription à 9h45 devant la mairie " +
       "— ouvert à tous, gratuit, avec quizz et petits lots. Buvette, petite restauration et vente de pain cuit au four communal les deux jours.",
-    image: '/images/actualites/pontcirq-en-fete-1-2026.jpg',
+    image: 'pontcirq-en-fete-1-2026.jpg',
     associations: [{ name: "FESTI'PONTCIRQ", anchor: 'assoc-festi-pontcirq' }],
   },
   {
@@ -115,7 +117,7 @@ export const actualites: Actualite[] = [
       "lieux patrimoniaux en Occitanie ; elle sera pour la première fois dans le Lot. C'est l'occasion de découvrir une artiste singulière. " +
       "Le concert est organisé par l'association Nashuar terre vivante avec le soutien de l'association du patrimoine communal, " +
       "de la bibliothèque et de la commune de Pontcirq. Tarif : 12 €. Réservation possible sur HelloAsso.",
-    image: '/images/actualites/concert-harpe-2026.jpg',
+    image: 'concert-harpe-2026.jpg',
     associations: [
       { name: 'Association de Sauvegarde du Patrimoine', anchor: 'assoc-association-de-sauvegarde-du-patrimoine' },
     ],
@@ -136,7 +138,7 @@ export const actualites: Actualite[] = [
       "l'animation de ce concert, comme dans l'accompagnement du chanteur Jean-Marie Tiam. Le public a apprécié cette après-midi " +
       "musicale, bien au frais dans l'église Saint-Pierre qui accueillait avec cette initiative un concert dont les références " +
       "chrétiennes disparaissent derrière les qualités fédératrices de cette musique.",
-    image: '/images/actualites/concert-gospel-2026.jpg',
+    image: 'concert-gospel-2026.jpg',
     associations: [
       { name: 'Association de Sauvegarde du Patrimoine', anchor: 'assoc-association-de-sauvegarde-du-patrimoine' },
     ],
@@ -152,7 +154,7 @@ export const actualites: Actualite[] = [
       "l'expert, animés par la boutique Guya Jeux de Sarlat et la médiathèque du Grand Cahors, ainsi que de grands jeux en bois animés par " +
       "Les jeux de l'Ours. Événement gratuit et ouvert à tous. Buvette et petite restauration (glaces, paninis, tapas) proposées par le bar " +
       "associatif La Gariotte. Contact : bibliotheque.pontcirq@gmail.com.",
-    image: '/images/actualites/bibs-en-jeux-2026.jpg',
+    image: 'bibs-en-jeux-2026.jpg',
     associations: [
       { name: 'Bibliothèque de Pontcirq', anchor: 'assoc-bibliotheque-de-pontcirq' },
       { name: 'La Gariotte', anchor: 'assoc-la-gariotte' },
@@ -170,7 +172,7 @@ export const actualites: Actualite[] = [
       "gratuit et ouvert à tous. Le duo Lo Garric, composé de Gilles Cassagnes (cabrette et autres cornemuses) et Francis Barascou " +
       "(accordéon), animera une session de musiques du Quercy, de l'Auvergne, du Limousin et d'autres régions. Jean-Luc Laviale assurera " +
       "l'animation pour la danse.",
-    image: '/images/actualites/bal-lo-garric-2026.webp',
+    image: 'bal-lo-garric-2026.webp',
   },
   {
     id: 12,
@@ -183,7 +185,7 @@ export const actualites: Actualite[] = [
       "Vendredi 6 mars à 20h30, la bibliothèque de Pontcirq proposait une séance cinéma à la salle communale : projection d'un film " +
       "sensible et émouvant sur l'amitié et la solidarité, inspiré d'un roman d'Anna Gavalda. Entrée gratuite. Ouverture de la buvette " +
       "à 18h30, vente de popcorns et glaces, en partenariat avec le café associatif La Gariotte.",
-    image: '/images/actualites/bibli-projection-2026.jpg',
+    image: 'bibli-projection-2026.jpg',
     associations: [
       { name: 'Bibliothèque de Pontcirq', anchor: 'assoc-bibliotheque-de-pontcirq' },
       { name: 'La Gariotte', anchor: 'assoc-la-gariotte' },
@@ -203,6 +205,27 @@ if (deadAnchors.length > 0) {
     `Unknown association anchors in src/data/actualites.ts (no matching card on /vie-locale):\n${deadAnchors.join('\n')}\n` +
       `Valid anchors: ${[...VALID_ANCHORS].join(', ')}`,
   );
+}
+
+// Event images live in src/assets/actualites/ and are referenced by file name, so astro:assets can optimise them.
+const actualiteImages: Record<string, ImageMetadata> = Object.fromEntries(
+  Object.entries(
+    import.meta.glob<{ default: ImageMetadata }>('/src/assets/actualites/*.{jpg,jpeg,png,webp,avif}', { eager: true }),
+  ).map(([path, module]) => [path.split('/').pop()!, module.default]),
+);
+
+// Build-time check: every event image must exist in src/assets/actualites/.
+const missingImages = actualites
+  .filter((a) => a.image && !actualiteImages[a.image])
+  .map((a) => `  - event id ${a.id}: "${a.image}"`);
+if (missingImages.length > 0) {
+  throw new Error(
+    `Missing event images (expected a file name in src/assets/actualites/, e.g. "contes-2026.jpg"):\n${missingImages.join('\n')}`,
+  );
+}
+
+export function getActualiteImage(actualite: Pick<Actualite, 'image'>): ImageMetadata | undefined {
+  return actualite.image ? actualiteImages[actualite.image] : undefined;
 }
 
 export type ActualiteStatus = 'upcoming' | 'ongoing' | 'past';

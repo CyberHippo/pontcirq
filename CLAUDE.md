@@ -20,7 +20,9 @@ Site content is in French; code, comments, commit messages and PR descriptions a
 - `src/components/`: `ActualiteCard`, `StatusBadge`, `Carousel`, `Header`, `Footer`
 - `src/pages/vie-locale.astro`: associations (from `src/data/associations.ts`), library, school, markets (markets data inline in the frontmatter)
 - `src/styles/global.css`: design tokens (`--color-*`, `--radius`, `--shadow-*`); reuse them instead of hard-coded colors
-- `public/images/`: static images, served from `/images/...`. File names are lowercase kebab-case with lowercase extensions: `logo-<name>` for logos, `<event>-<year>` for events
+- `src/assets/`: content photos (`actualites/`, `accueil/`, `vie-locale/`), optimised at build time by `astro:assets` (resized, converted to WebP, responsive `srcset`). Render them with `<Image>` / `getImage` from `astro:assets`, never a plain `<img>`; commit originals as they are, no manual compression needed. `BaseLayout`'s `image` prop (og:image) takes one of these imports and is resized to 1200px JPEG
+- `public/images/`: logos and icons served as is from `/images/...` (header blason, footer, services)
+- Image file names are lowercase kebab-case with lowercase extensions: `logo-<name>` for logos, `<event>-<year>` for events
 
 The Inter font (`@fontsource-variable/inter`) and htmx (`htmx.org`, pinned to an exact version) are npm dependencies bundled by Astro from `BaseLayout.astro`. Don't load scripts, styles or fonts from CDNs or Google Fonts (they receive visitors' IPs); self-host them instead.
 
@@ -33,7 +35,7 @@ Add an entry to the `actualites` array in `src/data/actualites.ts`:
 - `time`: start time `HH:MM` (24h), shown next to the date as `19h30` / `16h`; omit it for multi-day events with several times
 - `lieu`: place, e.g. `Salle communale de Pontcirq`, `Église Saint-Pierre-ès-Liens`, `Place de la halle, Catus`; shown under the date. Keep stating time and place in `content` too
 - `excerpt`: one sentence for cards; `content`: full text, rendered as Markdown (`\n\n` between paragraphs)
-- `image`: put the file in `public/images/actualites/` with a lowercase kebab-case name (e.g. `mois-du-doc-2026.png`); rename files the user drops in with spaces or capitals
+- `image`: put the file in `src/assets/actualites/` with a lowercase kebab-case name and set `image` to the file name only (e.g. `image: 'mois-du-doc-2026.png'`); rename files the user drops in with spaces or capitals. Formats: jpg, jpeg, png, webp, avif. The build fails if the file is missing. No need to resize or compress it
 - `associations`: `{ name, anchor }` where `anchor` is `associationAnchor(name)` (`assoc-` + `slugify(name)`) of an entry in `src/data/associations.ts`, or `LIBRARY_ANCHOR` (`assoc-bibliotheque-de-pontcirq`) for the library; the build fails on an unknown anchor. Omit the field when no listed association organises the event
 - If the user provides a poster, read it and include useful details missing from their message (times, price, duration, contact)
 - Write in the past tense when the event date has already passed, in the future tense otherwise

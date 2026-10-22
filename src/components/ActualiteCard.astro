@@ -1,6 +1,7 @@
 ---
+import { Image } from 'astro:assets';
 import StatusBadge from './StatusBadge.astro';
-import { getActualiteWhen, type Actualite } from '../data/actualites';
+import { getActualiteImage, getActualiteWhen, type Actualite } from '../data/actualites';
 
 interface Props {
   actualite: Actualite;
@@ -11,6 +12,7 @@ interface Props {
 
 const { actualite, layout = 'grid', showImage = true, showAssociation = true } = Astro.props;
 const when = getActualiteWhen(actualite);
+const image = showImage ? getActualiteImage(actualite) : undefined;
 ---
 
 <div class={`card news-item news-item--${layout}`}>
@@ -37,9 +39,15 @@ const when = getActualiteWhen(actualite);
       </p>
     )}
   </div>
-  {showImage && actualite.image && (
+  {image && (
     <div class="news-item-preview">
-      <img src={actualite.image} alt="" loading="lazy" />
+      <Image
+        src={image}
+        alt=""
+        widths={[320, 640, 960]}
+        sizes={layout === 'row' ? '(max-width: 640px) 100vw, 18rem' : '(max-width: 640px) 100vw, 24rem'}
+        loading="lazy"
+      />
     </div>
   )}
 </div>

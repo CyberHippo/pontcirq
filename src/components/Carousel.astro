@@ -1,6 +1,9 @@
 ---
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+
 interface Slide {
-  src: string;
+  src: ImageMetadata;
   alt: string;
 }
 
@@ -26,7 +29,15 @@ const { slides } = Astro.props;
         aria-roledescription="photo"
         aria-label={`${i + 1} sur ${slides.length}`}
       >
-        <img src={slide.src} alt={slide.alt} loading={i === 0 ? 'eager' : 'lazy'} />
+        <Image
+          src={slide.src}
+          alt={slide.alt}
+          widths={[640, 1080]}
+          sizes="(max-width: 72rem) 100vw, 72rem"
+          quality={75}
+          loading={i === 0 ? 'eager' : 'lazy'}
+          fetchpriority={i === 0 ? 'high' : 'auto'}
+        />
       </div>
     ))}
   </div>
