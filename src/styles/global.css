@@ -2,11 +2,11 @@
   --color-bg: #f6f7f4;
   --color-surface: #ffffff;
   --color-text: #1c1e1a;
-  --color-text-muted: #666b60;
+  --color-text-muted: #64695f;
   --color-primary: #2f6b47;
   --color-primary-dark: #1f4a30;
   --color-primary-light: #e6f0e8;
-  --color-accent: #d9762f;
+  --color-accent: #ae5b20;
   --color-border: #e6e8e2;
   --radius: 1rem;
   --radius-sm: 0.6rem;
@@ -23,6 +23,12 @@
 html {
   font-family: var(--font-sans);
   scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
 }
 
 body {
@@ -48,6 +54,29 @@ a {
 
 a:hover {
   color: var(--color-primary-dark);
+}
+
+:focus-visible {
+  outline: 3px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+.skip-link {
+  position: absolute;
+  top: 0.5rem;
+  left: 0.5rem;
+  z-index: 100;
+  padding: 0.6rem 1rem;
+  border-radius: var(--radius-sm);
+  background: var(--color-primary-dark);
+  color: #fff;
+  font-weight: 600;
+  transform: translateY(-200%);
+}
+
+.skip-link:focus {
+  transform: none;
+  color: #fff;
 }
 
 img {

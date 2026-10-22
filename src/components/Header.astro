@@ -22,10 +22,11 @@ const currentPath = Astro.url.pathname;
     </a>
     <nav aria-label="Navigation principale">
       <button
+        type="button"
         class="nav-toggle"
         aria-expanded="false"
         aria-controls="main-nav"
-        onclick="document.getElementById('main-nav').classList.toggle('open'); this.setAttribute('aria-expanded', this.getAttribute('aria-expanded') === 'false')"
+        onclick="document.getElementById('main-nav').classList.toggle('open'); this.setAttribute('aria-expanded', String(this.getAttribute('aria-expanded') !== 'true'))"
       >
         Menu
       </button>
