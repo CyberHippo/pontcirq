@@ -2,7 +2,7 @@
 import { marked } from 'marked';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import StatusBadge from '../../components/StatusBadge.astro';
-import { actualites, getById, getActualiteWhen } from '../../data/actualites';
+import { actualites, getById, getActualiteWhen, getStatus } from '../../data/actualites';
 
 export function getStaticPaths() {
   return actualites.map((item) => ({
@@ -14,6 +14,7 @@ const id = Number(Astro.params.id);
 const actualite = getById(id)!;
 const when = getActualiteWhen(actualite);
 const contentHtml = marked.parse(actualite.content, { async: false });
+const showAddToCalendar = getStatus(actualite) !== 'past';
 ---
 
 <BaseLayout title={actualite.title} description={actualite.excerpt} image={actualite.image} type="article">
@@ -26,6 +27,11 @@ const contentHtml = marked.parse(actualite.content, { async: false });
     <div class="news-detail-meta">
       <time datetime={when.datetime}>{when.date}{when.time && <span class="news-detail-hour"> · {when.time}</span>}</time>
       <StatusBadge actualite={actualite} />
+      {showAddToCalendar && (
+        <a class="add-to-calendar" href={`/actualites/${actualite.id}.ics`} download>
+          Ajouter à mon agenda
+        </a>
+      )}
     </div>
     {actualite.lieu && <p class="news-detail-lieu">{actualite.lieu}</p>}
     <h1>{actualite.title}</h1>
@@ -83,6 +89,13 @@ const contentHtml = marked.parse(actualite.content, { async: false });
     font-size: 0.95rem;
     font-weight: 600;
     color: var(--color-text-muted);
+  }
+
+  .add-to-calendar {
+    margin-left: auto;
+    color: var(--color-primary);
+    font-weight: 600;
+    font-size: 0.9rem;
   }
 
   .news-detail-image {

@@ -6,7 +6,7 @@ export default defineConfig({
   output: 'static',
   integrations: [
     sitemap({
-      filter: (page) => !page.includes('/fragments/'),
+      filter: (page) => !page.includes('/fragments/') && !page.endsWith('.ics'),
     }),
   ],
 });

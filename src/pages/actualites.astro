@@ -6,6 +6,9 @@ import { getUpcoming, getRecentPast, getArchiveTotalPages } from '../data/actual
 const upcoming = getUpcoming();
 const recentPast = getRecentPast();
 const hasArchives = getArchiveTotalPages() > 0;
+// webcal:// makes calendar apps subscribe to the feed instead of importing it once.
+const feedUrl = new URL('/agenda.ics', Astro.site);
+const subscribeUrl = feedUrl.href.replace(/^https?:/, 'webcal:');
 ---
 
 <BaseLayout title="Actualités" description="Actualités et annonces de la commune de Pontcirq.">
@@ -13,6 +16,10 @@ const hasArchives = getArchiveTotalPages() > 0;
   <p class="intro">
     Les événements à venir et les dernières annonces de la commune.
     <a class="rss-link" href="/rss.xml">Flux RSS</a>
+  </p>
+  <p class="subscribe">
+    <a href={subscribeUrl}>S'abonner à l'agenda</a>
+    (<a href={feedUrl.pathname}>fichier .ics</a>)
   </p>
 
   <section>
@@ -46,6 +53,12 @@ const hasArchives = getArchiveTotalPages() > 0;
 <style>
   .intro {
     color: var(--color-text-muted);
+    margin-bottom: 0.5rem;
+  }
+
+  .subscribe {
+    font-size: 0.9rem;
+    color: var(--color-text-muted);
     margin-bottom: 1.5rem;
   }
 
@@ -53,6 +66,10 @@ const hasArchives = getArchiveTotalPages() > 0;
     margin-left: 0.5rem;
     font-size: 0.85rem;
     color: var(--color-text-muted);
+  }
+
+  .subscribe a {
+    color: var(--color-primary);
   }
 
   .empty {
