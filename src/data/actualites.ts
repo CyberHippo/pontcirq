@@ -27,6 +27,17 @@ export function formatActualiteDate(actualite: Pick<Actualite, 'date' | 'endDate
 
 export const actualites: Actualite[] = [
   {
+    id: 14,
+    date: '2026-11-06',
+    title: "Projection « Permaculture, la voie de l'autonomie »",
+    excerpt: "Dans le cadre du Mois du doc, projection du film « Permaculture, la voie de l'autonomie » suivie d'une discussion, vendredi 6 novembre à 19h30 à la salle communale.",
+    content:
+      "Vendredi 6 novembre à 19h30, la salle communale de Pontcirq accueille la projection du documentaire " +
+      "« Permaculture, la voie de l'autonomie », dans le cadre du Mois du doc.\n\n" +
+      "La projection sera suivie d'une discussion autour de l'autonomie, animée par Émilie Galan de l'association Unis Vers Terre.",
+    associations: [{ name: 'Unis Vers Terre', anchor: 'assoc-unis-vers-terre' }],
+  },
+  {
     id: 1,
     date: '2026-07-25',
     endDate: '2026-07-26',
