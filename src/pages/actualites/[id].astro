@@ -2,7 +2,7 @@
 import { marked } from 'marked';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import StatusBadge from '../../components/StatusBadge.astro';
-import { actualites, getById, formatActualiteDate, formatActualiteTime } from '../../data/actualites';
+import { actualites, getById, getActualiteWhen } from '../../data/actualites';
 
 export function getStaticPaths() {
   return actualites.map((item) => ({
@@ -12,10 +12,7 @@ export function getStaticPaths() {
 
 const id = Number(Astro.params.id);
 const actualite = getById(id)!;
-const formattedDate = actualite.time
-  ? `${formatActualiteDate(actualite)} · ${formatActualiteTime(actualite.time)}`
-  : formatActualiteDate(actualite);
-const datetime = actualite.time ? `${actualite.date}T${actualite.time}` : actualite.date;
+const when = getActualiteWhen(actualite);
 const contentHtml = marked.parse(actualite.content, { async: false });
 ---
 
@@ -27,7 +24,7 @@ const contentHtml = marked.parse(actualite.content, { async: false });
       <img class="news-detail-image" src={actualite.image} alt="" />
     )}
     <div class="news-detail-meta">
-      <time datetime={datetime}>{formattedDate}</time>
+      <time datetime={when.datetime}>{when.date}{when.time && <span class="news-detail-hour"> · {when.time}</span>}</time>
       <StatusBadge actualite={actualite} />
     </div>
     {actualite.lieu && <p class="news-detail-lieu">{actualite.lieu}</p>}
@@ -75,6 +72,10 @@ const contentHtml = marked.parse(actualite.content, { async: false });
     color: var(--color-accent);
     text-transform: uppercase;
     letter-spacing: 0.03em;
+  }
+
+  .news-detail-hour {
+    text-transform: none;
   }
 
   .news-detail-lieu {

@@ -1,6 +1,6 @@
 ---
 import StatusBadge from './StatusBadge.astro';
-import { formatActualiteDate, formatActualiteTime, type Actualite } from '../data/actualites';
+import { getActualiteWhen, type Actualite } from '../data/actualites';
 
 interface Props {
   actualite: Actualite;
@@ -10,17 +10,14 @@ interface Props {
 }
 
 const { actualite, layout = 'grid', showImage = true, showAssociation = true } = Astro.props;
-const formattedDate = actualite.time
-  ? `${formatActualiteDate(actualite)} · ${formatActualiteTime(actualite.time)}`
-  : formatActualiteDate(actualite);
-const datetime = actualite.time ? `${actualite.date}T${actualite.time}` : actualite.date;
+const when = getActualiteWhen(actualite);
 ---
 
 <div class={`card news-item news-item--${layout}`}>
   <a class="news-item-link" href={`/actualites/${actualite.id}`}></a>
   <div class="news-item-body">
     <div class="news-item-meta">
-      <time datetime={datetime}>{formattedDate}</time>
+      <time datetime={when.datetime}>{when.date}{when.time && <span class="news-item-hour"> · {when.time}</span>}</time>
       <StatusBadge actualite={actualite} />
     </div>
     {actualite.lieu && <p class="news-item-lieu">{actualite.lieu}</p>}
@@ -129,6 +126,10 @@ const datetime = actualite.time ? `${actualite.date}T${actualite.time}` : actual
     color: var(--color-accent);
     text-transform: uppercase;
     letter-spacing: 0.03em;
+  }
+
+  .news-item-hour {
+    text-transform: none;
   }
 
   .news-item p.news-item-lieu {
