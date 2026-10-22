@@ -35,6 +35,19 @@ export function formatActualiteTime(time: string): string {
   return minutes === '00' ? `${Number(hours)}h` : `${Number(hours)}h${minutes}`;
 }
 
+// Date label, optional time label and `datetime` attribute for an event's <time>.
+export function getActualiteWhen(actualite: Pick<Actualite, 'date' | 'endDate' | 'time'>): {
+  date: string;
+  time?: string;
+  datetime: string;
+} {
+  return {
+    date: formatActualiteDate(actualite),
+    time: actualite.time && formatActualiteTime(actualite.time),
+    datetime: actualite.time ? `${actualite.date}T${actualite.time}` : actualite.date,
+  };
+}
+
 export const actualites: Actualite[] = [
   {
     id: 15,
