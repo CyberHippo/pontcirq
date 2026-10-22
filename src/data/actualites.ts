@@ -134,7 +134,7 @@ export const STATUS_LABELS: Record<ActualiteStatus, string> = {
 };
 
 // Statuses are computed at build time, in the commune's time zone. The site is
-// rebuilt every night so labels stay current.
+// rebuilt weekly (and on every push) so labels stay current.
 const today = new Intl.DateTimeFormat('en-CA', { timeZone: 'Europe/Paris' }).format(new Date());
 
 export function getStatus(actualite: Pick<Actualite, 'date' | 'endDate'>): ActualiteStatus {
