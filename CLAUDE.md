@@ -21,7 +21,7 @@ Site content is in French; code, comments, commit messages and PR descriptions a
 - `src/styles/global.css`: design tokens (`--color-*`, `--radius`, `--shadow-*`); reuse them instead of hard-coded colors
 - `public/images/`: static images, served from `/images/...`. File names are lowercase kebab-case with lowercase extensions: `logo-<name>` for logos, `<event>-<year>` for events
 
-htmx is loaded from unpkg in `BaseLayout.astro` with an SRI hash; keep the hash when changing the version.
+The Inter font (`@fontsource-variable/inter`) and htmx (`htmx.org`, pinned to an exact version) are npm dependencies bundled by Astro from `BaseLayout.astro`. Don't load scripts, styles or fonts from CDNs or Google Fonts (they receive visitors' IPs); self-host them instead.
 
 ## Adding an event
 
