@@ -1,0 +1,62 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Page introuvable" description="La page demandée n'existe pas ou a été déplacée.">
+  <section class="not-found">
+    <p class="code">404</p>
+    <h1>Page introuvable</h1>
+    <p class="lead">
+      La page que vous cherchez n'existe pas ou a été déplacée. Vérifiez l'adresse saisie,
+      ou poursuivez votre visite à partir de l'une des pages ci-dessous.
+    </p>
+    <a href="/" class="btn">Retour à l'accueil</a>
+
+    <nav class="links" aria-label="Pages principales">
+      <a href="/actualites">Actualités &rarr;</a>
+      <a href="/mairie">La mairie &rarr;</a>
+      <a href="/vie-locale">Vie locale &rarr;</a>
+    </nav>
+  </section>
+</BaseLayout>
+
+<style>
+  .not-found {
+    max-width: 42rem;
+    margin: 3rem auto 4rem;
+    text-align: center;
+  }
+
+  .code {
+    margin: 0;
+    font-size: clamp(3.5rem, 10vw, 5.5rem);
+    font-weight: 800;
+    line-height: 1;
+    color: var(--color-primary);
+  }
+
+  .not-found h1 {
+    font-size: clamp(1.6rem, 4vw, 2.1rem);
+    margin: 0.5rem 0 0.75rem;
+  }
+
+  .lead {
+    color: var(--color-text-muted);
+    font-size: 1.05rem;
+    margin: 0 0 1.75rem;
+  }
+
+  .links {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.75rem 1.5rem;
+    margin-top: 2rem;
+  }
+
+  .links a {
+    color: var(--color-primary);
+    font-weight: 600;
+    font-size: 0.95rem;
+  }
+</style>
