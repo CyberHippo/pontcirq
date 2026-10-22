@@ -1,0 +1,40 @@
+---
+import { getStatus, STATUS_LABELS, type Actualite } from '../data/actualites';
+
+interface Props {
+  actualite: Pick<Actualite, 'date' | 'endDate'>;
+}
+
+const status = getStatus(Astro.props.actualite);
+---
+
+<span class={`status-badge status-badge--${status}`}>{STATUS_LABELS[status]}</span>
+
+<style>
+  .status-badge {
+    display: inline-block;
+    padding: 0.15rem 0.6rem;
+    border-radius: 999px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    vertical-align: middle;
+  }
+
+  .status-badge--upcoming,
+  .status-badge--ongoing {
+    background: var(--color-primary-light);
+    color: var(--color-primary-dark);
+  }
+
+  .status-badge--ongoing {
+    background: var(--color-primary);
+    color: #fff;
+  }
+
+  .status-badge--past {
+    background: var(--color-border);
+    color: var(--color-text-muted);
+  }
+</style>

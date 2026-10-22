@@ -125,17 +125,59 @@ export const actualites: Actualite[] = [
   },
 ];
 
-export const PAGE_SIZE = 3;
+export type ActualiteStatus = 'upcoming' | 'ongoing' | 'past';
 
-const sortedActualites = [...actualites].sort((a, b) => b.date.localeCompare(a.date));
+export const STATUS_LABELS: Record<ActualiteStatus, string> = {
+  upcoming: 'À venir',
+  ongoing: 'En cours',
+  past: 'Passé',
+};
 
-export function getPage(page: number): Actualite[] {
-  const start = (page - 1) * PAGE_SIZE;
-  return sortedActualites.slice(start, start + PAGE_SIZE);
+// Statuses are computed at build time, in the commune's time zone. The site is
+// rebuilt every night so labels stay current.
+const today = new Intl.DateTimeFormat('en-CA', { timeZone: 'Europe/Paris' }).format(new Date());
+
+export function getStatus(actualite: Pick<Actualite, 'date' | 'endDate'>): ActualiteStatus {
+  if ((actualite.endDate ?? actualite.date) < today) return 'past';
+  if (actualite.date <= today) return 'ongoing';
+  return 'upcoming';
 }
 
-export function getTotalPages(): number {
-  return Math.ceil(sortedActualites.length / PAGE_SIZE);
+export const RECENT_PAST_COUNT = 5;
+export const ARCHIVE_PAGE_SIZE = 5;
+
+// Upcoming and ongoing events, soonest first.
+const upcoming = actualites
+  .filter((a) => getStatus(a) !== 'past')
+  .sort((a, b) => a.date.localeCompare(b.date));
+
+// Past events, most recent first.
+const past = actualites
+  .filter((a) => getStatus(a) === 'past')
+  .sort((a, b) => b.date.localeCompare(a.date));
+
+const archives = past.slice(RECENT_PAST_COUNT);
+
+export function getUpcoming(): Actualite[] {
+  return upcoming;
+}
+
+export function getRecentPast(): Actualite[] {
+  return past.slice(0, RECENT_PAST_COUNT);
+}
+
+// Next events first, then the most recent past ones.
+export function getHighlights(count: number): Actualite[] {
+  return [...upcoming, ...past].slice(0, count);
+}
+
+export function getArchivePage(page: number): Actualite[] {
+  const start = (page - 1) * ARCHIVE_PAGE_SIZE;
+  return archives.slice(start, start + ARCHIVE_PAGE_SIZE);
+}
+
+export function getArchiveTotalPages(): number {
+  return Math.ceil(archives.length / ARCHIVE_PAGE_SIZE);
 }
 
 export function getById(id: number): Actualite | undefined {

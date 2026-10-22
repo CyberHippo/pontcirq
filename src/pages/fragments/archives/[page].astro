@@ -1,0 +1,30 @@
+---
+import ActualiteCard from '../../../components/ActualiteCard.astro';
+import { getArchivePage, getArchiveTotalPages } from '../../../data/actualites';
+
+export function getStaticPaths() {
+  return Array.from({ length: getArchiveTotalPages() }, (_, i) => ({
+    params: { page: String(i + 1) },
+  }));
+}
+
+const page = Number(Astro.params.page);
+const items = getArchivePage(page);
+const hasNext = page < getArchiveTotalPages();
+---
+
+{items.map((item) => <ActualiteCard actualite={item} layout="row" />)}
+
+{hasNext ? (
+  <button
+    type="button"
+    class="load-archives"
+    hx-get={`/fragments/archives/${page + 1}/`}
+    hx-swap="outerHTML"
+  >
+    Voir plus d'archives
+    <span class="htmx-indicator">Chargement…</span>
+  </button>
+) : (
+  <p class="end-of-list">Vous avez tout lu &mdash; à bientôt pour de nouvelles actualités !</p>
+)}

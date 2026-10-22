@@ -2,9 +2,9 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Carousel from '../components/Carousel.astro';
 import ActualiteCard from '../components/ActualiteCard.astro';
-import { getPage } from '../data/actualites';
+import { getHighlights } from '../data/actualites';
 
-const latestNews = getPage(1);
+const latestNews = getHighlights(3);
 
 const slides = [
   { src: '/images/accueil/pontcirq-1.jpg', alt: "L'église et le clocher de Pontcirq" },
