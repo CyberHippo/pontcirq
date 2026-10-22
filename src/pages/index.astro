@@ -10,7 +10,6 @@ import pontcirq7 from '../assets/accueil/pontcirq-7.jpg';
 import Carousel from '../components/Carousel.astro';
 import ActualiteCard from '../components/ActualiteCard.astro';
 import { getHighlights } from '../data/actualites';
-import { address, phone, email, openingHours, emergencyNumbers } from '../data/mairie';
 
 const latestNews = getHighlights(3);
 
@@ -32,35 +31,6 @@ const slides = [
       Petite commune rurale aux portes du Quercy blanc, Pontcirq vous accueille dans un cadre
       de vie paisible entre causses et vallées.
     </p>
-  </section>
-
-  <section class="card infos" aria-labelledby="infos-title">
-    <div class="infos-header">
-      <h2 id="infos-title">Infos pratiques</h2>
-      <a href="/mairie" class="news-link">La mairie &rarr;</a>
-    </div>
-    <div class="infos-grid">
-      <div>
-        <h3>Mairie</h3>
-        <p><a href={address.href}>{address.label}</a></p>
-        <p><a href={phone.href}>{phone.label}</a></p>
-        <p><a href={email.href} class="infos-email">{email.label}</a></p>
-      </div>
-      <div>
-        <h3>Horaires d'ouverture</h3>
-        {openingHours.map((h) => <p>{h.day} : <strong>{h.label}</strong></p>)}
-      </div>
-      <div>
-        <h3>Urgences</h3>
-        <ul class="emergency">
-          {emergencyNumbers.map((n) => (
-            <li>
-              <a href={n.href}><strong>{n.number}</strong> {n.label}</a>
-            </li>
-          ))}
-        </ul>
-      </div>
-    </div>
   </section>
 
   <section class="gallery">
@@ -131,60 +101,6 @@ const slides = [
 
   .gallery {
     margin: 0 0 1.5rem;
-  }
-
-  .infos {
-    margin: 0 0 1.5rem;
-    padding: 1.25rem 1.5rem;
-  }
-
-  .infos-header {
-    display: flex;
-    align-items: baseline;
-    justify-content: space-between;
-    gap: 1rem;
-    margin-bottom: 0.75rem;
-  }
-
-  .infos-header h2 {
-    margin: 0;
-    font-size: 1.25rem;
-  }
-
-  .infos-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 1rem 1.5rem;
-  }
-
-  .infos h3 {
-    margin: 0 0 0.35rem;
-    font-size: 0.95rem;
-    color: var(--color-primary);
-  }
-
-  .infos p {
-    margin: 0.15rem 0;
-    font-size: 0.92rem;
-  }
-
-  .infos-email {
-    overflow-wrap: anywhere;
-  }
-
-  .emergency {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 0.35rem 1rem;
-    font-size: 0.92rem;
-  }
-
-  .emergency strong {
-    color: var(--color-accent);
-    margin-right: 0.25rem;
   }
 
   .news {
