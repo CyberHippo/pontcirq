@@ -2,7 +2,7 @@
 import { marked } from 'marked';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import StatusBadge from '../../components/StatusBadge.astro';
-import { actualites, getById, formatActualiteDate } from '../../data/actualites';
+import { actualites, getById, formatActualiteDate, formatActualiteTime } from '../../data/actualites';
 
 export function getStaticPaths() {
   return actualites.map((item) => ({
@@ -12,7 +12,10 @@ export function getStaticPaths() {
 
 const id = Number(Astro.params.id);
 const actualite = getById(id)!;
-const formattedDate = formatActualiteDate(actualite);
+const formattedDate = actualite.time
+  ? `${formatActualiteDate(actualite)} · ${formatActualiteTime(actualite.time)}`
+  : formatActualiteDate(actualite);
+const datetime = actualite.time ? `${actualite.date}T${actualite.time}` : actualite.date;
 const contentHtml = marked.parse(actualite.content, { async: false });
 ---
 
@@ -24,9 +27,10 @@ const contentHtml = marked.parse(actualite.content, { async: false });
       <img class="news-detail-image" src={actualite.image} alt="" />
     )}
     <div class="news-detail-meta">
-      <time datetime={actualite.date}>{formattedDate}</time>
+      <time datetime={datetime}>{formattedDate}</time>
       <StatusBadge actualite={actualite} />
     </div>
+    {actualite.lieu && <p class="news-detail-lieu">{actualite.lieu}</p>}
     <h1>{actualite.title}</h1>
     <div class="news-detail-content" set:html={contentHtml} />
     {actualite.associations && actualite.associations.length > 0 && (
@@ -71,6 +75,13 @@ const contentHtml = marked.parse(actualite.content, { async: false });
     color: var(--color-accent);
     text-transform: uppercase;
     letter-spacing: 0.03em;
+  }
+
+  .news-detail-lieu {
+    margin: 0 0 0.5rem;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--color-text-muted);
   }
 
   .news-detail-image {

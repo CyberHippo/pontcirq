@@ -2,6 +2,10 @@ export interface Actualite {
   id: number;
   date: string;
   endDate?: string;
+  /** Start time, `HH:MM` (24h). Omit for multi-day events with several times. */
+  time?: string;
+  /** Place of the event, e.g. « Salle communale de Pontcirq ». */
+  lieu?: string;
   title: string;
   excerpt: string;
   content: string;
@@ -25,10 +29,18 @@ export function formatActualiteDate(actualite: Pick<Actualite, 'date' | 'endDate
   return isConsecutiveDays ? `${startDay} et ${endFull}` : `Du ${startFull} au ${endFull}`;
 }
 
+// `19:30` -> `19h30`, `16:00` -> `16h`.
+export function formatActualiteTime(time: string): string {
+  const [hours, minutes] = time.split(':');
+  return minutes === '00' ? `${Number(hours)}h` : `${Number(hours)}h${minutes}`;
+}
+
 export const actualites: Actualite[] = [
   {
     id: 15,
     date: '2026-10-18',
+    time: '16:00',
+    lieu: 'Salle communale de Pontcirq',
     title: "Spectacle « La Bulle » – Tournée de contes",
     excerpt: "La compagnie L'Arbre à sons présentait « La Bulle », un spectacle musical et sensoriel gratuit pour les tout-petits et les plus grands, à la salle communale.",
     content:
@@ -41,6 +53,8 @@ export const actualites: Actualite[] = [
   {
     id: 14,
     date: '2026-11-06',
+    time: '19:30',
+    lieu: 'Salle communale de Pontcirq',
     title: "Projection « Permaculture, la voie de l'autonomie »",
     excerpt: "Dans le cadre du Mois du doc, projection gratuite du film « Permaculture, la voie de l'autonomie » suivie d'une discussion, vendredi 6 novembre à 19h30 à la salle communale.",
     content:
@@ -73,6 +87,8 @@ export const actualites: Actualite[] = [
   {
     id: 9,
     date: '2026-07-11',
+    time: '18:00',
+    lieu: 'Église Saint-Pierre-ès-Liens',
     title: 'Concert de harpe celtique à l\'église Saint-Pierre-ès-Liens',
     excerpt: "L'artiste Ronya donnera un concert de harpe celtique à l'église Saint-Pierre-ès-Liens, samedi 11 juillet à 18h.",
     content:
@@ -92,6 +108,7 @@ export const actualites: Actualite[] = [
   {
     id: 10,
     date: '2026-06-14',
+    lieu: 'Église Saint-Pierre-ès-Liens',
     title: 'Concert de gospel à l\'église Saint-Pierre',
     excerpt: "L'association pour la rénovation et la protection du patrimoine communal a organisé un concert de gospel qui a réuni un public attentif.",
     content:
@@ -112,6 +129,7 @@ export const actualites: Actualite[] = [
   {
     id: 11,
     date: '2026-06-13',
+    time: '16:30',
     title: "Bibs en Jeux",
     excerpt: "La bibliothèque de Pontcirq organise une après-midi jeux de société et grands jeux en bois, gratuite et ouverte à tous.",
     content:
@@ -128,6 +146,8 @@ export const actualites: Actualite[] = [
   {
     id: 13,
     date: '2026-06-13',
+    time: '21:00',
+    lieu: 'Place de la halle, Catus',
     title: 'Bal-atelier de danses traditionnelles à Catus',
     excerpt: "L'association Lo Garric propose un bal-atelier de danses traditionnelles, samedi 13 juin de 21h à 23h, place de la halle à Catus.",
     content:
@@ -140,6 +160,8 @@ export const actualites: Actualite[] = [
   {
     id: 12,
     date: '2026-03-06',
+    time: '20:30',
+    lieu: 'Salle communale de Pontcirq',
     title: 'Séance cinéma à la salle communale',
     excerpt: "La bibliothèque de Pontcirq proposait une projection gratuite en partenariat avec le café associatif La Gariotte.",
     content:
