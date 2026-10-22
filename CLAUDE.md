@@ -15,6 +15,7 @@ Site content is in French; code, comments, commit messages and PR descriptions a
 - `src/data/actualites.ts`: all events/news and the logic around them (status, archives, highlights)
 - `src/pages/`: one file per page; `actualites/[id].astro` is the event detail page
 - `src/pages/fragments/archives/[page].astro`: htmx fragments loaded by « Voir les archives »; `/fragments/` is excluded from the sitemap
+- `src/pages/rss.xml.ts`: RSS feed of all events (`/rss.xml`, `@astrojs/rss`), newest date first; linked from `BaseLayout.astro` and /actualites
 - `src/components/`: `ActualiteCard`, `StatusBadge`, `Carousel`, `Header`, `Footer`
 - `src/pages/vie-locale.astro`: associations, library, school, markets (data inline in the frontmatter)
 - `src/styles/global.css`: design tokens (`--color-*`, `--radius`, `--shadow-*`); reuse them instead of hard-coded colors
@@ -28,6 +29,8 @@ Add an entry to the `actualites` array in `src/data/actualites.ts`:
 
 - `id`: next integer after the current highest id (ids are not in array order)
 - `date` / `endDate`: `YYYY-MM-DD`; `endDate` only for multi-day events
+- `time`: start time `HH:MM` (24h), shown next to the date as `19h30` / `16h`; omit it for multi-day events with several times
+- `lieu`: place, e.g. `Salle communale de Pontcirq`, `Église Saint-Pierre-ès-Liens`, `Place de la halle, Catus`; shown under the date. Keep stating time and place in `content` too
 - `excerpt`: one sentence for cards; `content`: full text, rendered as Markdown (`\n\n` between paragraphs)
 - `image`: put the file in `public/images/actualites/` with a lowercase kebab-case name (e.g. `mois-du-doc-2026.png`); rename files the user drops in with spaces or capitals
 - `associations`: `{ name, anchor }` where `anchor` is `assoc-` + `slugify(name)` and must match a card on /vie-locale; omit the field when no listed association organises the event

@@ -1,6 +1,6 @@
 ---
 import StatusBadge from './StatusBadge.astro';
-import { formatActualiteDate, type Actualite } from '../data/actualites';
+import { getActualiteWhen, type Actualite } from '../data/actualites';
 
 interface Props {
   actualite: Actualite;
@@ -10,16 +10,17 @@ interface Props {
 }
 
 const { actualite, layout = 'grid', showImage = true, showAssociation = true } = Astro.props;
-const formattedDate = formatActualiteDate(actualite);
+const when = getActualiteWhen(actualite);
 ---
 
 <div class={`card news-item news-item--${layout}`}>
-  <a class="news-item-link" href={`/actualites/${actualite.id}`}></a>
+  <a class="news-item-link" href={`/actualites/${actualite.id}`} aria-label={actualite.title}></a>
   <div class="news-item-body">
     <div class="news-item-meta">
-      <time datetime={actualite.date}>{formattedDate}</time>
+      <time datetime={when.datetime}>{when.date}{when.time && <span class="news-item-hour"> · {when.time}</span>}</time>
       <StatusBadge actualite={actualite} />
     </div>
+    {actualite.lieu && <p class="news-item-lieu">{actualite.lieu}</p>}
     <h3>{actualite.title}</h3>
     <p class="excerpt">{actualite.excerpt}</p>
     <span class="news-item-more">En savoir plus &rarr;</span>
@@ -62,6 +63,17 @@ const formattedDate = formatActualiteDate(actualite);
     position: absolute;
     inset: 0;
     z-index: 1;
+    border-radius: inherit;
+  }
+
+  /* The card clips overflow, so draw the focus ring inside the overlay link */
+  .news-item-link:focus-visible {
+    outline: 3px solid var(--color-primary);
+    outline-offset: -3px;
+  }
+
+  .news-item:has(.news-item-link:focus-visible) {
+    box-shadow: var(--shadow-md);
   }
 
   .news-item--grid {
@@ -125,6 +137,16 @@ const formattedDate = formatActualiteDate(actualite);
     color: var(--color-accent);
     text-transform: uppercase;
     letter-spacing: 0.03em;
+  }
+
+  .news-item-hour {
+    text-transform: none;
+  }
+
+  .news-item p.news-item-lieu {
+    margin-top: 0.25rem;
+    font-size: 0.85rem;
+    font-weight: 600;
   }
 
   .news-item h3 {
