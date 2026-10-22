@@ -15,6 +15,7 @@ Site content is in French; code, comments, commit messages and PR descriptions a
 - `src/data/actualites.ts`: all events/news and the logic around them (status, archives, highlights)
 - `src/pages/`: one file per page; `actualites/[id].astro` is the event detail page
 - `src/pages/fragments/archives/[page].astro`: htmx fragments loaded by « Voir les archives »; `/fragments/` is excluded from the sitemap
+- `src/pages/rss.xml.ts`: RSS feed of all events (`/rss.xml`, `@astrojs/rss`), newest date first; linked from `BaseLayout.astro` and /actualites
 - `src/components/`: `ActualiteCard`, `StatusBadge`, `Carousel`, `Header`, `Footer`
 - `src/pages/vie-locale.astro`: associations, library, school, markets (data inline in the frontmatter)
 - `src/styles/global.css`: design tokens (`--color-*`, `--radius`, `--shadow-*`); reuse them instead of hard-coded colors

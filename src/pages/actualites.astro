@@ -10,7 +10,10 @@ const hasArchives = getArchiveTotalPages() > 0;
 
 <BaseLayout title="Actualités" description="Actualités et annonces de la commune de Pontcirq.">
   <h1>Actualités</h1>
-  <p class="intro">Les événements à venir et les dernières annonces de la commune.</p>
+  <p class="intro">
+    Les événements à venir et les dernières annonces de la commune.
+    <a class="rss-link" href="/rss.xml">Flux RSS</a>
+  </p>
 
   <section>
     <h2>À venir</h2>
@@ -44,6 +47,12 @@ const hasArchives = getArchiveTotalPages() > 0;
   .intro {
     color: var(--color-text-muted);
     margin-bottom: 1.5rem;
+  }
+
+  .rss-link {
+    margin-left: 0.5rem;
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
   }
 
   .empty {
