@@ -1,45 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { slugify } from '../utils/slugify';
-
-const associations = [
-  {
-    name: 'ACCA de Pontcirq',
-    desc: 'Association Communale de Chasse Agréée.',
-    contact: '',
-  },
-  {
-    name: 'APE 3LP',
-    desc: "Association des parents d'élèves du RPI Labastide-du-Vert, Les Junies, Lherm et Pontcirq.",
-    contact: '3lp.ape@gmail.com',
-  },
-  {
-    name: 'Association de Sauvegarde du Patrimoine',
-    desc: 'Préservation et valorisation du patrimoine communal.',
-    contact: '',
-  },
-  {
-    name: "FESTI'PONTCIRQ",
-    desc: 'Organisation de festivités et animations locales diverses (marché gourmand, brocante, fête votive, etc.).',
-    contact: 'festipontcirq@gmail.com',
-  },
-  {
-    name: 'La Gariotte',
-    desc: 'Café associatif et lieu de convivialité du village.',
-    contact: 'lagariottepontcirq@gmail.com',
-  },
-  {
-    name: 'La maison du Garric Blanc',
-    desc: 'Sauvegarde et mise en valeur de la maison dite du Garric Blanc, située au 158, route de la Crouzette à Pontcirq 46150',
-    contact: '',
-  },
-  {
-    name: 'Unis Vers Terre',
-    desc: "Laboratoire d'écologie globale cultivant l'autonomie, la coopération humaine et la transition intérieure à travers la permaculture.",
-    contact: 'asso.unisversterre (at) gmail.com',
-    website: 'https://unisversterre.wordpress.com/',
-  },
-];
+import { associations, associationAnchor, LIBRARY_ANCHOR } from '../data/associations';
 
 const marches = [
   {
@@ -123,7 +84,7 @@ const marches = [
     <h2>Associations</h2>
     <ul class="assoc-list">
       {associations.map((assoc) => (
-        <li class="card" id={`assoc-${slugify(assoc.name)}`}>
+        <li class="card" id={associationAnchor(assoc.name)}>
           <h3>{assoc.name}</h3>
           <p>{assoc.desc}</p>
           {assoc.contact && (
@@ -147,7 +108,7 @@ const marches = [
 
   <section>
     <h2>Bibliothèque communale</h2>
-    <div class="card library-card" id="assoc-bibliotheque-de-pontcirq">
+    <div class="card library-card" id={LIBRARY_ANCHOR}>
       <img src="/images/vie-locale/bibliotheque.jpg" alt="Intérieur de la bibliothèque de Pontcirq" />
       <div>
         <p>

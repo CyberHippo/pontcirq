@@ -1,3 +1,5 @@
+import { VALID_ANCHORS } from './associations';
+
 export interface Actualite {
   id: number;
   date: string;
@@ -80,7 +82,7 @@ export const actualites: Actualite[] = [
     associations: [
       { name: 'Bibliothèque de Pontcirq', anchor: 'assoc-bibliotheque-de-pontcirq' },
       { name: 'Unis Vers Terre', anchor: 'assoc-unis-vers-terre' },
-      { name: 'La Gariotte', anchor: 'assoc-la-gariotte-cafe-associatif-de-pontcirq' },
+      { name: 'La Gariotte', anchor: 'assoc-la-gariotte' },
     ],
   },
   {
@@ -153,7 +155,7 @@ export const actualites: Actualite[] = [
     image: '/images/actualites/bibs-en-jeux-2026.jpg',
     associations: [
       { name: 'Bibliothèque de Pontcirq', anchor: 'assoc-bibliotheque-de-pontcirq' },
-      { name: 'La Gariotte', anchor: 'assoc-la-gariotte-cafe-associatif-de-pontcirq' },
+      { name: 'La Gariotte', anchor: 'assoc-la-gariotte' },
     ],
   },
   {
@@ -184,10 +186,24 @@ export const actualites: Actualite[] = [
     image: '/images/actualites/bibli-projection-2026.jpg',
     associations: [
       { name: 'Bibliothèque de Pontcirq', anchor: 'assoc-bibliotheque-de-pontcirq' },
-      { name: 'La Gariotte', anchor: 'assoc-la-gariotte-cafe-associatif-de-pontcirq' },
+      { name: 'La Gariotte', anchor: 'assoc-la-gariotte' },
     ],
   },
 ];
+
+// Build-time check: every association link must point to a card on /vie-locale.
+// This module is imported by the event pages, so a dead anchor fails the build.
+const deadAnchors = actualites.flatMap((a) =>
+  (a.associations ?? [])
+    .filter((assoc) => !VALID_ANCHORS.has(assoc.anchor))
+    .map((assoc) => `  - event id ${a.id}: "${assoc.anchor}" (${assoc.name})`),
+);
+if (deadAnchors.length > 0) {
+  throw new Error(
+    `Unknown association anchors in src/data/actualites.ts (no matching card on /vie-locale):\n${deadAnchors.join('\n')}\n` +
+      `Valid anchors: ${[...VALID_ANCHORS].join(', ')}`,
+  );
+}
 
 export type ActualiteStatus = 'upcoming' | 'ongoing' | 'past';
 
