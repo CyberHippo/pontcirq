@@ -12,11 +12,12 @@ Site content is in French; code, comments, commit messages and PR descriptions a
 
 ## Layout
 
-- `src/data/actualites.ts`: all events/news and the logic around them (status, archives, highlights)
+- `src/data/actualites.ts`: all events/news and the logic around them (status, archives, highlights), plus the build-time check of association anchors
+- `src/data/associations.ts`: associations listed on /vie-locale, `associationAnchor(name)` and `LIBRARY_ANCHOR`
 - `src/pages/`: one file per page; `actualites/[id].astro` is the event detail page
 - `src/pages/fragments/archives/[page].astro`: htmx fragments loaded by « Voir les archives »; `/fragments/` is excluded from the sitemap
 - `src/components/`: `ActualiteCard`, `StatusBadge`, `Carousel`, `Header`, `Footer`
-- `src/pages/vie-locale.astro`: associations, library, school, markets (data inline in the frontmatter)
+- `src/pages/vie-locale.astro`: associations (from `src/data/associations.ts`), library, school, markets (markets data inline in the frontmatter)
 - `src/styles/global.css`: design tokens (`--color-*`, `--radius`, `--shadow-*`); reuse them instead of hard-coded colors
 - `public/images/`: static images, served from `/images/...`. File names are lowercase kebab-case with lowercase extensions: `logo-<name>` for logos, `<event>-<year>` for events
 
@@ -30,7 +31,7 @@ Add an entry to the `actualites` array in `src/data/actualites.ts`:
 - `date` / `endDate`: `YYYY-MM-DD`; `endDate` only for multi-day events
 - `excerpt`: one sentence for cards; `content`: full text, rendered as Markdown (`\n\n` between paragraphs)
 - `image`: put the file in `public/images/actualites/` with a lowercase kebab-case name (e.g. `mois-du-doc-2026.png`); rename files the user drops in with spaces or capitals
-- `associations`: `{ name, anchor }` where `anchor` is `assoc-` + `slugify(name)` and must match a card on /vie-locale; omit the field when no listed association organises the event
+- `associations`: `{ name, anchor }` where `anchor` is `associationAnchor(name)` (`assoc-` + `slugify(name)`) of an entry in `src/data/associations.ts`, or `LIBRARY_ANCHOR` (`assoc-bibliotheque-de-pontcirq`) for the library; the build fails on an unknown anchor. Omit the field when no listed association organises the event
 - If the user provides a poster, read it and include useful details missing from their message (times, price, duration, contact)
 - Write in the past tense when the event date has already passed, in the future tense otherwise
 
@@ -45,7 +46,7 @@ Event order in the array does not matter: lists are sorted by date.
 
 ## Associations
 
-Associations are listed in `src/pages/vie-locale.astro`. When removing one, also remove any `associations` link to it in `actualites.ts` (otherwise the anchor is dead), and check the grid `grid-template-rows` so the two columns stay balanced.
+Associations are listed in `src/data/associations.ts` and rendered on /vie-locale with `id={associationAnchor(name)}`; the library card is rendered separately with `id={LIBRARY_ANCHOR}`. `src/data/actualites.ts` checks at build time that every event `associations[].anchor` matches one of these anchors and throws with the event id and the bad anchor otherwise. So when removing or renaming an association, update the links to it in `actualites.ts` (the build tells you which), and check the grid `grid-template-rows` so the two columns stay balanced.
 
 ## CI / deployment
 
