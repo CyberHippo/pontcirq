@@ -1,21 +1,15 @@
 import type { ImageMetadata } from 'astro';
+import { getCollection, type CollectionEntry } from 'astro:content';
 import { VALID_ANCHORS } from './associations';
 
-export interface Actualite {
-  id: number;
-  date: string;
-  endDate?: string;
-  /** Start time, `HH:MM` (24h). Omit for multi-day events with several times. */
-  time?: string;
-  /** Place of the event, e.g. « Salle communale de Pontcirq ». */
-  lieu?: string;
-  title: string;
-  excerpt: string;
-  content: string;
-  /** File name of an image in src/assets/actualites/, e.g. `contes-2026.jpg` */
-  image?: string;
-  associations?: { name: string; anchor: string }[];
-}
+// Events live in src/content/actualites/ (one Markdown file each, schema in
+// src/content.config.ts). This module holds the logic around them.
+export type Actualite = CollectionEntry<'actualites'>['data'] & {
+  // The collection entry, to render the Markdown body with `render(entry)`.
+  entry: CollectionEntry<'actualites'>;
+};
+
+const entries = await getCollection('actualites');
 
 export function formatActualiteDate(actualite: Pick<Actualite, 'date' | 'endDate'>): string {
   const start = new Date(actualite.date);
@@ -52,157 +46,28 @@ export function getActualiteWhen(actualite: Pick<Actualite, 'date' | 'endDate' |
   };
 }
 
-export const actualites: Actualite[] = [
-  {
-    id: 15,
-    date: '2026-10-18',
-    time: '16:00',
-    lieu: 'Salle communale de Pontcirq',
-    title: "Spectacle « La Bulle » – Tournée de contes",
-    excerpt: "La compagnie L'Arbre à sons présentait « La Bulle », un spectacle musical et sensoriel gratuit pour les tout-petits et les plus grands, à la salle communale.",
-    content:
-      "Dimanche 18 octobre à 16h, la salle communale de Pontcirq accueillait « La Bulle », spectacle de la tournée de contes " +
-      "proposé par la compagnie L'Arbre à sons. Un spectacle musical et sensoriel de 45 minutes qui invitait petits et grands " +
-      "à explorer les sons, les silences et les sensations.\n\n" +
-      "Spectacle gratuit, suivi d'un goûter offert par les bénévoles.",
-    image: 'contes-2026.jpg',
-  },
-  {
-    id: 14,
-    date: '2026-11-06',
-    time: '19:30',
-    lieu: 'Salle communale de Pontcirq',
-    title: "Projection « Permaculture, la voie de l'autonomie »",
-    excerpt: "Dans le cadre du Mois du doc, projection gratuite du film « Permaculture, la voie de l'autonomie » suivie d'une discussion, vendredi 6 novembre à 19h30 à la salle communale.",
-    content:
-      "Vendredi 6 novembre à 19h30, la salle communale de Pontcirq accueille la projection du documentaire " +
-      "« Permaculture, la voie de l'autonomie », réalisé par Carinne Coisman et Julien Lenoir (68 min), dans le cadre du Mois du doc.\n\n" +
-      "La projection sera suivie d'une discussion autour de l'autonomie, animée par Émilie Galan de l'association Unis Vers Terre.\n\n" +
-      "Entrée gratuite. Ouverture du bar associatif La Gariotte à partir de 18h30. " +
-      "Contact : bibliotheque.pontcirq@gmail.com.",
-    image: 'mois-du-doc-2026.png',
-    associations: [
-      { name: 'Bibliothèque de Pontcirq', anchor: 'assoc-bibliotheque-de-pontcirq' },
-      { name: 'Unis Vers Terre', anchor: 'assoc-unis-vers-terre' },
-      { name: 'La Gariotte', anchor: 'assoc-la-gariotte' },
-    ],
-  },
-  {
-    id: 1,
-    date: '2026-07-25',
-    endDate: '2026-07-26',
-    title: 'Pontcirq en Fête',
-    excerpt: "Le Comité des fêtes, l'association du Patrimoine et la bibliothèque organisent deux jours de festivités : messe, cérémonie, soirée dansante et jeu de piste.",
-    content:
-      "FESTI'PONTCIRQ organise \"Pontcirq en Fête\" les 25 et 26 juillet.\n\n" +
-      "Samedi 25 juillet : messe à 10h30, cérémonie au monument aux morts à 11h30, puis soirée dansante à 22h animée par le groupe Clin d'œil.\n\n" +
-      "Dimanche 26 juillet : jeu de piste \"randonnée découverte du patrimoine\" en équipe (5 km) de 10h à 12h, inscription à 9h45 devant la mairie " +
-      "— ouvert à tous, gratuit, avec quizz et petits lots. Buvette, petite restauration et vente de pain cuit au four communal les deux jours.",
-    image: 'pontcirq-en-fete-1-2026.jpg',
-    associations: [{ name: "FESTI'PONTCIRQ", anchor: 'assoc-festi-pontcirq' }],
-  },
-  {
-    id: 9,
-    date: '2026-07-11',
-    time: '18:00',
-    lieu: 'Église Saint-Pierre-ès-Liens',
-    title: 'Concert de harpe celtique à l\'église Saint-Pierre-ès-Liens',
-    excerpt: "L'artiste Ronya donnera un concert de harpe celtique à l'église Saint-Pierre-ès-Liens, samedi 11 juillet à 18h.",
-    content:
-      "Samedi 11 juillet à 18 heures, un concert de harpe celtique sera donné à l'église Saint-Pierre-ès-Liens de Pontcirq par Ronya, " +
-      "une artiste d'origine iranienne et allemande installée en Occitanie. Également chanteuse, elle propose un voyage très varié " +
-      "à travers des chants traditionnels celtes, hébraïques et des compositions personnelles inspirées de la nature et de légendes. " +
-      "Avec sa harpe et sa voix lumineuse, l'artiste souhaite amener le public dans un univers musical empreint de poésie, " +
-      "d'émotion et de spiritualité, où chaque note invite à l'évasion et à la rêverie. Ronya s'est déjà produite dans de nombreux " +
-      "lieux patrimoniaux en Occitanie ; elle sera pour la première fois dans le Lot. C'est l'occasion de découvrir une artiste singulière. " +
-      "Le concert est organisé par l'association Nashuar terre vivante avec le soutien de l'association du patrimoine communal, " +
-      "de la bibliothèque et de la commune de Pontcirq. Tarif : 12 €. Réservation possible sur HelloAsso.",
-    image: 'concert-harpe-2026.jpg',
-    associations: [
-      { name: 'Association de Sauvegarde du Patrimoine', anchor: 'assoc-association-de-sauvegarde-du-patrimoine' },
-    ],
-  },
-  {
-    id: 10,
-    date: '2026-06-14',
-    lieu: 'Église Saint-Pierre-ès-Liens',
-    title: 'Concert de gospel à l\'église Saint-Pierre',
-    excerpt: "L'association pour la rénovation et la protection du patrimoine communal a organisé un concert de gospel qui a réuni un public attentif.",
-    content:
-      "Dimanche 14 juin après-midi, l'association pour la rénovation et la protection du patrimoine communal de Pontcirq organisait " +
-      "la venue à l'église du village d'un duo de musiciens, Jean-Marie Tiam au chant et à la guitare et Daniel Alogues à la trompette, " +
-      "pour un concert de musique gospel. Les deux musiciens ont amené un public attentif à parcourir l'univers et l'histoire de cette " +
-      "musique populaire servie avec engagement à travers notamment l'exécution de quelques grands standards (Amazing Grace, " +
-      "Joshua Fit the Battle of Jericho…). Les musiciens ont souvent entraîné le public à participer en tapant dans les mains, " +
-      "dans l'esprit de la pratique des negro spirituals. Daniel Alogues, trompettiste au jeu subtil, a été très apprécié dans " +
-      "l'animation de ce concert, comme dans l'accompagnement du chanteur Jean-Marie Tiam. Le public a apprécié cette après-midi " +
-      "musicale, bien au frais dans l'église Saint-Pierre qui accueillait avec cette initiative un concert dont les références " +
-      "chrétiennes disparaissent derrière les qualités fédératrices de cette musique.",
-    image: 'concert-gospel-2026.jpg',
-    associations: [
-      { name: 'Association de Sauvegarde du Patrimoine', anchor: 'assoc-association-de-sauvegarde-du-patrimoine' },
-    ],
-  },
-  {
-    id: 11,
-    date: '2026-06-13',
-    time: '16:30',
-    title: "Bibs en Jeux",
-    excerpt: "La bibliothèque de Pontcirq organise une après-midi jeux de société et grands jeux en bois, gratuite et ouverte à tous.",
-    content:
-      "Samedi 13 juin de 16h30 à 21h, la bibliothèque de Pontcirq organise \"Bibs en Jeux\" : de nombreux jeux de société, du débutant à " +
-      "l'expert, animés par la boutique Guya Jeux de Sarlat et la médiathèque du Grand Cahors, ainsi que de grands jeux en bois animés par " +
-      "Les jeux de l'Ours. Événement gratuit et ouvert à tous. Buvette et petite restauration (glaces, paninis, tapas) proposées par le bar " +
-      "associatif La Gariotte. Contact : bibliotheque.pontcirq@gmail.com.",
-    image: 'bibs-en-jeux-2026.jpg',
-    associations: [
-      { name: 'Bibliothèque de Pontcirq', anchor: 'assoc-bibliotheque-de-pontcirq' },
-      { name: 'La Gariotte', anchor: 'assoc-la-gariotte' },
-    ],
-  },
-  {
-    id: 13,
-    date: '2026-06-13',
-    time: '21:00',
-    lieu: 'Place de la halle, Catus',
-    title: 'Bal-atelier de danses traditionnelles à Catus',
-    excerpt: "L'association Lo Garric propose un bal-atelier de danses traditionnelles, samedi 13 juin de 21h à 23h, place de la halle à Catus.",
-    content:
-      "Samedi 13 juin de 21h à 23h, place de la halle à Catus, l'association Lo Garric propose un bal-atelier de danses traditionnelles, " +
-      "gratuit et ouvert à tous. Le duo Lo Garric, composé de Gilles Cassagnes (cabrette et autres cornemuses) et Francis Barascou " +
-      "(accordéon), animera une session de musiques du Quercy, de l'Auvergne, du Limousin et d'autres régions. Jean-Luc Laviale assurera " +
-      "l'animation pour la danse.",
-    image: 'bal-lo-garric-2026.webp',
-  },
-  {
-    id: 12,
-    date: '2026-03-06',
-    time: '20:30',
-    lieu: 'Salle communale de Pontcirq',
-    title: 'Séance cinéma à la salle communale',
-    excerpt: "La bibliothèque de Pontcirq proposait une projection gratuite en partenariat avec le café associatif La Gariotte.",
-    content:
-      "Vendredi 6 mars à 20h30, la bibliothèque de Pontcirq proposait une séance cinéma à la salle communale : projection d'un film " +
-      "sensible et émouvant sur l'amitié et la solidarité, inspiré d'un roman d'Anna Gavalda. Entrée gratuite. Ouverture de la buvette " +
-      "à 18h30, vente de popcorns et glaces, en partenariat avec le café associatif La Gariotte.",
-    image: 'bibli-projection-2026.jpg',
-    associations: [
-      { name: 'Bibliothèque de Pontcirq', anchor: 'assoc-bibliotheque-de-pontcirq' },
-      { name: 'La Gariotte', anchor: 'assoc-la-gariotte' },
-    ],
-  },
-];
+export const actualites: Actualite[] = entries.map((entry) => ({ ...entry.data, entry }));
+
+// Ids are used in URLs (/actualites/<id>/), so they must be unique.
+const seenIds = new Map<number, string>();
+for (const { id, entry } of actualites) {
+  const other = seenIds.get(id);
+  if (other) {
+    throw new Error(`Duplicate actualite id ${id} in src/content/actualites/${other}.md and ${entry.id}.md`);
+  }
+  seenIds.set(id, entry.id);
+}
 
 // Build-time check: every association link must point to a card on /vie-locale.
 // This module is imported by the event pages, so a dead anchor fails the build.
 const deadAnchors = actualites.flatMap((a) =>
   (a.associations ?? [])
     .filter((assoc) => !VALID_ANCHORS.has(assoc.anchor))
-    .map((assoc) => `  - event id ${a.id}: "${assoc.anchor}" (${assoc.name})`),
+    .map((assoc) => `  - ${a.entry.id}.md (id ${a.id}): "${assoc.anchor}" (${assoc.name})`),
 );
 if (deadAnchors.length > 0) {
   throw new Error(
-    `Unknown association anchors in src/data/actualites.ts (no matching card on /vie-locale):\n${deadAnchors.join('\n')}\n` +
+    `Unknown association anchors in src/content/actualites/ (no matching card on /vie-locale):\n${deadAnchors.join('\n')}\n` +
       `Valid anchors: ${[...VALID_ANCHORS].join(', ')}`,
   );
 }
@@ -217,7 +82,7 @@ const actualiteImages: Record<string, ImageMetadata> = Object.fromEntries(
 // Build-time check: every event image must exist in src/assets/actualites/.
 const missingImages = actualites
   .filter((a) => a.image && !actualiteImages[a.image])
-  .map((a) => `  - event id ${a.id}: "${a.image}"`);
+  .map((a) => `  - ${a.entry.id}.md (id ${a.id}): "${a.image}"`);
 if (missingImages.length > 0) {
   throw new Error(
     `Missing event images (expected a file name in src/assets/actualites/, e.g. "contes-2026.jpg"):\n${missingImages.join('\n')}`,
@@ -252,12 +117,12 @@ export const ARCHIVE_PAGE_SIZE = 5;
 // Upcoming and ongoing events, soonest first.
 const upcoming = actualites
   .filter((a) => getStatus(a) !== 'past')
-  .sort((a, b) => a.date.localeCompare(b.date));
+  .sort((a, b) => a.date.localeCompare(b.date) || a.id - b.id);
 
 // Past events, most recent first.
 const past = actualites
   .filter((a) => getStatus(a) === 'past')
-  .sort((a, b) => b.date.localeCompare(a.date));
+  .sort((a, b) => b.date.localeCompare(a.date) || a.id - b.id);
 
 const archives = past.slice(RECENT_PAST_COUNT);
 

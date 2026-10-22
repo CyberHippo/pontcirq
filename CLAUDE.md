@@ -12,7 +12,8 @@ Site content is in French; code, comments, commit messages and PR descriptions a
 
 ## Layout
 
-- `src/data/actualites.ts`: all events/news and the logic around them (status, archives, highlights), plus the build-time check of association anchors
+- `src/content/actualites/`: events/news, one Markdown file each; schema in `src/content.config.ts` (validated at build time)
+- `src/data/actualites.ts`: the logic around events (loading the collection, status, archives, highlights, date/time formatting, image lookup), plus the build-time checks of unique ids, association anchors and images
 - `src/data/associations.ts`: associations listed on /vie-locale, `associationAnchor(name)` and `LIBRARY_ANCHOR`
 - `src/pages/`: one file per page; `actualites/[id].astro` is the event detail page
 - `src/pages/fragments/archives/[page].astro`: htmx fragments loaded by « Voir les archives »; `/fragments/` is excluded from the sitemap
@@ -28,19 +29,38 @@ The Inter font (`@fontsource-variable/inter`) and htmx (`htmx.org`, pinned to an
 
 ## Adding an event
 
-Add an entry to the `actualites` array in `src/data/actualites.ts`:
+Create a Markdown file in `src/content/actualites/` named `<date>-<slug>.md` (e.g. `2026-11-06-projection-permaculture.md`, slug in lowercase kebab-case). The frontmatter holds the metadata, the body is the full text:
 
-- `id`: next integer after the current highest id (ids are not in array order)
-- `date` / `endDate`: `YYYY-MM-DD`; `endDate` only for multi-day events
-- `time`: start time `HH:MM` (24h), shown next to the date as `19h30` / `16h`; omit it for multi-day events with several times
-- `lieu`: place, e.g. `Salle communale de Pontcirq`, `Église Saint-Pierre-ès-Liens`, `Place de la halle, Catus`; shown under the date. Keep stating time and place in `content` too
-- `excerpt`: one sentence for cards; `content`: full text, rendered as Markdown (`\n\n` between paragraphs)
-- `image`: put the file in `src/assets/actualites/` with a lowercase kebab-case name and set `image` to the file name only (e.g. `image: 'mois-du-doc-2026.png'`); rename files the user drops in with spaces or capitals. Formats: jpg, jpeg, png, webp, avif. The build fails if the file is missing. No need to resize or compress it
-- `associations`: `{ name, anchor }` where `anchor` is `associationAnchor(name)` (`assoc-` + `slugify(name)`) of an entry in `src/data/associations.ts`, or `LIBRARY_ANCHOR` (`assoc-bibliotheque-de-pontcirq`) for the library; the build fails on an unknown anchor. Omit the field when no listed association organises the event
+```markdown
+---
+id: 16
+date: "2026-11-06"
+time: "19:30"
+lieu: "Salle communale de Pontcirq"
+title: "Projection « Permaculture, la voie de l'autonomie »"
+excerpt: "Une phrase courte pour les cartes."
+image: "mois-du-doc-2026.png"
+associations:
+  - name: "Bibliothèque de Pontcirq"
+    anchor: assoc-bibliotheque-de-pontcirq
+---
+
+Premier paragraphe du texte complet.
+
+Deuxième paragraphe (une ligne vide entre les paragraphes).
+```
+
+- `id`: next integer after the current highest id across all files; it is the URL (`/actualites/<id>/`), so never reuse or change one. The build fails on duplicate ids
+- `date` / `endDate`: quoted `"YYYY-MM-DD"` strings (unquoted, YAML turns them into dates and validation fails); `endDate` only for multi-day events and never before `date`
+- `time`: optional quoted start time `"HH:MM"` (24h), shown next to the date as `19h30` / `16h`; omit it for multi-day events with several times
+- `lieu`: optional place, e.g. `Salle communale de Pontcirq`, `Église Saint-Pierre-ès-Liens`, `Place de la halle, Catus`; shown under the date. Keep stating time and place in the body too
+- `excerpt`: one sentence for cards; the body is rendered as Markdown, with a blank line between paragraphs. Smart quotes are disabled, so text renders exactly as typed
+- `image`: optional; put the file in `src/assets/actualites/` with a lowercase kebab-case name and set `image` to the file name only (e.g. `image: "mois-du-doc-2026.png"`); rename files the user drops in with spaces or capitals. Formats: jpg, jpeg, png, webp, avif. The build fails if the file is missing. No need to resize or compress it
+- `associations`: optional list of `{ name, anchor }` where `anchor` is `associationAnchor(name)` (`assoc-` + `slugify(name)`) of an entry in `src/data/associations.ts`, or `LIBRARY_ANCHOR` (`assoc-bibliotheque-de-pontcirq`) for the library; the build fails on an unknown anchor. Omit the field when no listed association organises the event
 - If the user provides a poster, read it and include useful details missing from their message (times, price, duration, contact)
 - Write in the past tense when the event date has already passed, in the future tense otherwise
 
-Event order in the array does not matter: lists are sorted by date.
+File order does not matter: lists are sorted by date, then by id. `npm run build` reports schema errors with the file name and field.
 
 ## Event status and archives
 
@@ -51,7 +71,7 @@ Event order in the array does not matter: lists are sorted by date.
 
 ## Associations
 
-Associations are listed in `src/data/associations.ts` and rendered on /vie-locale with `id={associationAnchor(name)}`; the library card is rendered separately with `id={LIBRARY_ANCHOR}`. `src/data/actualites.ts` checks at build time that every event `associations[].anchor` matches one of these anchors and throws with the event id and the bad anchor otherwise. So when removing or renaming an association, update the links to it in `actualites.ts` (the build tells you which), and check the grid `grid-template-rows` so the two columns stay balanced.
+Associations are listed in `src/data/associations.ts` and rendered on /vie-locale with `id={associationAnchor(name)}`; the library card is rendered separately with `id={LIBRARY_ANCHOR}`. `src/data/actualites.ts` checks at build time that every event `associations[].anchor` matches one of these anchors and throws with the event file, id and bad anchor otherwise. So when removing or renaming an association, update the links to it in `src/content/actualites/` (the build tells you which), and check the grid `grid-template-rows` so the two columns stay balanced.
 
 ## CI / deployment
 
@@ -64,5 +84,5 @@ Associations are listed in `src/data/associations.ts` and rendered on /vie-local
 ## Workflow
 
 - One branch and one PR per change; don't stack unrelated changes on an open PR
-- Branch names: `content/...` for site content, `feat/...` for features, `ci/...` for workflow changes
+- Branch names: `content/...` for site content, `feat/...` for features, `ci/...` for workflow changes, `refactor/...` for code changes with no visible effect
 - Open PRs with `gh pr create --assignee @me`
