@@ -10,6 +10,7 @@ import pontcirq6 from '../assets/accueil/pontcirq-6.jpg';
 import pontcirq7 from '../assets/accueil/pontcirq-7.jpg';
 import Carousel from '../components/Carousel.astro';
 import ActualiteCard from '../components/ActualiteCard.astro';
+import AlerteBanner from '../components/AlerteBanner.astro';
 import { getHighlights } from '../data/actualites';
 
 const latestNews = getHighlights(3);
@@ -33,6 +34,8 @@ const slides = [
       de vie paisible entre causses et vallées.
     </p>
   </section>
+
+  <AlerteBanner />
 
   <section class="gallery">
     <Carousel slides={slides} />
