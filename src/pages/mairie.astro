@@ -1,5 +1,7 @@
 ---
+import { Image } from 'astro:assets';
 import BaseLayout from '../layouts/BaseLayout.astro';
+import carte from '../assets/mairie/carte-pontcirq.png';
 import { address, phone, email, hours, CLOSED } from '../data/mairie';
 
 const elus = [{ role: 'Maire', name: 'Thierry Chatain' }];
@@ -118,13 +120,19 @@ const demarches = [
       </p>
       <p>Téléphone : <a href={phone.href}>{phone.label}</a></p>
       <p>Email : <a href={email.href}>{email.label}</a></p>
-      <div class="map-embed">
-        <iframe
-          title="Carte de localisation de Pontcirq"
-          src="https://www.openstreetmap.org/export/embed.html?bbox=1.2328%2C44.5226%2C1.2928%2C44.5726&layer=mapnik&marker=44.5476%2C1.2628"
-          loading="lazy"
-        ></iframe>
-      </div>
+      <a
+        class="map-embed"
+        href="https://www.openstreetmap.org/?mlat=44.5476&mlon=1.2628#map=14/44.5476/1.2628"
+        target="_blank"
+        rel="noopener"
+      >
+        <Image
+          src={carte}
+          alt="Carte du bourg de Pontcirq et des environs : la mairie est marquée au centre. Ouvrir la carte interactive sur OpenStreetMap"
+          widths={[480, 960]}
+          sizes="(max-width: 720px) 100vw, 36rem"
+        />
+      </a>
       <p>
         <a href="https://www.openstreetmap.org/relation/123870" target="_blank" rel="noopener">
           Voir le contour de la commune sur OpenStreetMap &rarr;
@@ -316,16 +324,17 @@ const demarches = [
   }
 
   .map-embed {
+    display: block;
     margin: 1rem 0;
     border-radius: var(--radius-sm);
     overflow: hidden;
     border: 1px solid var(--color-border);
   }
 
-  .map-embed iframe {
+  .map-embed img {
     width: 100%;
     height: 220px;
-    border: 0;
+    object-fit: cover;
     display: block;
   }
 
