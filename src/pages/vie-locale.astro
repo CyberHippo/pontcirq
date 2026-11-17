@@ -4,6 +4,24 @@ import bibliotheque from '../assets/vie-locale/bibliotheque.jpg';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { associations, associationAnchor, LIBRARY_ANCHOR } from '../data/associations';
 
+const ecoles = [
+  {
+    name: 'Labastide-du-Vert',
+    cycle: 'École maternelle',
+    levels: 'Petite, moyenne et grande sections',
+  },
+  {
+    name: 'Lherm',
+    cycle: 'École élémentaire',
+    levels: 'CP, CE1 et CE2',
+  },
+  {
+    name: 'Les Junies',
+    cycle: 'École élémentaire',
+    levels: 'CE2, CM1 et CM2',
+  },
+];
+
 const marches = [
   {
     day: 'Lundi soir',
@@ -134,14 +152,25 @@ const marches = [
 
   <section>
     <h2>École (RPI)</h2>
-    <p>
-      Les enfants de Pontcirq sont scolarisés au sein du regroupement pédagogique intercommunal (RPI)
-      réunissant les communes de Labastide-du-Vert, Les Junies, Lherm et Pontcirq, en école maternelle
-      et élémentaire. Ramassage scolaire assuré par le Conseil départemental du Lot.
+    <p class="section-intro">
+      Pontcirq n'a plus d'école ouverte : les enfants sont scolarisés au sein du regroupement pédagogique
+      intercommunal (RPI n° 22 du Lot), qui réunit les communes de Labastide-du-Vert, Les Junies, Lherm et
+      Pontcirq. Les classes sont réparties sur trois sites :
     </p>
+    <ul class="ecoles">
+      {ecoles.map((ecole) => (
+        <li class="card">
+          <h3>{ecole.name}</h3>
+          <p class="ecole-cycle">{ecole.cycle}</p>
+          <p>{ecole.levels}</p>
+        </li>
+      ))}
+    </ul>
+    <p>Le ramassage scolaire est assuré par le Conseil départemental du Lot.</p>
     <p>
-      L'association des parents d'élèves du RPI (APE 3LP) organise chaque année des événements dont
-      les fonds récoltés sont reversés intégralement et équitablement entre les écoles du regroupement.
+      L'association des parents d'élèves du RPI (<a href={`#${associationAnchor('APE 3LP')}`}>APE 3LP</a>)
+      organise chaque année des événements dont les fonds récoltés sont reversés intégralement et
+      équitablement entre les écoles du regroupement.
     </p>
   </section>
 
@@ -205,6 +234,31 @@ const marches = [
 
   .assoc-list .contact a {
     color: var(--color-primary);
+  }
+
+  .ecoles {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    list-style: none;
+    padding: 0;
+    margin: 1.25rem 0 1.5rem;
+  }
+
+  .ecoles h3 {
+    margin: 0 0 0.25rem;
+    font-size: 1.1rem;
+  }
+
+  .ecoles p {
+    margin: 0;
+    color: var(--color-text-muted);
+    font-size: 0.92rem;
+  }
+
+  .ecoles .ecole-cycle {
+    color: var(--color-primary);
+    font-weight: 600;
   }
 
   .section-intro {
