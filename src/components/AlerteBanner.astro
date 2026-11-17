@@ -1,0 +1,80 @@
+---
+import { formatAlerteDate, getActiveAlertes } from '../data/alertes';
+
+const alertes = getActiveAlertes();
+---
+
+{alertes.map((alerte, i) => (
+  <aside class="alerte" aria-labelledby={`alerte-${i}`}>
+    <h2 id={`alerte-${i}`}>
+      <span class="alerte-icon" aria-hidden="true">!</span>
+      {alerte.title}
+    </h2>
+    {alerte.paragraphs.map((p) => <p>{p}</p>)}
+    {alerte.dates && (
+      <ul>
+        {alerte.dates.map((date) => (
+          <li><time datetime={date}>{formatAlerteDate(date)}</time></li>
+        ))}
+      </ul>
+    )}
+    {alerte.phone && (
+      <p>
+        {alerte.phone.intro} <a href={alerte.phone.href}>{alerte.phone.label}</a>.
+      </p>
+    )}
+    {alerte.closing && <p>{alerte.closing}</p>}
+  </aside>
+))}
+
+<style>
+  .alerte {
+    background: var(--color-accent-light);
+    border: 1px solid var(--color-accent);
+    border-left-width: 6px;
+    border-radius: var(--radius-sm);
+    padding: 1rem 1.25rem;
+    margin: 0 0 1.5rem;
+  }
+
+  .alerte h2 {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin: 0 0 0.5rem;
+    font-size: 1.15rem;
+    color: var(--color-text);
+  }
+
+  .alerte-icon {
+    flex: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: 999px;
+    background: var(--color-accent);
+    color: #fff;
+    font-weight: 800;
+    font-size: 0.95rem;
+  }
+
+  .alerte p {
+    margin: 0.4rem 0;
+  }
+
+  .alerte ul {
+    margin: 0.4rem 0;
+    padding-left: 1.4rem;
+  }
+
+  .alerte li {
+    font-weight: 700;
+  }
+
+  .alerte a {
+    font-weight: 700;
+    white-space: nowrap;
+  }
+</style>
