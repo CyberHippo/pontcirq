@@ -168,6 +168,38 @@ const demarches = [
     </div>
   </section>
 
+  <section id="salle-communale">
+    <h2>Location de la salle communale</h2>
+    <div class="card salle-card">
+      <p class="salle-intro">
+        La salle communale (salle des fêtes), située dans le bourg, peut être louée pour vos fêtes de famille,
+        repas et événements associatifs.
+      </p>
+      <dl class="salle-facts">
+        <div>
+          <dt>Adresse</dt>
+          <dd><a href={address.href}>{address.label}</a></dd>
+        </div>
+        <div>
+          <dt>Capacité</dt>
+          <dd>90 personnes</dd>
+        </div>
+        <div>
+          <dt>Tarif</dt>
+          <dd>de 75 € à 90 €</dd>
+        </div>
+        <div>
+          <dt>Réservation</dt>
+          <dd><a href="tel:+33672028518">06 72 02 85 18</a></dd>
+        </div>
+      </dl>
+      <p class="salle-note">
+        Renseignements sur les disponibilités et les conditions de location auprès de la mairie, par téléphone
+        ou par email à <a href={email.href}>{email.label}</a>.
+      </p>
+    </div>
+  </section>
+
   <section>
     <h2>Services publics</h2>
     <ul class="services">
@@ -271,6 +303,45 @@ const demarches = [
     display: flex;
     flex-direction: column;
     gap: 0.25rem;
+  }
+
+  .salle-card {
+    margin: 1.5rem 0 2.5rem;
+  }
+
+  .salle-intro,
+  .salle-note {
+    margin: 0;
+    color: var(--color-text-muted);
+  }
+
+  .salle-facts {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 1rem;
+    margin: 1.25rem 0;
+  }
+
+  .salle-facts div {
+    background: var(--color-primary-light);
+    border-radius: var(--radius-sm);
+    padding: 0.75rem 1rem;
+  }
+
+  .salle-facts dt {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--color-text-muted);
+  }
+
+  .salle-facts dd {
+    margin: 0.15rem 0 0;
+    font-weight: 700;
+    color: var(--color-primary-dark);
+  }
+
+  .salle-facts dd a {
+    color: inherit;
   }
 
   .services {
