@@ -39,6 +39,10 @@ const slides = [
 
   <section class="gallery">
     <Carousel slides={slides} />
+    <p class="photo-credit">
+      Photos : © Pierre Lasvenes,
+      <a href="https://www.entrevoir.com/" target="_blank" rel="noopener">entrevoir.com</a>
+    </p>
   </section>
 
   <section class="news">
@@ -107,6 +111,18 @@ const slides = [
 
   .gallery {
     margin: 0 0 1.5rem;
+  }
+
+  .photo-credit {
+    margin: 0.5rem 0 0;
+    text-align: right;
+    font-size: 0.8rem;
+    color: var(--color-text-muted);
+  }
+
+  .photo-credit a {
+    color: inherit;
+    text-decoration: underline;
   }
 
   .news {
