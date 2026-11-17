@@ -201,6 +201,40 @@ const marches = [
       ))}
     </ul>
   </section>
+
+  <section id="randonnee">
+    <h2>Randonnée</h2>
+    <div class="card rando-card">
+      <h3>Chemin des chevaliers</h3>
+      <ul class="rando-facts">
+        <li><strong>4,5 km</strong> en boucle</li>
+        <li><strong>1h30</strong> à pied</li>
+        <li><strong>Facile</strong></li>
+        <li>Balisage <strong>jaune</strong></li>
+      </ul>
+      <p>
+        Au départ de la mairie, cette petite boucle monte au-dessus du village par le lieu-dit La Crouzette,
+        traverse le hameau de Tourniac, passe par Le Rège puis redescend par La Bastide, son château d'eau et son
+        pigeonnier, avec un joli point de vue sur le village de Pontcirq. Prévoyez des chaussures adaptées et
+        des vêtements imperméables.
+      </p>
+      <ul class="rando-links">
+        <li>
+          <a href="https://cdt46.media.tourinsoft.eu/upload/Fiche-Rando-PR-PONTCIRQ.pdf" target="_blank" rel="noopener">
+            Fiche de l'itinéraire avec carte (PDF)
+          </a>
+        </li>
+        <li>
+          <a href="https://cdt46.media.tourinsoft.eu/upload/2022-10-24-PR-PONTCIRQ.gpx">Trace GPX</a>
+        </li>
+        <li>
+          <a href="https://www.cahorsvalleedulot.com/itineraires/chemin-des-chevaliers/" target="_blank" rel="noopener">
+            Sur le site de l'Office de tourisme Cahors – Vallée du Lot &rarr;
+          </a>
+        </li>
+      </ul>
+    </div>
+  </section>
 </BaseLayout>
 
 <style>
@@ -283,6 +317,50 @@ const marches = [
   .section-intro {
     color: var(--color-text-muted);
     margin-top: 0.25rem;
+  }
+
+  .rando-card {
+    margin: 1.5rem 0 2.5rem;
+    max-width: 48rem;
+  }
+
+  .rando-card h3 {
+    margin-top: 0;
+  }
+
+  .rando-card p {
+    color: var(--color-text-muted);
+  }
+
+  .rando-facts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    list-style: none;
+    padding: 0;
+    margin: 0.75rem 0 1rem;
+  }
+
+  .rando-facts li {
+    background: var(--color-primary-light);
+    color: var(--color-primary-dark);
+    border-radius: 999px;
+    padding: 0.3rem 0.85rem;
+    font-size: 0.9rem;
+  }
+
+  .rando-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .rando-links li {
+    margin-top: 0.4rem;
+  }
+
+  .rando-links a {
+    font-weight: 600;
   }
 
   .marches-list {
