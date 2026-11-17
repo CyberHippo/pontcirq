@@ -101,7 +101,7 @@ const marches = [
   <h1>Vie locale</h1>
 
   <section>
-    <h2>Associations</h2>
+    <h2><span aria-hidden="true">🤝</span> Associations</h2>
     <ul class="assoc-list">
       {associations.map((assoc) => (
         <li class="card" id={associationAnchor(assoc.name)}>
@@ -132,7 +132,7 @@ const marches = [
   </section>
 
   <section>
-    <h2>Bibliothèque communale</h2>
+    <h2><span aria-hidden="true">📚</span> Bibliothèque communale</h2>
     <div class="card library-card" id={LIBRARY_ANCHOR}>
       <Image
         src={bibliotheque}
@@ -156,7 +156,7 @@ const marches = [
   </section>
 
   <section>
-    <h2>École (RPI)</h2>
+    <h2><span aria-hidden="true">🏫</span> École (RPI)</h2>
     <p class="section-intro">
       Pontcirq n'a plus d'école ouverte : les enfants sont scolarisés au sein du regroupement pédagogique
       intercommunal (RPI n° 22 du Lot), qui réunit les communes de Labastide-du-Vert, Les Junies, Lherm et
@@ -180,7 +180,7 @@ const marches = [
   </section>
 
   <section>
-    <h2>Marchés du coin</h2>
+    <h2><span aria-hidden="true">🧺</span> Marchés du coin</h2>
     <p class="section-intro">Aucun marché à Pontcirq même, mais plusieurs marchés hebdomadaires à proximité.</p>
     <ul class="marches-list">
       {marches.map((marche) => (
@@ -203,7 +203,7 @@ const marches = [
   </section>
 
   <section id="randonnee">
-    <h2>Randonnée</h2>
+    <h2><span aria-hidden="true">🥾</span> Randonnée</h2>
     <div class="card rando-card">
       <h3>Chemin des chevaliers</h3>
       <ul class="rando-facts">
