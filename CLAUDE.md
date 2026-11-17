@@ -15,7 +15,7 @@ Site content is in French; code, comments, commit messages and PR descriptions a
 - `src/content/actualites/`: events/news, one Markdown file each; schema in `src/content.config.ts` (validated at build time)
 - `src/data/actualites.ts`: the logic around events (loading the collection, status, archives, highlights, date/time formatting, image lookup), plus the build-time checks of unique ids, association anchors and images
 - `src/data/alertes.ts`: notices shown in a banner at the top of the home page (`AlerteBanner`), e.g. exceptional town-hall closures. Give them `dates` (past ones are hidden, the notice disappears after the last one) or an `until` date, so they expire on their own at the weekly rebuild
-- `src/data/associations.ts`: associations listed on /vie-locale, `associationAnchor(name)` and `LIBRARY_ANCHOR`
+- `src/data/associations.ts`: associations listed on /vie-locale (optional `logo`, imported from `src/assets/vie-locale/logo-<name>.*`, shown next to the name), `associationAnchor(name)` and `LIBRARY_ANCHOR`
 - `src/pages/`: one file per page; `actualites/[id].astro` is the event detail page
 - `src/pages/fragments/archives/[page].astro`: htmx fragments loaded by « Voir les archives »; `/fragments/` is excluded from the sitemap
 - `src/pages/accessibilite.astro`: accessibility declaration (legally required, linked from the footer as « Accessibilité : non conforme »); update its `declarationDate` whenever its content changes, and the status there and in the footer if an RGAA audit is done

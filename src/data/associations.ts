@@ -1,3 +1,5 @@
+import type { ImageMetadata } from 'astro';
+import logoLaGariotte from '../assets/vie-locale/logo-la-gariotte.png';
 import { slugify } from '../utils/slugify';
 
 export interface Association {
@@ -6,6 +8,8 @@ export interface Association {
   /** Email address (rendered as a mailto link when it contains "@") or free text; empty when unknown. */
   contact: string;
   website?: string;
+  /** Logo from src/assets/vie-locale/ (`logo-<name>`), shown next to the name on /vie-locale. */
+  logo?: ImageMetadata;
 }
 
 export const associations: Association[] = [
@@ -33,6 +37,7 @@ export const associations: Association[] = [
     name: 'La Gariotte',
     desc: 'Café associatif et lieu de convivialité du village.',
     contact: 'lagariottepontcirq@gmail.com',
+    logo: logoLaGariotte,
   },
   {
     name: 'La maison du Garric Blanc',
