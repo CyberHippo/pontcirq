@@ -33,6 +33,29 @@ const services = [
   },
 ];
 
+const urbanisme = [
+  {
+    label: 'Consulter le PLUi',
+    desc: 'Règlement, plans de zonage et évolutions en cours, sur le site du Grand Cahors.',
+    href: 'https://cahorsagglo.fr/plui',
+  },
+  {
+    label: 'Fiche urbanisme de Pontcirq',
+    desc: "Documents d'urbanisme en vigueur sur la commune et droit de préemption.",
+    href: 'https://cahorsagglo.fr/pontcirq',
+  },
+  {
+    label: 'Déposer une demande en ligne',
+    desc: "Permis de construire, déclaration préalable, certificat d'urbanisme, permis de démolir… Le dépôt papier reste possible au secrétariat de mairie.",
+    href: 'https://permisdeconstruire.grandcahors.fr',
+  },
+  {
+    label: 'Plan cadastral',
+    desc: 'Consulter et imprimer le plan cadastral de la commune.',
+    href: 'https://cadastre.gouv.fr',
+  },
+];
+
 const demarches = [
   {
     title: 'État civil',
@@ -246,6 +269,22 @@ const demarches = [
       ))}
     </div>
   </section>
+
+  <section id="urbanisme">
+    <h2>Urbanisme</h2>
+    <p class="intro">
+      L'urbanisme de Pontcirq relève du plan local d'urbanisme intercommunal (PLUi) du Grand Cahors, approuvé
+      le 11 mars 2024. Les demandes d'autorisation sont instruites par le Grand Cahors.
+    </p>
+    <ul class="urbanisme-list">
+      {urbanisme.map((item) => (
+        <li class="card">
+          <a href={item.href} target="_blank" rel="noopener">{item.label} &rarr;</a>
+          <p>{item.desc}</p>
+        </li>
+      ))}
+    </ul>
+  </section>
 </BaseLayout>
 
 
@@ -429,6 +468,26 @@ const demarches = [
   .intro-logo img {
     width: 24rem;
     height: auto;
+  }
+
+  .urbanisme-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1rem;
+    list-style: none;
+    padding: 0;
+    margin: 1.5rem 0 3rem;
+  }
+
+  .urbanisme-list a {
+    font-weight: 700;
+    color: var(--color-primary);
+  }
+
+  .urbanisme-list p {
+    margin: 0.4rem 0 0;
+    color: var(--color-text-muted);
+    font-size: 0.9rem;
   }
 
   .demarches-grid {
