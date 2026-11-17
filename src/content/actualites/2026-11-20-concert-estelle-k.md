@@ -15,4 +15,4 @@ Vendredi 20 novembre, l'équipe des joyeux Gariottins vous convie à une nouvell
 
 À 21h, Estelle-K, chanteuse et musicienne multiforme, proposera une exploration musicale entre chanson française, folk, musique traditionnelle et voyage sonore au-delà des frontières, au gré de la voix, de l'accordéon, de la guitare, du tambour, du balafon, de la guimbarde et bien d'autres instruments.
 
-Ouverture du bar à 18h30. Restauration sur réservation à 16 € : paëlla, salade et dessert maison façon forêt-noire, café ou boisson chaude offerts. Réservation avant le mardi 17 novembre à 12h à lagariotte@hotmail.com. Merci d'apporter vos couverts.
+Ouverture du bar à 18h30. Restauration sur réservation à 16 € : paëlla, salade et dessert maison façon forêt-noire, café ou boisson chaude offerts. Réservation avant le mardi 17 novembre à 12h à lagariottepontcirq@gmail.com. Merci d'apporter vos couverts.
