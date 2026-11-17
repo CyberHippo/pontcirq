@@ -1,8 +1,8 @@
 // Town-hall contact details, shared by /mairie and the footer.
 
 export const address = {
-  label: 'Le Bourg, 46150 Pontcirq',
-  href: 'geo:44.5476,1.2628?q=Le+Bourg%2C+46150+Pontcirq',
+  label: '530 route du Bourg, 46150 Pontcirq',
+  href: 'geo:44.5476,1.2628?q=530+route+du+Bourg%2C+46150+Pontcirq',
 };
 
 export const phone = {
