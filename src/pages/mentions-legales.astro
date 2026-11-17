@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { address, email, phone } from '../data/mairie';
 ---
 
 <BaseLayout title="Mentions légales" description="Mentions légales du site de la commune de Pontcirq.">
@@ -14,12 +15,13 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     <h2>Édition du site</h2>
     <p>
       Mairie de Pontcirq<br />
-      Le Bourg, 46150 Pontcirq<br />
-      Email : mairie.de.pontcirq@wanadoo.fr
+      {address.label}<br />
+      Téléphone : <a href={phone.href}>{phone.label}</a><br />
+      Email : <a href={email.href}>{email.label}</a>
     </p>
 
     <h2>Directeur de la publication</h2>
-    <p>Le maire de Pontcirq, en sa qualité de représentant légal de la commune.</p>
+    <p>Thierry Chatain, maire de Pontcirq.</p>
 
     <h2>Hébergement</h2>
     <p>
@@ -43,6 +45,22 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     <p>
       Ce site ne collecte, ne traite ni ne conserve aucune donnée personnelle des visiteurs. Il ne charge aucun
       contenu (polices, scripts, cartes, vidéos) depuis un service tiers.
+    </p>
+
+    <p>
+      Comme tout hébergeur, GitHub enregistre des données techniques de connexion, dont l'adresse IP des
+      visiteurs, pour assurer la sécurité et le bon fonctionnement du service. Ces données sont traitées par
+      GitHub selon sa
+      <a href="https://docs.github.com/fr/site-policy/privacy-policies/github-general-privacy-statement" target="_blank" rel="noopener">déclaration de confidentialité</a>.
+    </p>
+    <p>
+      Les liens vers d'autres sites (service-public.fr, syndicats, associations…) vous font quitter ce site :
+      ces sites appliquent leur propre politique de confidentialité.
+    </p>
+    <p>
+      Pour toute question, vous pouvez écrire à la mairie à <a href={email.href}>{email.label}</a>. Vous
+      pouvez également adresser une réclamation à la
+      <a href="https://www.cnil.fr/fr/plaintes" target="_blank" rel="noopener">CNIL</a>.
     </p>
 
     <h2>Cookies</h2>
