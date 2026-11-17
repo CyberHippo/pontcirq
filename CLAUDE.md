@@ -17,9 +17,9 @@ Site content is in French; code, comments, commit messages and PR descriptions a
 - `src/data/associations.ts`: associations listed on /vie-locale, `associationAnchor(name)` and `LIBRARY_ANCHOR`
 - `src/pages/`: one file per page; `actualites/[id].astro` is the event detail page
 - `src/pages/fragments/archives/[page].astro`: htmx fragments loaded by « Voir les archives »; `/fragments/` is excluded from the sitemap
+- `src/pages/accessibilite.astro`: accessibility declaration (legally required, linked from the footer as « Accessibilité : non conforme »); update its `declarationDate` whenever its content changes, and the status there and in the footer if an RGAA audit is done
 - `src/pages/rss.xml.ts`: RSS feed of all events (`/rss.xml`, `@astrojs/rss`), newest date first; linked from `BaseLayout.astro` and /actualites
 - `src/components/`: `ActualiteCard`, `StatusBadge`, `Carousel`, `Header`, `Footer`
-- `src/pages/accessibilite.astro`: accessibility declaration (legally required, linked from the footer as « Accessibilité : non conforme »); update its `declarationDate` whenever its content changes, and the status there and in the footer if an RGAA audit is done
 - `src/pages/vie-locale.astro`: associations (from `src/data/associations.ts`), library, school, markets (markets data inline in the frontmatter)
 - `src/styles/global.css`: design tokens (`--color-*`, `--radius`, `--shadow-*`); reuse them instead of hard-coded colors
 - `src/assets/`: content photos (`actualites/`, `accueil/`, `vie-locale/`), optimised at build time by `astro:assets` (resized, converted to WebP, responsive `srcset`). Render them with `<Image>` / `getImage` from `astro:assets`, never a plain `<img>`; commit originals as they are, no manual compression needed. `BaseLayout`'s `image` prop (og:image) takes one of these imports and is resized to 1200px JPEG
