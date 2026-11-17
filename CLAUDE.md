@@ -22,6 +22,7 @@ Site content is in French; code, comments, commit messages and PR descriptions a
 - `src/components/`: `ActualiteCard`, `StatusBadge`, `Carousel`, `Header`, `Footer`
 - `src/pages/mentions-legales.astro` states that no content is loaded from third parties: no iframes or embeds (the /mairie map is a static image in `src/assets/mairie/` linking to OpenStreetMap)
 - `src/pages/vie-locale.astro`: associations (from `src/data/associations.ts`), library, school, markets (markets data inline in the frontmatter)
+- `src/components/SuggestionBox.astro`: « Une idée pour Pontcirq ? » card at the bottom of the home page; its button is a `mailto:` to the town hall with a pre-filled subject and body (CRLF line breaks)
 - `src/styles/global.css`: design tokens (`--color-*`, `--radius`, `--shadow-*`); reuse them instead of hard-coded colors
 - `src/assets/`: content photos (`actualites/`, `accueil/`, `mairie/`, `vie-locale/`), optimised at build time by `astro:assets` (resized, converted to WebP, responsive `srcset`). Render them with `<Image>` / `getImage` from `astro:assets`, never a plain `<img>`; commit originals as they are, no manual compression needed. `BaseLayout`'s `image` prop (og:image) takes one of these imports and is resized to 1200px JPEG
 - `public/images/`: logos and icons served as is from `/images/...` (header blason, footer, services)

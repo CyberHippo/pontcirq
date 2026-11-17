@@ -1,0 +1,88 @@
+---
+import { email } from '../data/mairie';
+
+// Opens the visitor's email app with a pre-filled message to the town hall (CRLF line breaks, per RFC 6068).
+const subject = 'Idée / suggestion pour la commune';
+const body = [
+  'Bonjour,',
+  '',
+  'Je souhaite proposer une idée ou une amélioration pour la commune :',
+  '',
+  '',
+  '',
+  'Nom (facultatif) :',
+  'Téléphone (facultatif) :',
+].join('\r\n');
+const mailto = `${email.href}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+---
+
+<section class="suggestion" aria-labelledby="suggestion-title">
+  <span class="suggestion-icon" aria-hidden="true">💡</span>
+  <div class="suggestion-text">
+    <h2 id="suggestion-title">Une idée pour Pontcirq ?</h2>
+    <p>
+      Une suggestion, une amélioration pour le village ou pour ce site, un problème à signaler ? Écrivez à la
+      mairie, toutes les idées sont les bienvenues.
+    </p>
+  </div>
+  <div class="suggestion-actions">
+    <a class="btn" href={mailto}>Envoyer une suggestion</a>
+    <small>ou écrivez à <a href={email.href}>{email.label}</a></small>
+  </div>
+</section>
+
+<style>
+  .suggestion {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: 1.25rem;
+    background: var(--color-primary-light);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    margin: 0 0 3rem;
+  }
+
+  .suggestion-icon {
+    font-size: 1.75rem;
+    width: 3rem;
+    height: 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--color-surface);
+    border-radius: var(--radius-sm);
+  }
+
+  .suggestion h2 {
+    margin: 0 0 0.25rem;
+    font-size: 1.25rem;
+  }
+
+  .suggestion p {
+    margin: 0;
+    color: var(--color-text-muted);
+  }
+
+  .suggestion-actions {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.4rem;
+  }
+
+  .suggestion-actions small {
+    color: var(--color-text-muted);
+    font-size: 0.8rem;
+  }
+
+  .suggestion-actions small a {
+    color: var(--color-primary-dark);
+  }
+
+  @media (max-width: 720px) {
+    .suggestion {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
