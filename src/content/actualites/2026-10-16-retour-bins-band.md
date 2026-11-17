@@ -5,6 +5,7 @@ time: "19:45"
 lieu: "Salle communale de Pontcirq"
 title: "Le retour sur scène du Bin's Band"
 excerpt: "La Gariotte fêtait le retour sur scène de sa chorale, le Bin's Band, lors d'une soirée festive le vendredi 16 octobre."
+image: "logo-la-gariotte.png"
 associations:
   - name: "La Gariotte"
     anchor: assoc-la-gariotte
