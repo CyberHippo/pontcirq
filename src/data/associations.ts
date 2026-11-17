@@ -1,5 +1,6 @@
 import type { ImageMetadata } from 'astro';
 import logoLaGariotte from '../assets/vie-locale/logo-la-gariotte.png';
+import logoUnisVersTerre from '../assets/vie-locale/logo-unis-vers-terre.webp';
 import { slugify } from '../utils/slugify';
 
 export interface Association {
@@ -49,6 +50,7 @@ export const associations: Association[] = [
     desc: "Laboratoire d'écologie globale cultivant l'autonomie, la coopération humaine et la transition intérieure à travers la permaculture.",
     contact: 'asso.unisversterre (at) gmail.com',
     website: 'https://unisversterre.wordpress.com/',
+    logo: logoUnisVersTerre,
   },
 ];
 
