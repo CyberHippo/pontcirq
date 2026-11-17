@@ -17,6 +17,7 @@ Site content is in French; code, comments, commit messages and PR descriptions a
 - `src/data/associations.ts`: associations listed on /vie-locale, `associationAnchor(name)` and `LIBRARY_ANCHOR`
 - `src/pages/`: one file per page; `actualites/[id].astro` is the event detail page
 - `src/pages/fragments/archives/[page].astro`: htmx fragments loaded by « Voir les archives »; `/fragments/` is excluded from the sitemap
+- `src/pages/accessibilite.astro`: accessibility declaration (legally required, linked from the footer as « Accessibilité : non conforme »); update its `declarationDate` whenever its content changes, and the status there and in the footer if an RGAA audit is done
 - `src/pages/rss.xml.ts`: RSS feed of all events (`/rss.xml`, `@astrojs/rss`), newest date first; linked from `BaseLayout.astro` and /actualites
 - `src/components/`: `ActualiteCard`, `StatusBadge`, `Carousel`, `Header`, `Footer`
 - `src/pages/mentions-legales.astro` states that no content is loaded from third parties: no iframes or embeds (the /mairie map is a static image in `src/assets/mairie/` linking to OpenStreetMap)
