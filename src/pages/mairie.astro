@@ -218,6 +218,42 @@ const demarches = [
     </ul>
   </section>
 
+  <section id="grand-pass">
+    <h2>Carte Grand Pass</h2>
+    <div class="card grand-pass-card">
+      <p>
+        Gratuite et nominative, la carte Grand Pass du Grand Cahors est proposée à tous les habitants de
+        l'agglomération, donc aux Pontcirquois. Elle donne accès à des tarifs préférentiels :
+      </p>
+      <ul>
+        <li>piscines, médiathèque, ludothèque et conservatoire du Grand Cahors ;</li>
+        <li>spectacles, concerts (Auditorium, Les Docks) et visites guidées ;</li>
+        <li>offres ponctuelles des partenaires de l'agglomération.</li>
+      </ul>
+      <p>
+        Elle permet aussi de retirer les sacs jaunes de tri à l'Hôtel administratif Wilson.
+      </p>
+      <h3>Comment l'obtenir</h3>
+      <p>
+        Chaque membre de la famille doit avoir sa propre carte. Présentez-vous avec une pièce d'identité (ou le
+        livret de famille pour les enfants) et un justificatif de domicile de moins de trois mois :
+      </p>
+      <ul>
+        <li>
+          à l'Hôtel administratif Wilson, 72 rue du Président Wilson à Cahors, du lundi au vendredi de 8h30 à
+          11h45 et de 13h30 à 16h30 ;
+        </li>
+        <li>ou à la médiathèque du Grand Cahors, 185 avenue Jean-Jaurès à Cahors.</li>
+      </ul>
+      <p>Une carte perdue ou volée est remplacée pour 10 €.</p>
+      <p>
+        <a href="https://cahorsagglo.fr/ma-carte-grand-pass" target="_blank" rel="noopener">
+          Tous les avantages sur le site du Grand Cahors &rarr;
+        </a>
+      </p>
+    </div>
+  </section>
+
   <section id="demarches">
     <h2>Démarches administratives</h2>
     <div class="intro-row">
@@ -392,6 +428,37 @@ const demarches = [
     color: var(--color-primary);
     font-weight: 600;
     font-size: 0.85rem;
+  }
+
+  .grand-pass-card {
+    margin: 1.5rem 0 2.5rem;
+    max-width: 48rem;
+  }
+
+  .grand-pass-card p,
+  .grand-pass-card li {
+    color: var(--color-text-muted);
+  }
+
+  .grand-pass-card p:first-child {
+    margin-top: 0;
+  }
+
+  .grand-pass-card p:last-child {
+    margin-bottom: 0;
+  }
+
+  .grand-pass-card h3 {
+    margin: 1.25rem 0 0.5rem;
+    font-size: 1.05rem;
+  }
+
+  .grand-pass-card li {
+    margin-bottom: 0.3rem;
+  }
+
+  .grand-pass-card a {
+    font-weight: 600;
   }
 
   .map-embed {
